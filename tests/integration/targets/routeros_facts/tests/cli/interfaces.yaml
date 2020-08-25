@@ -1,0 +1,20 @@
+---
+- debug: msg="Interface Facts Test - START connection={{ ansible_connection }}"
+
+- kilip.routeros.routeros_facts:
+    gather_network_resources: interfaces
+  register: result
+
+- assert:
+    that:
+      - result.ansible_facts.ansible_network_resources is defined
+      - result.ansible_facts.ansible_network_resources.interfaces is defined
+
+- set_fact:
+    _interfaces: "{{ result.ansible_facts.ansible_network_resources.interfaces }}"
+    
+- assert:
+    that:
+      - _interfaces|length > 0
+        
+        
