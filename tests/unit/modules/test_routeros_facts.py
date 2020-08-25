@@ -21,7 +21,7 @@ class TestRouterosFactsModule(TestRouterOSModule):
     def setUp(self):
         super(TestRouterosFactsModule, self).setUp()
         self.mock_run_commands = patch(
-            "ansible_collections.kilip.routeros.plugins.module_utils.facts.base.run_commands"
+            "ansible_collections.kilip.routeros.plugins.module_utils.facts.legacy.run_commands"
         )
         self.run_commands = self.mock_run_commands.start()
 
@@ -34,6 +34,11 @@ class TestRouterosFactsModule(TestRouterOSModule):
             "ansible_collections.kilip.routeros.plugins.module_utils.facts.bridges.get_config"
         )
         self.bridge_get_config = self.mock_bridge_config.start()
+
+        self.mock_base_facts = patch(
+            "ansible_collections.kilip.routeros.plugins.module_utils.facts.resource_facts_base.get_config"
+        )
+        self.base_facts_config = self.mock_base_facts.start()
 
     def load_fixtures(self, commands=None):
         def load_from_file(*args, **kwargs):
@@ -53,6 +58,7 @@ class TestRouterosFactsModule(TestRouterOSModule):
         self.run_commands.side_effect = load_from_file
         self.get_config.side_effect = load_config_from_file
         self.bridge_get_config.side_effect = load_config_from_file
+        self.base_facts_config.side_effect = load_config_from_file
 
     def test_gather_legacy_facts(self):
         set_module_args(dict(
@@ -110,3 +116,18 @@ class TestRouterosFactsModule(TestRouterOSModule):
         self.assertEqual(bridge1['vlan']['vlan_filtering'], False)
         self.assertEqual(bridge2['vlan']['vlan_filtering'], True)
 
+    def test_gather_bridge_ports(self):
+        set_module_args(
+            dict(
+                gather_subset=None,
+                gather_network_resources="bridge_ports"
+            )
+        )
+        result = self.execute_module()
+        ports = result["ansible_facts"]["ansible_network_resources"]["bridge_ports"]
+
+        port1 = ports[0]
+        self.assertEqual(port1["bridge"], "br-wan")
+        self.assertEqual(port1["interface"], "ether1")
+        self.assertFalse(port1["vlan"]["tag_stacking"])
+        self.assertFalse(port1["stp"]["auto_isolate"])

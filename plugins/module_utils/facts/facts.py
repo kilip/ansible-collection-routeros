@@ -4,7 +4,7 @@ __metaclass__ = type
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.facts.facts import (
     FactsBase,
 )
-from ansible_collections.kilip.routeros.plugins.module_utils.facts.base import(
+from ansible_collections.kilip.routeros.plugins.module_utils.facts.legacy import(
     Default,
     Hardware,
     Interfaces,
@@ -12,7 +12,7 @@ from ansible_collections.kilip.routeros.plugins.module_utils.facts.base import(
 )
 from .interfaces import InterfacesFacts
 from .bridges import BridgesFacts
-
+from .bridge_port import BridgePortFacts
 
 FACT_LEGACY_SUBSETS = dict(
     default=Default,
@@ -24,6 +24,7 @@ FACT_LEGACY_SUBSETS = dict(
 FACT_RESOURCE_SUBSETS = dict(
     interfaces=InterfacesFacts,
     bridges=BridgesFacts,
+    bridge_ports=BridgePortFacts,
 )
 
 
