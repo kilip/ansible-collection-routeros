@@ -23,17 +23,3 @@ class BridgePortFacts(ResourceFactsBase):
             subspec,
             options
         )
-
-    def do_render_config(self, spec, conf):
-        config = parse_config(spec, conf)
-        # parse stp config
-        stp = parse_config(spec['stp'], conf)
-        if stp:
-            config['stp'] = stp
-
-        # parse vlan config
-        vlan = parse_config(spec['vlan'], conf)
-        if vlan:
-            config['vlan'] = vlan
-
-        return config

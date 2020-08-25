@@ -52,7 +52,7 @@ class ResourceFactsBase(object):
         configs = data.split(self.config_root + " add ")
         del configs[0]
         for config in configs:
-            obj = self.do_render_config(self.generated_spec, config)
+            obj = self._render_config(self.generated_spec, config)
             if obj:
                 resources.append(obj)
 
@@ -60,9 +60,14 @@ class ResourceFactsBase(object):
             ansible_facts["ansible_network_resources"].update({self.network_resource_name: resources})
         return ansible_facts
 
-    @abstractmethod
-    def do_render_config(self, spec, conf):
-        pass
-
     def _get_resources_data(self):
         return get_config(self._module, self.config_root + " export verbose terse")
+
+    def _render_config(self, spec, conf):
+        config = parse_config(spec, conf)
+        # parse dict type config
+        for key in spec:
+            if type(spec[key]) == dict:
+                config[key] = parse_config(spec[key], conf)
+
+        return config
