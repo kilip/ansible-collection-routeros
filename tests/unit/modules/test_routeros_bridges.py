@@ -88,3 +88,47 @@ class TestRouterosBridgesModule(TestRouterOSModule):
             '/interface bridge remove [ find name=br-trunk1 ]'
         ]
         self.execute_module(changed=True, commands=commands)
+
+    def test_state_replaced(self):
+        set_module_args(dict(
+            config=[
+                dict(
+                    name="br-new1"
+                ),
+                dict(
+                    name="br-new2"
+                ),
+                dict(
+                    name="br-trunk1"
+                ),
+                dict(
+                    name="br-trunk2"
+                ),
+            ],
+            state="replaced"
+        ))
+        commands = [
+            '/interface bridge add name=br-new1',
+            '/interface bridge add name=br-new2',
+            '/interface bridge remove [ find name=br-trunk1 ]',
+            '/interface bridge add name=br-trunk1',
+            '/interface bridge remove [ find name=br-trunk2 ]',
+            '/interface bridge add name=br-trunk2',
+        ]
+        self.execute_module(False, True, commands)
+
+    def test_state_overriden(self):
+        set_module_args(dict(
+            config=[
+                dict(name="br-new1"),
+                dict(name="br-new2")
+            ],
+            state="overridden"
+        ))
+        commands = [
+            '/interface bridge remove [ find name=br-trunk1 ]',
+            '/interface bridge remove [ find name=br-trunk2 ]',
+            '/interface bridge add name=br-new1',
+            '/interface bridge add name=br-new2',
+        ]
+        self.execute_module(False, True, commands)

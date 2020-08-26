@@ -5,6 +5,7 @@ pexpect
 pytest
 pytest-xdist
 pytest-mock
+pylint
 yamllint
 junit-xml
 coverage==4.5.4

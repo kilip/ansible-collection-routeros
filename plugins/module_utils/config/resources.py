@@ -16,15 +16,21 @@ from ..connection import (
 from abc import abstractmethod
 from ..facts.facts import Facts
 
+from ..utils import (
+    generate_command_values,
+    filter_dict_having_none_value,
+)
 
 class Resources(ConfigBase):
     """
-    Base class for single network resource
+    Base class for network resources
     """
 
     gather_subset = ["!all", "!min"]
     resource = ""
     resource_facts_command = ""
+    resource_keys = ["name"]
+    config_root = ""
 
     def __init__(
         self,
@@ -128,14 +134,30 @@ class Resources(ConfigBase):
         return commands
 
     def _state_overridden(self, want, have):
-        pass
+        """ The command generator when state is overridden
+
+        :param want: the desired configuration as a dictionary
+        :param have: the current configuration as a dictionary
+        :rtype: A list
+        :returns: the commands necessary to migrate the current configuration
+                  to the desired configuration
+        """
+        commands = []
+
+        for existing in have:
+            commands.extend(self._delete(existing))
+            self._remove_invalid(existing)
+
+        for resource in want:
+            commands.extend(self._configure(resource, dict()))
+
+        return commands
 
     def _state_deleted(self, want, have):
         """ The command generator when state is deleted
 
         :param want: the objects from which the configuration should be removed
-        :param obj_in_have: the current configuration as a dictionary
-        :param interface_type: interface type
+        :param have: the existing configuration
         :rtype: A list
         :returns: the commands necessary to remove the current configuration
                   of the provided objects
@@ -144,24 +166,18 @@ class Resources(ConfigBase):
 
         if want:
             for resource in want:
-                for each in have:
-                    if each["name"] == resource["name"]:
-                        break
-                else:
-                    continue
-                resource = dict(name=resource["name"])
-                commands.extend(self.do_delete(resource, each))
+                existing = self._find_resource(resource, have)
+                commands.extend(self._delete(existing))
         else:
             for each in have:
-                want = dict()
-                commands.extend(self.do_delete(want, each))
+                commands.extend(self._delete(each))
         return commands
 
     def _state_merged(self, want, have):
         """ The command generator when state is merged
 
         :param want: the additive configuration as a dictionary
-        :param obj_in_have: the current configuration as a dictionary
+        :param have: the current configuration as a dictionary
         :rtype: A list
         :returns: the commands necessary to merge the provided into
                   the current configuration
@@ -169,23 +185,80 @@ class Resources(ConfigBase):
         commands = []
 
         for resource in want:
-            for each in have:
-                if each["name"] == resource["name"]:
-                    break
-            else:
-                # configuring non-existing interface
-                commands.extend(self.do_set_config(resource, dict()))
-                continue
-            commands.extend(self.do_set_config(resource, each))
+            existing = self._find_resource(resource, have)
+            commands.extend(self._configure(resource, existing))
         return commands
 
     def _state_replaced(self, want, have):
-        pass
+        """ The command generator when state is replaced
 
-    @abstractmethod
-    def do_set_config(self, want, have):
-        pass
+        :param want: the desired configuration as a dictionary
+        :param have: the current configuration as a dictionary
+        :param interface_type: interface type
+        :rtype: A list
+        :returns: the commands necessary to migrate the current configuration
+                  to the deisred configuration
+        """
+        commands = []
 
-    @abstractmethod
-    def do_delete(self, want, have):
-        pass
+        for resource in want:
+            existing = self._find_resource(resource, have)
+            have_dict = filter_dict_having_none_value(resource, existing)
+            # TODO: add clear config for certain network resource
+            # commands.extend(self._clear_config(dict(), have_dict))
+            if existing:
+                commands.extend(self._delete(have_dict))
+            commands.extend(self._configure(resource, dict()))
+        return commands
+
+    def _find_resource(self, want, have):
+        """
+        Find existing resource
+        :param want: a configure
+        :param have:
+        :return:
+        """
+        keys = self.resource_keys
+        resource = dict()
+        for each in have:
+            exist = True
+            for key in keys:
+                if each[key] != want[key]:
+                    exist = False
+            if exist:
+                resource = each
+        return resource
+
+    def _create_find_command(self, want):
+        keys = self.resource_keys
+        finds = []
+        for key in keys:
+            finds.append(key + "=" + want[key])
+        return "[ find %s ]" % (" and ".join(finds))
+
+    def _configure(self, want, have):
+        commands = []
+        config_root = self.config_root
+        prefix = f"%s add " % config_root
+        filters = []
+        if have:
+            find_command = self._create_find_command(want)
+            prefix = f"%s set %s " % (config_root,find_command)
+            filters = self.resource_keys
+
+        values = generate_command_values(want, have, filters)
+        if values:
+            cmd = prefix + " ".join(values)
+            commands.append(cmd)
+        return commands
+
+    def _delete(self, resource):
+        commands = []
+        config_root = self.config_root
+        find_command = self._create_find_command(resource)
+        cmd = f'%s remove %s' % (config_root, find_command)
+        commands.append(cmd)
+        return commands
+
+    def _remove_invalid(self, existing):
+        return []
