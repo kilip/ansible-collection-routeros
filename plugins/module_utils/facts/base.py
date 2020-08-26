@@ -2,54 +2,53 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from abc import abstractmethod
 from copy import deepcopy
+from abc import abstractmethod
 import re
-
-from ansible.module_utils._text import to_text
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
     utils as net_utils,
 )
-
-from ..connection import (
+from ..routeros import (
     get_config
 )
 from ..utils import (
     parse_config
 )
 
-class ResourceFactsBase(object):
-    
-    argument_spec = {}
-    config_root = ""
-    network_resource_name = ""
-    resource_facts_command = ""
+class FactsBase(object):
 
-    def __init__(
-        self, 
-        module,
-        subspec="config",
-        options="options"
-    ):
+    def __init__(self, module, sub_spec="config", options="options"):
         self._module = module
-        spec = deepcopy(self.argument_spec)
-        if subspec:
+        resource = self.get_resource()
+
+        spec = deepcopy(resource.argument_spec)
+        if sub_spec:
             if options:
-                facts_argument_spec = spec[subspec][options]
+                facts_argument_spec = spec[sub_spec][options]
             else:
-                facts_argument_spec = spec[subspec]
+                facts_argument_spec = spec[sub_spec]
         else:
             facts_argument_spec = spec
         self.generated_spec = net_utils.generate_dict(facts_argument_spec)
+        self.resource = resource
+
+    @abstractmethod
+    def get_resource(self):
+        """
+        :rtype ResourceBase
+        :return: resource
+        """
+        pass
 
     def populate_facts(self, connection, ansible_facts, data=None):
         resources = []
+        resource = self.resource
         if not data:
             data = self._get_resources_data()
 
         # ensure line between /interface word
         data = data.replace("/interface", "\n/interface")
-        configs = data.split(self.config_root + " add ")
+        configs = data.split(resource.command_root + " ")
         del configs[0]
         for config in configs:
             obj = self._render_config(self.generated_spec, config)
@@ -57,11 +56,13 @@ class ResourceFactsBase(object):
                 resources.append(obj)
 
         if resources:
-            ansible_facts["ansible_network_resources"].update({self.network_resource_name: resources})
+            ansible_facts["ansible_network_resources"].update({
+                resource.resource_name: resources
+            })
         return ansible_facts
 
     def _get_resources_data(self):
-        return get_config(self._module, self.config_root + " export verbose terse")
+        return get_config(self._module, self.resource.command_root + " export verbose terse")
 
     def _render_config(self, spec, conf):
         config = parse_config(spec, conf)
@@ -70,4 +71,10 @@ class ResourceFactsBase(object):
             if type(spec[key]) == dict:
                 config[key] = parse_config(spec[key], conf)
 
+        additional_config = self.additional_config(spec, conf)
+        if additional_config:
+            config.update(additional_config)
         return config
+
+    def additional_config(self, spec, conf):
+        return {}

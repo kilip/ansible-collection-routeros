@@ -3,16 +3,21 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.kilip.routeros.plugins.module_utils.argspec.facts import FactsArgs
-from ansible_collections.kilip.routeros.plugins.module_utils.facts.facts import Facts
+from ..module_utils.facts.facts import Facts
 
 
 def main():
-    argument_spec = FactsArgs.argument_spec
+    argument_spec = {
+        "gather_subset": dict(
+            default=["!config"],
+            type="list",
+            elements="str"
+        ),
+        "gather_network_resources": dict(type="list", elements="str"),
+    }
     warnings = []
     module = AnsibleModule(
         argument_spec=argument_spec,
-        supports_check_mode=True
     )
 
     result = Facts(module).get_facts()

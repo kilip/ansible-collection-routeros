@@ -3,10 +3,8 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.kilip.routeros.plugins.module_utils.argspec.interfaces import (
-    InterfacesArgs,
-)
-from ansible_collections.kilip.routeros.plugins.module_utils.config.interfaces import Interfaces
+from ..module_utils.resource.interface import InterfaceResource
+from ..module_utils.config.interface import Interface
 
 def main():
     """
@@ -24,12 +22,12 @@ def main():
     mutually_exclusive = [("config", "running_config")]
 
     module = AnsibleModule(
-        argument_spec=InterfacesArgs.argument_spec,
+        argument_spec=InterfaceResource.argument_spec,
         required_if=required_if,
         mutually_exclusive=mutually_exclusive,
         supports_check_mode=True,
     )
-    result = Interfaces(module).execute_module()
+    result = Interface(module).execute_module()
     module.exit_json(**result)
 
 

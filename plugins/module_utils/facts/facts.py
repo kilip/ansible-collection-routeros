@@ -1,18 +1,18 @@
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.facts.facts import (
     FactsBase,
 )
-from ansible_collections.kilip.routeros.plugins.module_utils.facts.legacy import(
+from .legacy import (
     Default,
     Hardware,
     Interfaces,
-    Config,
+    Config
 )
-from .interfaces import InterfacesFacts
-from .bridges import BridgesFacts
-from .bridge_port import BridgePortFacts
+from .interface import InterfaceFacts
+from .bridge import BridgeFacts
 
 FACT_LEGACY_SUBSETS = dict(
     default=Default,
@@ -22,11 +22,9 @@ FACT_LEGACY_SUBSETS = dict(
 )
 
 FACT_RESOURCE_SUBSETS = dict(
-    interfaces=InterfacesFacts,
-    bridges=BridgesFacts,
-    bridge_ports=BridgePortFacts,
+    interfaces = InterfaceFacts,
+    bridges = BridgeFacts
 )
-
 
 class Facts(FactsBase):
     """ The fact class for RouterOS

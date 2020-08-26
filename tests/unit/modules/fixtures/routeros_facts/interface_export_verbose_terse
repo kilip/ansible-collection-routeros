@@ -1,0 +1,13 @@
+# aug/26/2020 09:53:39 by RouterOS 6.47.2
+# software id =
+#
+#
+#
+
+# allow fixing on broken lines
+/interface ethernet set [ find default-name=ether1 ] comment
+="ether1 comment" disab
+led=no na
+me=ether1
+
+/interface bridge add name=foo comment="bridge foo comment"

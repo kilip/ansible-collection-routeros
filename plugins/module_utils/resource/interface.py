@@ -2,11 +2,9 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from .base import ResourceBase
 
-class InterfacesArgs(object):
-    def __init__(self, **kwargs):
-        pass
-
+class InterfaceResource(ResourceBase):
     argument_spec = {
         "config": {
             "elements": "dict",
@@ -14,10 +12,7 @@ class InterfacesArgs(object):
                 "name": {"type": "str"},
                 "comment": {"type": "str"},
                 "disabled": {"type": "bool", "default": None},
-                "type": {
-                    "choices": ["ethernet", "bridge", "vlan"],
-                    "type": "str"
-                }
+                "type": {"type": "str"}
             },
             "type": "list"
         },
@@ -30,3 +25,8 @@ class InterfacesArgs(object):
             "type": "str",
         },
     }
+    resource_name = "interfaces"
+    command_root = "/interface"
+    related_resources = []
+    gather_network_resources = ["interfaces"]
+    filters = ['type']

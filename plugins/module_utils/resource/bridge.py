@@ -2,19 +2,9 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-# @TODO: find a use for this config
-# "query_response_interval": {},
-# "last_member_query_count": {},
-# "region_revision": {},
-# "startup_query_count": {},
-# "membership_interval": {},
-# "startup_query_interval": {},
-# "last_member_interval": {},
+from .base import ResourceBase
 
-class BridgesArgs(object):
-    def __init__(self, **kwargs):
-        pass
-
+class BridgeResource(ResourceBase):
     argument_spec = {
         "config": {
             "elements": "dict",
@@ -120,7 +110,6 @@ class BridgesArgs(object):
                 "auto_mac": {"type": "bool", "default": None},
             }
         },
-
         "state": {
             "choices": [
                 "merged",
@@ -132,3 +121,13 @@ class BridgesArgs(object):
             "default": "merged"
         }
     }
+    resource_name = "bridges"
+    command_root = "/interface bridge"
+    related_resources = [
+        "/ip firewall",
+        "/ip address",
+        "/ip bridge port",
+        "/ip dhcp-server",
+    ]
+    gather_network_resources = ["bridges"]
+    filters = []

@@ -2,53 +2,41 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from abc import abstractmethod
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.cfg.base import (
     ConfigBase,
 )
-
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     to_list,
 )
-from ..connection import (
-    load_config,
-)
 
-from abc import abstractmethod
 from ..facts.facts import Facts
-
+from ..routeros import (
+    load_config
+)
 from ..utils import (
-    generate_command_values,
     filter_dict_having_none_value,
+    generate_command_values
 )
 
-class Resources(ConfigBase):
-    """
-    Base class for network resources
-    """
-
-    gather_subset = ["!all", "!min"]
-    resource = ""
-    resource_facts_command = ""
-    resource_keys = ["name"]
-    config_root = ""
+class ConfigResource(ConfigBase):
 
     def __init__(
         self,
         module,
-        resource,
-        resource_facts_command
+        resource
     ):
-        super(Resources, self).__init__(module)
+        super(ConfigResource, self).__init__(module)
         self.resource = resource
-        self.resource_facts_command = resource_facts_command
 
     def get_resource_facts(self, data=None):
+        resource = self.resource
         facts, _warning = Facts(self._module).get_facts(
-            self.gather_subset,
-            [self.resource],
+            resource.gather_subset,
+            resource.gather_network_resources,
             data
         )
-        resource_facts = facts['ansible_network_resources'].get(self.resource)
+        resource_facts = facts['ansible_network_resources'].get(resource.resource_name)
         if not resource_facts:
             return []
         return resource_facts
@@ -57,6 +45,7 @@ class Resources(ConfigBase):
         result = {"changed": False}
         commands = list()
         warnings = list()
+        resource = self.resource
 
         existing_resource_facts = []
         if self.state in self.ACTION_STATES:
@@ -65,10 +54,11 @@ class Resources(ConfigBase):
         if self.state in self.ACTION_STATES:
             commands.extend(self._set_config(existing_resource_facts))
 
+
         changed_resource_facts = []
         if commands and self.state in self.ACTION_STATES:
             if not self._module.check_mode:
-                load_config(self._module, commands, self.resource_facts_command)
+                load_config(self._module, commands)
             result["changed"] = True
 
         if self.state in self.ACTION_STATES:
@@ -218,7 +208,7 @@ class Resources(ConfigBase):
         :param have:
         :return:
         """
-        keys = self.resource_keys
+        keys = self.resource.resource_keys
         resource = dict()
         for each in have:
             exist = True
@@ -230,7 +220,7 @@ class Resources(ConfigBase):
         return resource
 
     def _create_find_command(self, want):
-        keys = self.resource_keys
+        keys = self.resource.resource_keys
         finds = []
         for key in keys:
             finds.append(key + "=" + want[key])
@@ -238,13 +228,14 @@ class Resources(ConfigBase):
 
     def _configure(self, want, have):
         commands = []
-        config_root = self.config_root
-        prefix = f"%s add " % config_root
-        filters = []
+        resource = self.resource
+        command_prefix = self.get_command_prefix(want, have)
+        prefix = f"%s add " % command_prefix
+        filters = resource.value_filters
         if have:
             find_command = self._create_find_command(want)
-            prefix = f"%s set %s " % (config_root,find_command)
-            filters = self.resource_keys
+            prefix = f"%s set %s " % (command_prefix,find_command)
+            filters.extend(resource.resource_keys)
 
         values = generate_command_values(want, have, filters)
         if values:
@@ -252,13 +243,19 @@ class Resources(ConfigBase):
             commands.append(cmd)
         return commands
 
-    def _delete(self, resource):
+    def _delete(self, want, have):
         commands = []
-        config_root = self.config_root
-        find_command = self._create_find_command(resource)
-        cmd = f'%s remove %s' % (config_root, find_command)
+        prefix = self.get_command_prefix(want, have)
+        find_command = self._create_find_command(want)
+        cmd = f'%s remove %s' % (prefix, find_command)
         commands.append(cmd)
+        commands.extend(self._remove_related_resource(want, have))
         return commands
 
-    def _remove_invalid(self, existing):
-        return []
+    def _remove_related_resource(self, want, have):
+        commands = []
+        return commands
+
+    def get_command_prefix(self, want, have):
+        prefix = self.resource.command_root
+        return prefix
