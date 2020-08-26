@@ -7,9 +7,7 @@ from ..compat.mock import patch
 from ansible_collections.kilip.routeros.plugins.modules import routeros_facts
 from .utils import set_module_args
 from .routeros_module import TestRouterOSModule, load_fixture
-from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
-    to_list,
-)
+
 
 class TestRouterosFactsModule(TestRouterOSModule):
     module = routeros_facts
@@ -39,23 +37,21 @@ class TestRouterosFactsModule(TestRouterOSModule):
         self.routeros.side_effect = load_from_file
 
     def test_gather_legacy_facts(self):
-        set_module_args(dict(
-            gather_subset="all"
-        ))
+        set_module_args(dict(gather_subset="all"))
         result = self.execute_module(changed=False)
 
         self.assertEqual(
             result["ansible_facts"]["ansible_net_model"],
-            "RouterBOARD 3011UiAS"
+            "RouterBOARD 3011UiAS",
         )
 
     def test_interface_facts(self):
-        set_module_args(dict(
-            gather_network_resources="interfaces"
-        ))
+        set_module_args(dict(gather_network_resources="interfaces"))
         result = self.execute_module(changed=False)
 
-        interfaces = result["ansible_facts"]["ansible_network_resources"]["interfaces"]
+        interfaces = result["ansible_facts"]["ansible_network_resources"][
+            "interfaces"
+        ]
         interface1 = interfaces[0]
         interface2 = interfaces[1]
 
@@ -70,20 +66,20 @@ class TestRouterosFactsModule(TestRouterOSModule):
         self.assertEqual(interface2["type"], "bridge")
 
     def test_bridge_facts(self):
-        set_module_args(dict(
-            gather_network_resources="bridges"
-        ))
+        set_module_args(dict(gather_network_resources="bridges"))
         result = self.execute_module(False, False)
-        bridges = result["ansible_facts"]["ansible_network_resources"]["bridges"]
+        bridges = result["ansible_facts"]["ansible_network_resources"][
+            "bridges"
+        ]
         bridge1 = bridges[0]
         bridge2 = bridges[1]
 
         # bridge 1 assert
-        self.assertEqual(bridge1['name'], "br-trunk1")
-        self.assertFalse(bridge1['vlan']['vlan_filtering'])
-        self.assertEqual(bridge1['stp']['protocol_mode'],"rstp")
+        self.assertEqual(bridge1["name"], "br-trunk1")
+        self.assertFalse(bridge1["vlan"]["vlan_filtering"])
+        self.assertEqual(bridge1["stp"]["protocol_mode"], "rstp")
 
         # bridge 2 assert
-        self.assertEqual(bridge2['name'], "br-trunk2")
-        self.assertTrue(bridge2['vlan']['vlan_filtering'])
-        self.assertEqual(bridge2['stp']['protocol_mode'], "mstp")
+        self.assertEqual(bridge2["name"], "br-trunk2")
+        self.assertTrue(bridge2["vlan"]["vlan_filtering"])
+        self.assertEqual(bridge2["stp"]["protocol_mode"], "mstp")

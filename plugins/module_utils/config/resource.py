@@ -12,14 +12,11 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.u
 
 from ..resource.base import ResourceBase
 from ..facts.facts import Facts
-from ..routeros import (
-    load_config,
-    get_config,
-)
+from ..routeros import load_config, get_config
 from ..utils import (
     generate_command_values,
     gen_remove_invalid_resource,
-    ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
+    ANSIBLE_REMOVE_INVALID_SCRIPT_NAME,
 )
 
 
@@ -30,11 +27,11 @@ class ConfigResource(ConfigBase):
     def get_resource_facts(self, data=None):
         resource = self.resource
         facts, _warning = Facts(self._module).get_facts(
-            resource.gather_subset,
-            resource.gather_network_resources,
-            data
+            resource.gather_subset, resource.gather_network_resources, data
         )
-        resource_facts = facts['ansible_network_resources'].get(resource.resource_name)
+        resource_facts = facts["ansible_network_resources"].get(
+            resource.resource_name
+        )
         if not resource_facts:
             return []
         return resource_facts
@@ -79,15 +76,15 @@ class ConfigResource(ConfigBase):
         :return generated inject script
         """
         script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
-        existing = get_config(self._module, '/system script export terse')
+        existing = get_config(self._module, "/system script export terse")
         lines = [
             ":global ansiblerminterface;",
-            ":log info \\\"ansible: remove invalid config for interface: \\$ansiblerminterface\\\";",
+            ':log info \\"ansible: remove invalid config for interface: \\$ansiblerminterface\\";',
             "/ip address remove [find invalid];",
-            "/ip dhcp-server remove [find invalid];"
+            "/ip dhcp-server remove [find invalid];",
         ]
         scripts = "".join(lines)
-        commands = f"/system script add name={script_name} policy=read,write source=\"{scripts}\""
+        commands = f'/system script add name={script_name} policy=read,write source="{scripts}"'
         match = re.search(r"name\=" + script_name, existing, re.M)
         if not match:
             load_config(self._module, commands)

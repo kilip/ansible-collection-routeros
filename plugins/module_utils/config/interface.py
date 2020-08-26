@@ -18,7 +18,7 @@ class Interface(ConfigResource):
         :param have: the existing configuration
         :return: command prefix
         """
-        intype = have['type']
+        intype = have["type"]
         root = self.resource.command_root
         prefix = f"{root} {intype}"
         return prefix

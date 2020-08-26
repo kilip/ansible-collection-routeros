@@ -6,6 +6,7 @@ from ansible.module_utils.basic import AnsibleModule
 from ..module_utils.resource.interface import InterfaceResource
 from ..module_utils.config.interface import Interface
 
+
 def main():
     """
     Main entry point for module execution

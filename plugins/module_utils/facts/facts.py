@@ -5,30 +5,21 @@ __metaclass__ = type
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.facts.facts import (
     FactsBase,
 )
-from .legacy import (
-    Default,
-    Hardware,
-    Interfaces,
-    Config
-)
+from .legacy import Default, Hardware, Interfaces, Config
 from .interface import InterfaceFacts
 from .bridge import BridgeFacts
 
 FACT_LEGACY_SUBSETS = dict(
-    default=Default,
-    hardware=Hardware,
-    interfaces=Interfaces,
-    config=Config
+    default=Default, hardware=Hardware, interfaces=Interfaces, config=Config
 )
 
-FACT_RESOURCE_SUBSETS = dict(
-    interfaces = InterfaceFacts,
-    bridges = BridgeFacts
-)
+FACT_RESOURCE_SUBSETS = dict(interfaces=InterfaceFacts, bridges=BridgeFacts)
+
 
 class Facts(FactsBase):
     """ The fact class for RouterOS
     """
+
     VALID_LEGACY_GATHER_SUBSETS = frozenset(FACT_LEGACY_SUBSETS.keys())
     VALID_RESOURCE_SUBSETS = frozenset(FACT_RESOURCE_SUBSETS.keys())
 

@@ -1,5 +1,5 @@
 ---
-- debug: msg="START connection={{ ansible_connection }} routeros_interfaces tests"
+- debug: msg="START routeros_interfaces tests"
 
 - kilip.routeros.routeros_interfaces:
     config:

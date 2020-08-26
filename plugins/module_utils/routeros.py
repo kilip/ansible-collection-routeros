@@ -4,18 +4,18 @@ __metaclass__ = type
 
 import re
 from ansible_collections.community.network.plugins.module_utils.network.routeros.routeros import (
-    run_commands
+    run_commands,
 )
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     to_list,
-    to_text
+    to_text,
 )
 
 DEVICE_CONFIGS = {}
 
 
 def generate_config_key(command):
-    sub = re.sub('(.*)(export|add|remove).*', "\\1", command)
+    sub = re.sub("(.*)(export|add|remove).*", "\\1", command)
     sub = sub.strip().replace(" ", "_").replace("/", "")
     return sub
 
@@ -27,7 +27,7 @@ def normalize_config(config):
     :rtype string
     :return: normalized config
     """
-    return re.sub(r"([a-z|=|\-])(\n)", '\\1', config)
+    return re.sub(r"([a-z|=|\-])(\n)", "\\1", config)
 
 
 def reset_config(command):

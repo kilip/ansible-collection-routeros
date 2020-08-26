@@ -4,17 +4,17 @@
 - name: ensure the tests bridges does not exists first
   kilip.routeros.routeros_bridge: &id001
     config:
-    - name: "br-new1"
-    - name: "br-new2"
+      - name: "br-new1"
+      - name: "br-new2"
     state: deleted
 
 - name: creates new routeros_bridge
   kilip.routeros.routeros_bridge: &id002
     config:
-    - name: "br-new1"
-      comment: br-new1 create
-    - name: "br-new2"
-      comment: br-new2 create
+      - name: "br-new1"
+        comment: br-new1 create
+      - name: "br-new2"
+        comment: br-new2 create
   register: result
 - assert:
     that:
@@ -30,8 +30,8 @@
 - name: test update bridge
   kilip.routeros.routeros_bridge:
     config:
-    - name: br-new1
-      comment: br-new1 update
+      - name: br-new1
+        comment: br-new1 update
   register: result
 - assert:
     that:

@@ -11,10 +11,8 @@
       - result.ansible_facts.ansible_network_resources.interfaces is defined
 
 - set_fact:
-    _interfaces: "{{ result.ansible_facts.ansible_network_resources.interfaces }}"
-    
+    _interfaces: "{{result.ansible_facts.ansible_network_resources.interfaces}}"
+
 - assert:
     that:
       - _interfaces|length > 0
-        
-        

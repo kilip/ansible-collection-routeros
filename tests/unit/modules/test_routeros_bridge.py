@@ -5,7 +5,9 @@ __metaclass__ = type
 
 from ansible_collections.kilip.routeros.tests.unit.compat.mock import patch
 from ansible_collections.kilip.routeros.plugins.modules import routeros_bridge
-from ansible_collections.kilip.routeros.plugins.module_utils.utils import gen_remove_invalid_resource
+from ansible_collections.kilip.routeros.plugins.module_utils.utils import (
+    gen_remove_invalid_resource,
+)
 from ansible_collections.kilip.routeros.tests.unit.modules.utils import (
     set_module_args,
 )
@@ -32,83 +34,82 @@ class TestRouterosBridgeModule(TestRouterOSModule):
                     output.append(load_fixture("routeros_bridge%s" % filename))
                 return output
             else:
-                return dict(diff=None, session="session", results=[], requests=[])
+                return dict(
+                    diff=None, session="session", results=[], requests=[]
+                )
 
         self.run_commands.side_effect = load_from_file
 
     def test_merged(self):
         set_module_args(
             {
-                'config': [
-                    dict(
-                        name="br-new",
-                        comment="br-new comment"
-                    ),
-                    dict(
-                        name="br-trunk1",
-                        comment="br-trunk1 comment"
-                    ),
+                "config": [
+                    dict(name="br-new", comment="br-new comment"),
+                    dict(name="br-trunk1", comment="br-trunk1 comment"),
                 ]
             }
         )
         commands = [
             '/interface bridge add name=br-new comment="br-new comment"',
-            '/interface bridge set [ find name=br-trunk1 ] comment="br-trunk1 comment"'
+            '/interface bridge set [ find name=br-trunk1 ] comment="br-trunk1 comment"',
         ]
         self.execute_module(False, True, commands=commands)
 
     def test_idempotence(self):
-        set_module_args(dict(
-            config=[
-                dict(name="br-trunk1", vlan=dict(vlan_filtering=False))
-            ]
-        ))
+        set_module_args(
+            dict(
+                config=[
+                    dict(name="br-trunk1", vlan=dict(vlan_filtering=False))
+                ]
+            )
+        )
         self.execute_module(False, False)
 
     def test_deleted(self):
-        set_module_args(dict(
-            config=[
-                dict(name="br-trunk1"),
-                dict(name="br-trunk2")
-            ],
-            state="deleted"
-        ))
+        set_module_args(
+            dict(
+                config=[dict(name="br-trunk1"), dict(name="br-trunk2")],
+                state="deleted",
+            )
+        )
         commands = [
             "/interface bridge remove [ find name=br-trunk1 ]",
-            gen_remove_invalid_resource('br-trunk1'),
+            gen_remove_invalid_resource("br-trunk1"),
             "/interface bridge remove [ find name=br-trunk2 ]",
-            gen_remove_invalid_resource('br-trunk2'),
+            gen_remove_invalid_resource("br-trunk2"),
         ]
         self.execute_module(False, True, commands)
 
     def test_replaced(self):
-        set_module_args(dict(
-            config=[
-                dict(name="br-trunk1", vlan=dict(vlan_filtering=True)),
-                dict(name="br-new", comment="new comment")
-            ],
-            state="replaced"
-        ))
+        set_module_args(
+            dict(
+                config=[
+                    dict(name="br-trunk1", vlan=dict(vlan_filtering=True)),
+                    dict(name="br-new", comment="new comment"),
+                ],
+                state="replaced",
+            )
+        )
         commands = [
-            '/interface bridge remove [ find name=br-trunk1 ]',
-            gen_remove_invalid_resource('br-trunk1'),
-            '/interface bridge add name=br-trunk1 vlan-filtering=yes',
-            "/interface bridge add name=br-new comment=\"new comment\"",
+            "/interface bridge remove [ find name=br-trunk1 ]",
+            gen_remove_invalid_resource("br-trunk1"),
+            "/interface bridge add name=br-trunk1 vlan-filtering=yes",
+            '/interface bridge add name=br-new comment="new comment"',
         ]
         self.execute_module(False, True, commands)
 
     def test_overriden(self):
-        set_module_args(dict(
-            config=[
-                dict(name="br-new", comment="new comment")
-            ],
-            state="overridden"
-        ))
+        set_module_args(
+            dict(
+                config=[dict(name="br-new", comment="new comment")],
+                state="overridden",
+            )
+        )
         commands = [
             "/interface bridge remove [ find name=br-trunk1 ]",
-            gen_remove_invalid_resource('br-trunk1'),
+            gen_remove_invalid_resource("br-trunk1"),
             "/interface bridge remove [ find name=br-trunk2 ]",
-            gen_remove_invalid_resource('br-trunk2'),
-            "/interface bridge add name=br-new comment=\"new comment\"",
+            gen_remove_invalid_resource("br-trunk2"),
+            '/interface bridge add name=br-new comment="new comment"',
         ]
         self.execute_module(False, True, commands)

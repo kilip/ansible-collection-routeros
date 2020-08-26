@@ -30,8 +30,7 @@ from ..module_utils.config.bridge import Bridge, BridgeResource
 
 def main():
     module = AnsibleModule(
-        argument_spec=BridgeResource.argument_spec,
-        supports_check_mode=True
+        argument_spec=BridgeResource.argument_spec, supports_check_mode=True
     )
     result = Bridge(module).execute_module()
     return module.exit_json(**result)

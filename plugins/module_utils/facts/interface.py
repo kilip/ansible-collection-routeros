@@ -22,11 +22,7 @@ class InterfaceFacts(FactsBase):
 
     def _get_interface_type(self, type):
         intype = "unknown"
-        known_types = [
-            "ethernet",
-            "bridge",
-            "vlan"
-        ]
+        known_types = ["ethernet", "bridge", "vlan"]
         if type.lower() in known_types:
             intype = type.lower()
         return intype

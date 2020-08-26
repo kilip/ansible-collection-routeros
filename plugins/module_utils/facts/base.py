@@ -3,16 +3,11 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from copy import deepcopy
-from abc import abstractmethod
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
     utils as net_utils,
 )
-from ..routeros import (
-    get_config
-)
-from ..utils import (
-    parse_config
-)
+from ..routeros import get_config
+from ..utils import parse_config
 
 
 class FactsBase(object):
@@ -48,13 +43,15 @@ class FactsBase(object):
                 resources.append(obj)
 
         if resources:
-            ansible_facts["ansible_network_resources"].update({
-                resource.resource_name: resources
-            })
+            ansible_facts["ansible_network_resources"].update(
+                {resource.resource_name: resources}
+            )
         return ansible_facts
 
     def _get_resources_data(self):
-        return get_config(self._module, self.resource.command_root + " export verbose terse")
+        return get_config(
+            self._module, self.resource.command_root + " export verbose terse"
+        )
 
     def _render_config(self, spec, conf):
         config = parse_config(spec, conf)

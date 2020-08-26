@@ -9,16 +9,12 @@ from ..module_utils.facts.facts import Facts
 def main():
     argument_spec = {
         "gather_subset": dict(
-            default=["!config"],
-            type="list",
-            elements="str"
+            default=["!config"], type="list", elements="str"
         ),
         "gather_network_resources": dict(type="list", elements="str"),
     }
     warnings = []
-    module = AnsibleModule(
-        argument_spec=argument_spec,
-    )
+    module = AnsibleModule(argument_spec=argument_spec)
 
     result = Facts(module).get_facts()
     ansible_facts, additional_warnings = result

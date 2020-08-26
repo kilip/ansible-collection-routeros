@@ -6,6 +6,7 @@ __metaclass__ = type
 class ResourceBase(object):
     def __init__(self):
         pass
+
     name = ""
     argument_spec = {}
     command_root = ""

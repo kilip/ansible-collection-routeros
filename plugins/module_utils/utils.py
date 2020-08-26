@@ -41,8 +41,8 @@ def parse_config(spec, conf):
     for key in config:
         mt_key = key.replace("_", "-")
         value = parse_conf_arg(conf, mt_key)
-        if value == 'yes' or value == 'no':
-            value = True if value == 'yes' else False
+        if value == "yes" or value == "no":
+            value = True if value == "yes" else False
 
         if value is not None:
             config[key] = value
@@ -100,7 +100,7 @@ def dict_to_set(sample_dict):
 
 
 def key_to_routeros(key):
-    return key.replace('_', '-').strip()
+    return key.replace("_", "-").strip()
 
 
 def value_to_routeros(value):
