@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 import re
-from ansible.module_utils.connection import Connection, ConnectionError
 from ansible_collections.community.network.plugins.module_utils.network.routeros.routeros import (
     run_commands
 )
@@ -14,9 +13,10 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.u
 
 DEVICE_CONFIGS = {}
 
+
 def generate_config_key(command):
-    sub = re.sub('(.*)(export|add|remove).*',"\\1", command)
-    sub = sub.strip().replace(" ","_").replace("/","")
+    sub = re.sub('(.*)(export|add|remove).*', "\\1", command)
+    sub = sub.strip().replace(" ", "_").replace("/", "")
     return sub
 
 
@@ -48,6 +48,7 @@ def get_config(module, command):
     cfg = normalize_config(cfg)
     DEVICE_CONFIGS[key] = cfg
     return cfg
+
 
 def load_config(module, commands):
     response = {}

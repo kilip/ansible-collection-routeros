@@ -4,7 +4,6 @@ __metaclass__ = type
 
 from copy import deepcopy
 from abc import abstractmethod
-import re
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
     utils as net_utils,
 )
@@ -15,12 +14,14 @@ from ..utils import (
     parse_config
 )
 
+
 class FactsBase(object):
+
+    resource = object
 
     def __init__(self, module, sub_spec="config", options="options"):
         self._module = module
-        resource = self.get_resource()
-
+        resource = self.resource
         spec = deepcopy(resource.argument_spec)
         if sub_spec:
             if options:
@@ -30,15 +31,6 @@ class FactsBase(object):
         else:
             facts_argument_spec = spec
         self.generated_spec = net_utils.generate_dict(facts_argument_spec)
-        self.resource = resource
-
-    @abstractmethod
-    def get_resource(self):
-        """
-        :rtype ResourceBase
-        :return: resource
-        """
-        pass
 
     def populate_facts(self, connection, ansible_facts, data=None):
         resources = []
@@ -47,7 +39,7 @@ class FactsBase(object):
             data = self._get_resources_data()
 
         # ensure line between /interface word
-        data = data.replace("/interface", "\n/interface")
+        data = data.replace("/", "\n/")
         configs = data.split(resource.command_root + " ")
         del configs[0]
         for config in configs:

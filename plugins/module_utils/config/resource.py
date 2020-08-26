@@ -2,7 +2,6 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from abc import abstractmethod
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.cfg.base import (
     ConfigBase,
 )
@@ -10,24 +9,19 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.u
     to_list,
 )
 
+from ..resource.base import ResourceBase
 from ..facts.facts import Facts
 from ..routeros import (
     load_config
 )
 from ..utils import (
-    filter_dict_having_none_value,
-    generate_command_values
+    generate_command_values,
 )
+
 
 class ConfigResource(ConfigBase):
 
-    def __init__(
-        self,
-        module,
-        resource
-    ):
-        super(ConfigResource, self).__init__(module)
-        self.resource = resource
+    resource = ResourceBase
 
     def get_resource_facts(self, data=None):
         resource = self.resource
@@ -45,7 +39,6 @@ class ConfigResource(ConfigBase):
         result = {"changed": False}
         commands = list()
         warnings = list()
-        resource = self.resource
 
         existing_resource_facts = []
         if self.state in self.ACTION_STATES:
@@ -136,7 +129,6 @@ class ConfigResource(ConfigBase):
 
         for existing in have:
             commands.extend(self._delete(existing))
-            self._remove_invalid(existing)
 
         for resource in want:
             commands.extend(self._configure(resource, dict()))
@@ -193,12 +185,18 @@ class ConfigResource(ConfigBase):
 
         for resource in want:
             existing = self._find_resource(resource, have)
-            have_dict = filter_dict_having_none_value(resource, existing)
+            # have_dict = filter_dict_having_none_value(resource, existing)
             # TODO: add clear config for certain network resource
             # commands.extend(self._clear_config(dict(), have_dict))
             if existing:
-                commands.extend(self._delete(have_dict))
+                commands.extend(self._delete(resource))
             commands.extend(self._configure(resource, dict()))
+        return commands
+
+    def _remove_invalid(self):
+        commands = [
+            '/system script run ansible-remove-invalid'
+        ]
         return commands
 
     def _find_resource(self, want, have):
@@ -213,6 +211,9 @@ class ConfigResource(ConfigBase):
         for each in have:
             exist = True
             for key in keys:
+                if each.get(key) is None:
+                    exist = False
+                    continue
                 if each[key] != want[key]:
                     exist = False
             if exist:
@@ -223,6 +224,8 @@ class ConfigResource(ConfigBase):
         keys = self.resource.resource_keys
         finds = []
         for key in keys:
+            if want.get(key) is None:
+                continue
             finds.append(key + "=" + want[key])
         return "[ find %s ]" % (" and ".join(finds))
 
@@ -230,11 +233,11 @@ class ConfigResource(ConfigBase):
         commands = []
         resource = self.resource
         command_prefix = self.get_command_prefix(want, have)
-        prefix = f"%s add " % command_prefix
+        prefix = f"{command_prefix} add "
         filters = resource.value_filters
         if have:
             find_command = self._create_find_command(want)
-            prefix = f"%s set %s " % (command_prefix,find_command)
+            prefix = f"{command_prefix} set {find_command} "
             filters.extend(resource.resource_keys)
 
         values = generate_command_values(want, have, filters)
@@ -243,19 +246,17 @@ class ConfigResource(ConfigBase):
             commands.append(cmd)
         return commands
 
-    def _delete(self, want, have):
+    def _delete(self, want):
         commands = []
-        prefix = self.get_command_prefix(want, have)
+        prefix = self.get_command_prefix(want)
         find_command = self._create_find_command(want)
-        cmd = f'%s remove %s' % (prefix, find_command)
+        cmd = f"{prefix} remove {find_command}"
         commands.append(cmd)
-        commands.extend(self._remove_related_resource(want, have))
+
+        if self.resource.remove_related_resource:
+            commands.extend(self._remove_invalid())
         return commands
 
-    def _remove_related_resource(self, want, have):
-        commands = []
-        return commands
-
-    def get_command_prefix(self, want, have):
+    def get_command_prefix(self, want, have=None):
         prefix = self.resource.command_root
         return prefix

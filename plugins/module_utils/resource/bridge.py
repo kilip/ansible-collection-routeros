@@ -4,7 +4,9 @@ __metaclass__ = type
 
 from .base import ResourceBase
 
+
 class BridgeResource(ResourceBase):
+
     argument_spec = {
         "config": {
             "elements": "dict",
@@ -123,11 +125,6 @@ class BridgeResource(ResourceBase):
     }
     resource_name = "bridges"
     command_root = "/interface bridge"
-    related_resources = [
-        "/ip firewall",
-        "/ip address",
-        "/ip bridge port",
-        "/ip dhcp-server",
-    ]
+    remove_related_resource = True
     gather_network_resources = ["bridges"]
     filters = []

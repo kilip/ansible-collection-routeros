@@ -2,10 +2,10 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from .base import FactsBase
+from .resource import ConfigResource
 from ..resource.bridge import BridgeResource
 
 
-class BridgeFacts(FactsBase):
+class Bridge(ConfigResource):
 
     resource = BridgeResource

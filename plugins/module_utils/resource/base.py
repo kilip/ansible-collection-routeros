@@ -9,7 +9,8 @@ class ResourceBase(object):
     name = ""
     argument_spec = {}
     command_root = ""
-    related_resources= []
+    remove_related_resource = False
+    related_resource_key = "name"
     gather_subset = ["!all", "!min"]
     gather_network_resources = []
     resource_name = ""

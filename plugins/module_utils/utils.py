@@ -109,7 +109,7 @@ def value_to_routeros(value):
     return value
 
 
-def generate_command_values(want, have, filters = []):
+def generate_command_values(want, have, filters=[]):
     cmd = []
     want_dict = dict_to_set(want)
     have_dict = dict_to_set(have)
@@ -231,3 +231,9 @@ def remove_duplicate_interface(commands):
             set_cmd.append(each)
 
     return set_cmd
+
+
+def generate_remove_related(interface):
+    script_name = "ansible-remove-interface"
+    command = f"/global name=ansiblerminterface value={interface};/system script run {script_name};"
+    return command

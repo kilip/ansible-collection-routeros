@@ -6,9 +6,10 @@ import re
 from .base import FactsBase
 from ..resource.interface import InterfaceResource
 
+
 class InterfaceFacts(FactsBase):
-    def get_resource(self):
-        return InterfaceResource
+
+    resource = InterfaceResource
 
     def additional_config(self, spec, conf):
         config = {}
