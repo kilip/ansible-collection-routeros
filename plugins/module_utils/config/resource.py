@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import re
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.cfg.base import (
     ConfigBase,
 )
@@ -12,10 +13,13 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.u
 from ..resource.base import ResourceBase
 from ..facts.facts import Facts
 from ..routeros import (
-    load_config
+    load_config,
+    get_config,
 )
 from ..utils import (
     generate_command_values,
+    gen_remove_invalid_resource,
+    ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
 )
 
 
@@ -40,13 +44,14 @@ class ConfigResource(ConfigBase):
         commands = list()
         warnings = list()
 
+        self._inject_script()
+
         existing_resource_facts = []
         if self.state in self.ACTION_STATES:
             existing_resource_facts = self.get_resource_facts()
 
         if self.state in self.ACTION_STATES:
             commands.extend(self._set_config(existing_resource_facts))
-
 
         changed_resource_facts = []
         if commands and self.state in self.ACTION_STATES:
@@ -67,6 +72,25 @@ class ConfigResource(ConfigBase):
 
         result["warnings"] = warnings
         return result
+
+    def _inject_script(self):
+        """
+        Inject ansible-remove-invalid scripts into routeros
+        :return generated inject script
+        """
+        script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
+        existing = get_config(self._module, '/system script export terse')
+        lines = [
+            ":global ansiblerminterface;",
+            ":log info \\\"ansible: remove invalid config for interface: \\$ansiblerminterface\\\";",
+            "/ip address remove [find invalid];",
+            "/ip dhcp-server remove [find invalid];"
+        ]
+        scripts = "".join(lines)
+        commands = f"/system script add name={script_name} policy=read,write source=\"{scripts}\""
+        match = re.search(r"name\=" + script_name, existing, re.M)
+        if not match:
+            load_config(self._module, commands)
 
     def _set_config(self, existing):
         """ Collect the configuration from the args passed to the module,
@@ -193,12 +217,6 @@ class ConfigResource(ConfigBase):
             commands.extend(self._configure(resource, dict()))
         return commands
 
-    def _remove_invalid(self):
-        commands = [
-            '/system script run ansible-remove-invalid'
-        ]
-        return commands
-
     def _find_resource(self, want, have):
         """
         Find existing resource
@@ -254,7 +272,11 @@ class ConfigResource(ConfigBase):
         commands.append(cmd)
 
         if self.resource.remove_related_resource:
-            commands.extend(self._remove_invalid())
+            key = self.resource.related_resource_key
+            if want.get(key) is not None:
+                name = want[key]
+                cmd = gen_remove_invalid_resource(name)
+                commands.append(cmd)
         return commands
 
     def get_command_prefix(self, want, have=None):

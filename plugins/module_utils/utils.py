@@ -9,6 +9,9 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common i
     utils as net_utils,
 )
 
+ANSIBLE_REMOVE_INVALID_SCRIPT_NAME = "ansible-remove-invalid"
+
+
 def get_interface_type(interface):
     """Gets the type of interface from config
     """
@@ -233,7 +236,7 @@ def remove_duplicate_interface(commands):
     return set_cmd
 
 
-def generate_remove_related(interface):
-    script_name = "ansible-remove-interface"
-    command = f"/global name=ansiblerminterface value={interface};/system script run {script_name};"
+def gen_remove_invalid_resource(interface):
+    script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
+    command = f"/global name=ansiblerminterface value={interface}; /system script run {script_name};"
     return command

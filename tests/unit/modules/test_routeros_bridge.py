@@ -5,6 +5,7 @@ __metaclass__ = type
 
 from ansible_collections.kilip.routeros.tests.unit.compat.mock import patch
 from ansible_collections.kilip.routeros.plugins.modules import routeros_bridge
+from ansible_collections.kilip.routeros.plugins.module_utils.utils import gen_remove_invalid_resource
 from ansible_collections.kilip.routeros.tests.unit.modules.utils import (
     set_module_args,
 )
@@ -74,9 +75,9 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         ))
         commands = [
             "/interface bridge remove [ find name=br-trunk1 ]",
-            "/system script run ansible-remove-invalid",
+            gen_remove_invalid_resource('br-trunk1'),
             "/interface bridge remove [ find name=br-trunk2 ]",
-            "/system script run ansible-remove-invalid",
+            gen_remove_invalid_resource('br-trunk2'),
         ]
         self.execute_module(False, True, commands)
 
@@ -90,7 +91,7 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         ))
         commands = [
             '/interface bridge remove [ find name=br-trunk1 ]',
-            '/system script run ansible-remove-invalid',
+            gen_remove_invalid_resource('br-trunk1'),
             '/interface bridge add name=br-trunk1 vlan-filtering=yes',
             "/interface bridge add name=br-new comment=\"new comment\"",
         ]
@@ -105,9 +106,9 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         ))
         commands = [
             "/interface bridge remove [ find name=br-trunk1 ]",
-            '/system script run ansible-remove-invalid',
+            gen_remove_invalid_resource('br-trunk1'),
             "/interface bridge remove [ find name=br-trunk2 ]",
-            '/system script run ansible-remove-invalid',
+            gen_remove_invalid_resource('br-trunk2'),
             "/interface bridge add name=br-new comment=\"new comment\"",
         ]
         self.execute_module(False, True, commands)
