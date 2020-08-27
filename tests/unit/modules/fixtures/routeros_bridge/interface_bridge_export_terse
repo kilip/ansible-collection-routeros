@@ -1,0 +1,7 @@
+# aug/26/2020 11:33:22 by RouterOS 6.47.2
+# software id =
+#
+#
+#
+/interface bridge add name=br-trunk1 vlan-filtering=no comment="comment"
+/interface bridge add name=br-trunk2 vlan-filtering=yes comment="comment"

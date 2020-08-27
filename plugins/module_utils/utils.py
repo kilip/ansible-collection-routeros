@@ -35,6 +35,7 @@ def parse_config(spec, conf):
     Parse routeros configuration and extract values
     :param spec: Configuration specification
     :param conf: routeros configuration values
+    :param use_default: replace configuration with the default value
     :return: an array of routeros config
     """
     config = deepcopy(spec)
@@ -107,7 +108,7 @@ def value_to_routeros(value):
     if type(value) is bool:
         value = "yes" if value else "no"
 
-    if " " in value:
+    if type(value) == str and " " in value:
         value = '"' + value + '"'
     return value
 
@@ -126,7 +127,7 @@ def generate_command_values(want, have, filters=[]):
             value = want.get(key)
             if type(value) is not dict:
                 value = value_to_routeros(value)
-                cmd.append(ros_key + "=" + value)
+                cmd.append(ros_key + "=" + str(value))
             else:
                 have_section = dict()
                 if have.get(key) is not None:
@@ -236,7 +237,25 @@ def remove_duplicate_interface(commands):
     return set_cmd
 
 
-def gen_remove_invalid_resource(interface):
+def gen_remove_invalid_resource():
     script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
-    command = f"/global name=ansiblerminterface value={interface}; /system script run {script_name};"
+    command = f"/system script run {script_name};"
     return command
+
+
+def remove_default_values(defaults, config):
+    values = dict()
+    for key in config:
+        if type(config[key]) == dict:
+            values[key] = remove_default_values(defaults[key], config[key])
+            continue
+
+        value = config[key]
+        if defaults.get(key) is not None:
+            default = defaults.get(key)
+            if value == default:
+                value = None
+        if value is not None:
+            values[key] = value
+
+    return values

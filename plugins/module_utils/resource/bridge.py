@@ -14,8 +14,8 @@ class BridgeResource(ResourceBase):
             "options": {
                 # general section
                 "name": {"type": "str", "required": True},
-                "comment": {"type": "str"},
-                "mtu": {"type": "string"},
+                "comment": {"type": "str", "default": '""'},
+                "mtu": {"type": "int", "default": 1500},
                 "arp": {
                     "choices": [
                         "disabled",
@@ -51,7 +51,7 @@ class BridgeResource(ResourceBase):
                 "vlan": {
                     "type": "dict",
                     "options": {
-                        "vlan_filtering": {"type": "bool"},
+                        "vlan_filtering": {"type": "bool", "default": False},
                         "ether_type": {
                             "choices": ["0x8100", "0x88a8", "0x9100"],
                             "type": "str",
@@ -93,4 +93,3 @@ class BridgeResource(ResourceBase):
     command_root = "/interface bridge"
     remove_related_resource = True
     gather_network_resources = ["bridges"]
-    filters = []

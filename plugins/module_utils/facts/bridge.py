@@ -8,4 +8,4 @@ from ..resource.bridge import BridgeResource
 
 class BridgeFacts(FactsBase):
 
-    resource = BridgeResource
+    resource = BridgeResource()

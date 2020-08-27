@@ -8,12 +8,17 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.f
 from .legacy import Default, Hardware, Interfaces, Config
 from .interface import InterfaceFacts
 from .bridge import BridgeFacts
+from .bridge_port import BridgePortFacts
 
 FACT_LEGACY_SUBSETS = dict(
     default=Default, hardware=Hardware, interfaces=Interfaces, config=Config
 )
 
-FACT_RESOURCE_SUBSETS = dict(interfaces=InterfaceFacts, bridges=BridgeFacts)
+FACT_RESOURCE_SUBSETS = dict(
+    interfaces=InterfaceFacts,
+    bridges=BridgeFacts,
+    bridge_ports=BridgePortFacts,
+)
 
 
 class Facts(FactsBase):

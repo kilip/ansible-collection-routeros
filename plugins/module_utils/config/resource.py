@@ -16,13 +16,14 @@ from ..routeros import load_config, get_config
 from ..utils import (
     generate_command_values,
     gen_remove_invalid_resource,
+    remove_default_values,
     ANSIBLE_REMOVE_INVALID_SCRIPT_NAME,
 )
 
 
 class ConfigResource(ConfigBase):
 
-    resource = ResourceBase
+    resource = ResourceBase()
 
     def get_resource_facts(self, data=None):
         resource = self.resource
@@ -69,6 +70,60 @@ class ConfigResource(ConfigBase):
 
         result["warnings"] = warnings
         return result
+
+    def add(self, want):
+        resource = self.resource
+        commands = []
+        command_prefix = self.get_command_prefix(want)
+        prefix = f"{command_prefix} add "
+
+        # always remove default values for new resource
+        defaults = resource.generate_dict()
+        want = remove_default_values(defaults, want)
+
+        values = generate_command_values(want, dict())
+        if values:
+            cmd = prefix + " ".join(values)
+            commands.append(cmd)
+
+        return commands
+
+    def update(self, want, have, remove_defaults=True):
+        resource = self.resource
+        find_command = self._create_find_command(want)
+        command_prefix = self.get_command_prefix(want, have)
+        prefix = f"{command_prefix} set {find_command} "
+        commands = []
+        filters = resource.value_filters
+
+        # remove default values if required
+        if remove_defaults:
+            defaults = resource.generate_dict()
+            want = remove_default_values(defaults, want)
+
+        # start generating values
+        values = generate_command_values(want, have, filters)
+        if values:
+            cmd = prefix + " ".join(values)
+            commands.append(cmd)
+        return commands
+
+    def delete(self, want):
+        commands = []
+        prefix = self.get_command_prefix(want)
+        find_command = self._create_find_command(want)
+        cmd = f"{prefix} remove {find_command}"
+        commands.append(cmd)
+
+        if self.resource.remove_related_resource:
+            cmd = gen_remove_invalid_resource()
+            commands.append(cmd)
+
+        return commands
+
+    def get_command_prefix(self, want, have=None):
+        prefix = self.resource.command_root
+        return prefix
 
     def _inject_script(self):
         """
@@ -149,10 +204,10 @@ class ConfigResource(ConfigBase):
         commands = []
 
         for existing in have:
-            commands.extend(self._delete(existing))
+            commands.extend(self.delete(existing))
 
         for resource in want:
-            commands.extend(self._configure(resource, dict()))
+            commands.extend(self.add(resource))
 
         return commands
 
@@ -170,10 +225,11 @@ class ConfigResource(ConfigBase):
         if want:
             for resource in want:
                 existing = self._find_resource(resource, have)
-                commands.extend(self._delete(existing))
+                if existing is not None:
+                    commands.extend(self.delete(existing))
         else:
             for each in have:
-                commands.extend(self._delete(each))
+                commands.extend(self.delete(each))
         return commands
 
     def _state_merged(self, want, have):
@@ -189,7 +245,10 @@ class ConfigResource(ConfigBase):
 
         for resource in want:
             existing = self._find_resource(resource, have)
-            commands.extend(self._configure(resource, existing))
+            if existing is None:
+                commands.extend(self.add(resource))
+            else:
+                commands.extend(self.update(resource, existing))
         return commands
 
     def _state_replaced(self, want, have):
@@ -206,13 +265,40 @@ class ConfigResource(ConfigBase):
 
         for resource in want:
             existing = self._find_resource(resource, have)
-            # have_dict = filter_dict_having_none_value(resource, existing)
-            # TODO: add clear config for certain network resource
-            # commands.extend(self._clear_config(dict(), have_dict))
-            if existing:
-                commands.extend(self._delete(resource))
-            commands.extend(self._configure(resource, dict()))
+            if existing is None:
+                commands.extend(self.add(resource))
+            else:
+                commands.extend(self._clear_config(existing))
+                new = self._create_empty_resource(existing)
+                commands.extend(self.update(resource, new))
         return commands
+
+    def _create_empty_resource(self, existing):
+        """
+        Create empty resource to be used in replaced state
+        :param existing: existing resource config
+        :return: the new config with resource keys only
+        """
+        new = dict()
+        resource = self.resource
+        for key in resource.resource_keys:
+            new[key] = existing[key]
+        return new
+
+    def _clear_config(self, existing):
+        """
+        Replace existing resource configuration with it's default values
+        :param existing: resource config
+        :rtype str
+        :return: default resource configuration command
+        """
+        resource = self.resource
+        defaults = resource.generate_dict()
+        want = defaults
+        empty_resource = self._create_empty_resource(existing)
+        want.update(empty_resource)  # use keys from empty resource
+        cmd = self.update(want, existing, False)
+        return cmd
 
     def _find_resource(self, want, have):
         """
@@ -222,7 +308,7 @@ class ConfigResource(ConfigBase):
         :return:
         """
         keys = self.resource.resource_keys
-        resource = dict()
+        resource = None
         for each in have:
             exist = True
             for key in keys:
@@ -244,38 +330,24 @@ class ConfigResource(ConfigBase):
             finds.append(key + "=" + want[key])
         return "[ find %s ]" % (" and ".join(finds))
 
-    def _configure(self, want, have):
-        commands = []
+    def _configure(self, want, have, remove_defaults=True):
         resource = self.resource
+
+        if remove_defaults:
+            defaults = resource.generate_dict()
+            want = remove_default_values(defaults, want)
+
+        commands = []
         command_prefix = self.get_command_prefix(want, have)
         prefix = f"{command_prefix} add "
-        filters = resource.value_filters
+        filters = []
         if have:
             find_command = self._create_find_command(want)
             prefix = f"{command_prefix} set {find_command} "
             filters.extend(resource.resource_keys)
-
         values = generate_command_values(want, have, filters)
         if values:
             cmd = prefix + " ".join(values)
             commands.append(cmd)
+
         return commands
-
-    def _delete(self, want):
-        commands = []
-        prefix = self.get_command_prefix(want)
-        find_command = self._create_find_command(want)
-        cmd = f"{prefix} remove {find_command}"
-        commands.append(cmd)
-
-        if self.resource.remove_related_resource:
-            key = self.resource.related_resource_key
-            if want.get(key) is not None:
-                name = want[key]
-                cmd = gen_remove_invalid_resource(name)
-                commands.append(cmd)
-        return commands
-
-    def get_command_prefix(self, want, have=None):
-        prefix = self.resource.command_root
-        return prefix

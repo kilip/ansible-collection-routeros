@@ -9,7 +9,7 @@ from ..resource.interface import InterfaceResource
 
 class InterfaceFacts(FactsBase):
 
-    resource = InterfaceResource
+    resource = InterfaceResource()
 
     def additional_config(self, spec, conf):
         config = {}

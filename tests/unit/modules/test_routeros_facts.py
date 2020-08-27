@@ -83,3 +83,23 @@ class TestRouterosFactsModule(TestRouterOSModule):
         self.assertEqual(bridge2["name"], "br-trunk2")
         self.assertTrue(bridge2["vlan"]["vlan_filtering"])
         self.assertEqual(bridge2["stp"]["protocol_mode"], "mstp")
+
+    def test_bridge_port_facts(self):
+        set_module_args(dict(gather_network_resources="bridge_ports"))
+        result = self.execute_module()
+        ports = result["ansible_facts"]["ansible_network_resources"][
+            "bridge_ports"
+        ]
+        port1 = ports[0]
+        port2 = ports[1]
+
+        self.assertEqual(port1["bridge"], "br-wan")
+        self.assertEqual(port1["interface"], "ether1")
+        self.assertTrue(port1["vlan"]["tag_stacking"])
+        self.assertEqual(
+            port1["vlan"]["frame_types"], "admit-only-vlan-tagged"
+        )
+        self.assertTrue(port1["stp"]["auto_isolate"])
+
+        self.assertEqual(port2["bridge"], "br-trunk")
+        self.assertEqual(port2["interface"], "ether2")

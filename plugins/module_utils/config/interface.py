@@ -8,7 +8,7 @@ from ..resource.interface import InterfaceResource
 
 class Interface(ConfigResource):
 
-    resource = InterfaceResource
+    resource = InterfaceResource()
 
     def get_command_prefix(self, want, have):
         """

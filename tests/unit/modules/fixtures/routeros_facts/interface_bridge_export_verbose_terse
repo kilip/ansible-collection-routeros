@@ -1,7 +1,0 @@
-# aug/26/2020 11:33:22 by RouterOS 6.47.2
-# software id =
-#
-#
-#
-/interface bridge add ageing-time=5m arp=enabled arp-timeout=auto auto-mac=yes dhcp-snooping=no disabled=yes fast-forward=yes forward-delay=15s igmp-snooping=no max-message-age=20s mtu=auto name=br-trunk1 priority=0x8000 protocol-mode=rstp transmit-hold-count=6 vlan-filtering=no
-/interface bridge add ageing-time=5m arp=enabled arp-timeout=auto auto-mac=yes dhcp-snooping=no disabled=yes fast-forward=yes forward-delay=15s igmp-snooping=no max-message-age=20s mtu=auto name=br-trunk2 priority=0x8000 protocol-mode=mstp transmit-hold-count=6 vlan-filtering=yes

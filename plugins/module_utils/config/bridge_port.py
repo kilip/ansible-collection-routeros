@@ -3,9 +3,9 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from .resource import ConfigResource
-from ..resource.bridge import BridgeResource
+from ..resource.bridge_port import BridgePortResource
 
 
-class Bridge(ConfigResource):
+class BridgePort(ConfigResource):
 
-    resource = BridgeResource()
+    resource = BridgePortResource()

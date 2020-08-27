@@ -24,4 +24,4 @@ class InterfaceResource(ResourceBase):
     command_root = "/interface"
     related_resources = []
     gather_network_resources = ["interfaces"]
-    filters = ["type"]
+    value_filters = ["name", "type"]

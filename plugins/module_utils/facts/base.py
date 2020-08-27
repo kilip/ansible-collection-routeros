@@ -2,30 +2,19 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from copy import deepcopy
-from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
-    utils as net_utils,
-)
 from ..routeros import get_config
 from ..utils import parse_config
+from ..resource.base import ResourceBase
 
 
 class FactsBase(object):
 
-    resource = object
+    resource = ResourceBase()
 
     def __init__(self, module, sub_spec="config", options="options"):
         self._module = module
         resource = self.resource
-        spec = deepcopy(resource.argument_spec)
-        if sub_spec:
-            if options:
-                facts_argument_spec = spec[sub_spec][options]
-            else:
-                facts_argument_spec = spec[sub_spec]
-        else:
-            facts_argument_spec = spec
-        self.generated_spec = net_utils.generate_dict(facts_argument_spec)
+        self.generated_spec = resource.generate_dict(sub_spec, options)
 
     def populate_facts(self, connection, ansible_facts, data=None):
         resources = []
@@ -50,7 +39,7 @@ class FactsBase(object):
 
     def _get_resources_data(self):
         return get_config(
-            self._module, self.resource.command_root + " export verbose terse"
+            self._module, self.resource.command_root + " export terse"
         )
 
     def _render_config(self, spec, conf):

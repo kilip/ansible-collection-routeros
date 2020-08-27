@@ -40,6 +40,16 @@ class TestRouterosBridgeModule(TestRouterOSModule):
 
         self.run_commands.side_effect = load_from_file
 
+    def test_idempotence(self):
+        set_module_args(
+            dict(
+                config=[
+                    dict(name="br-trunk1", vlan=dict(vlan_filtering=False))
+                ]
+            )
+        )
+        self.execute_module(False, False)
+
     def test_merged(self):
         set_module_args(
             {
@@ -55,16 +65,6 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         ]
         self.execute_module(False, True, commands=commands)
 
-    def test_idempotence(self):
-        set_module_args(
-            dict(
-                config=[
-                    dict(name="br-trunk1", vlan=dict(vlan_filtering=False))
-                ]
-            )
-        )
-        self.execute_module(False, False)
-
     def test_deleted(self):
         set_module_args(
             dict(
@@ -74,26 +74,37 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         )
         commands = [
             "/interface bridge remove [ find name=br-trunk1 ]",
-            gen_remove_invalid_resource("br-trunk1"),
+            gen_remove_invalid_resource(),
             "/interface bridge remove [ find name=br-trunk2 ]",
-            gen_remove_invalid_resource("br-trunk2"),
+            gen_remove_invalid_resource(),
         ]
         self.execute_module(False, True, commands)
+
+    def test_deleted_with_non_existing_resource(self):
+        set_module_args(
+            dict(
+                config=[dict(name="br-foo")],
+                state="deleted",
+            )
+        )
+        self.execute_module(False, False)
 
     def test_replaced(self):
         set_module_args(
             dict(
                 config=[
                     dict(name="br-trunk1", vlan=dict(vlan_filtering=True)),
+                    dict(name="br-trunk2", vlan=dict(vlan_filtering=True)),
                     dict(name="br-new", comment="new comment"),
                 ],
                 state="replaced",
             )
         )
         commands = [
-            "/interface bridge remove [ find name=br-trunk1 ]",
-            gen_remove_invalid_resource("br-trunk1"),
-            "/interface bridge add name=br-trunk1 vlan-filtering=yes",
+            '/interface bridge set [ find name=br-trunk1 ] comment=""',
+            "/interface bridge set [ find name=br-trunk1 ] vlan-filtering=yes",
+            '/interface bridge set [ find name=br-trunk2 ] comment="" vlan-filtering=no',
+            "/interface bridge set [ find name=br-trunk2 ] vlan-filtering=yes",
             '/interface bridge add name=br-new comment="new comment"',
         ]
         self.execute_module(False, True, commands)
@@ -107,9 +118,9 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         )
         commands = [
             "/interface bridge remove [ find name=br-trunk1 ]",
-            gen_remove_invalid_resource("br-trunk1"),
+            gen_remove_invalid_resource(),
             "/interface bridge remove [ find name=br-trunk2 ]",
-            gen_remove_invalid_resource("br-trunk2"),
+            gen_remove_invalid_resource(),
             '/interface bridge add name=br-new comment="new comment"',
         ]
         self.execute_module(False, True, commands)
