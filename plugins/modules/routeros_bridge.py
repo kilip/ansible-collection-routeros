@@ -25,14 +25,15 @@ RETURN = """
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.config.bridge import Bridge, BridgeResource
+from ..module_utils.config.resource import ResourceConfig
+from ..module_utils.resources.bridge import BridgeResource
 
 
 def main():
     module = AnsibleModule(
         argument_spec=BridgeResource.argument_spec, supports_check_mode=True
     )
-    result = Bridge(module).execute_module()
+    result = ResourceConfig(module, BridgeResource).execute_module()
     return module.exit_json(**result)
 
 

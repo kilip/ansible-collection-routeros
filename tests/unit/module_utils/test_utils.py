@@ -2,7 +2,7 @@ from ..compat.unittest import TestCase
 from ansible_collections.kilip.routeros.plugins.module_utils.utils import (
     remove_default_values,
 )
-from ansible_collections.kilip.routeros.plugins.module_utils.resource.bridge import (
+from ansible_collections.kilip.routeros.plugins.module_utils.resources.bridge import (
     BridgeResource,
 )
 

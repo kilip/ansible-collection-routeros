@@ -4,18 +4,16 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible_collections.kilip.routeros.tests.unit.compat.mock import patch
-from ansible_collections.kilip.routeros.plugins.modules import (
-    routeros_interfaces,
-)
+from ansible_collections.kilip.routeros.plugins.modules import routeros
 from .utils import set_module_args
 from .routeros_module import TestRouterOSModule, load_fixture
 
 
-class TestRouterosInterfacesModule(TestRouterOSModule):
-    module = routeros_interfaces
+class TestRouterosBridgeModule(TestRouterOSModule):
+    module = routeros
 
     def setUp(self):
-        super(TestRouterosInterfacesModule, self).setUp()
+        super(TestRouterosBridgeModule, self).setUp()
         self.mock_run_commands = patch(
             "ansible_collections.kilip.routeros.plugins.module_utils.routeros.run_commands"
         )
@@ -28,7 +26,7 @@ class TestRouterosInterfacesModule(TestRouterOSModule):
                 output = list()
                 for command in commands:
                     filename = str(command).replace(" ", "_")
-                    output.append(load_fixture("routeros_facts%s" % filename))
+                    output.append(load_fixture("routeros_bridge%s" % filename))
                 return output
             else:
                 return dict(
@@ -36,20 +34,24 @@ class TestRouterosInterfacesModule(TestRouterOSModule):
                 )
 
         self.run_commands.side_effect = load_from_file
-        # self.load_config.return_value = dict(diff=None, session="session", results=[],requests=[])
-
-    def test_configure_interfaces(self):
-        set_module_args(
-            {"config": [dict(name="ether1", comment="ether1 update comment")]}
-        )
-        commands = [
-            '/interface ethernet set [ find name=ether1 ] comment="ether1 update comment"'
-        ]
-        self.execute_module(False, True, commands=commands)
 
     def test_idempotence(self):
         set_module_args(
-            {"config": [dict(name="ether1", comment="ether1 comment")]}
+            dict(
+                resource="interface",
+                config=[dict(name="ether1")],
+                state="deleted",
+            )
         )
-        commands = []
-        self.execute_module(False, False, commands=commands)
+        self.execute_module(False, False)
+
+    def test_merged(self):
+        set_module_args(
+            dict(
+                resource="bridge",
+                config=[dict(name="br-wan", comment="WAN Bridge")],
+                state="merged",
+            )
+        )
+        commands = ['/interface bridge add name=br-wan comment="WAN Bridge"']
+        self.execute_module(False, True, commands)

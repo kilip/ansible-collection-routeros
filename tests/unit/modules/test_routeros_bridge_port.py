@@ -10,9 +10,6 @@ from ansible_collections.kilip.routeros.plugins.modules import (
 from ansible_collections.kilip.routeros.tests.unit.modules.utils import (
     set_module_args,
 )
-from ansible_collections.kilip.routeros.plugins.module_utils.utils import (
-    gen_remove_invalid_resource,
-)
 from .routeros_module import TestRouterOSModule, load_fixture
 
 
@@ -96,7 +93,7 @@ class TestRouterosBridgePortModule(TestRouterOSModule):
                         interface="ether1",
                         vlan=dict(tag_stacking=False),
                     ),
-                    dict(bridge="br-new", interface="ether3")
+                    dict(bridge="br-new", interface="ether3"),
                 ],
                 "state": "replaced",
             }
@@ -122,8 +119,8 @@ class TestRouterosBridgePortModule(TestRouterOSModule):
             }
         )
         commands = [
-            '/interface bridge port remove [ find bridge=br-wan and interface=ether1 ]',
-            '/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]',
-            '/interface bridge port add bridge=br-wan interface=ether1 tag-stacking=no',
+            "/interface bridge port remove [ find bridge=br-wan and interface=ether1 ]",
+            "/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]",
+            "/interface bridge port add bridge=br-wan interface=ether1 tag-stacking=no",
         ]
         self.execute_module(False, True, commands)

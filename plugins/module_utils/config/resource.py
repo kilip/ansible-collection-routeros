@@ -10,7 +10,6 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.u
     to_list,
 )
 
-from ..resource.base import ResourceBase
 from ..facts.facts import Facts
 from ..routeros import load_config, get_config
 from ..utils import (
@@ -21,9 +20,10 @@ from ..utils import (
 )
 
 
-class ConfigResource(ConfigBase):
-
-    resource = ResourceBase()
+class ResourceConfig(ConfigBase):
+    def __init__(self, module, resource):
+        super(ResourceConfig, self).__init__(module)
+        self.resource = resource()
 
     def get_resource_facts(self, data=None):
         resource = self.resource
@@ -122,7 +122,7 @@ class ConfigResource(ConfigBase):
         return commands
 
     def get_command_prefix(self, want, have=None):
-        prefix = self.resource.command_root
+        prefix = self.resource.get_command_prefix(want, have)
         return prefix
 
     def _inject_script(self):
@@ -133,8 +133,7 @@ class ConfigResource(ConfigBase):
         script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
         existing = get_config(self._module, "/system script export terse")
         lines = [
-            ":global ansiblerminterface;",
-            ':log info \\"ansible: remove invalid config for interface: \\$ansiblerminterface\\";',
+            ':log info \\"ansible: remove invalid config";',
             "/ip address remove [find invalid];",
             "/ip dhcp-server remove [find invalid];",
         ]

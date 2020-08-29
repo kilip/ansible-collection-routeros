@@ -25,7 +25,8 @@ RETURN = """
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.config.bridge_port import BridgePort, BridgePortResource
+from ..module_utils.config.resource import ResourceConfig
+from ..module_utils.resources.bridge_port import BridgePortResource
 
 
 def main():
@@ -33,7 +34,7 @@ def main():
         argument_spec=BridgePortResource.argument_spec,
         supports_check_mode=True,
     )
-    result = BridgePort(module).execute_module()
+    result = ResourceConfig(module, BridgePortResource).execute_module()
     return module.exit_json(**result)
 
 

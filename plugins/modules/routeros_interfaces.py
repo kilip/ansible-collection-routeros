@@ -5,8 +5,8 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.resource.interface import InterfaceResource
-from ..module_utils.config.interface import Interface
+from ..module_utils.resources.interface import InterfaceResource
+from ..module_utils.config.resource import ResourceConfig
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
         mutually_exclusive=mutually_exclusive,
         supports_check_mode=True,
     )
-    result = Interface(module).execute_module()
+    result = ResourceConfig(module, InterfaceResource).execute_module()
     module.exit_json(**result)
 
 

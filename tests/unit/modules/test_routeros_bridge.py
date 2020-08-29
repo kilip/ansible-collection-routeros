@@ -81,12 +81,7 @@ class TestRouterosBridgeModule(TestRouterOSModule):
         self.execute_module(False, True, commands)
 
     def test_deleted_with_non_existing_resource(self):
-        set_module_args(
-            dict(
-                config=[dict(name="br-foo")],
-                state="deleted",
-            )
-        )
+        set_module_args(dict(config=[dict(name="br-foo")], state="deleted"))
         self.execute_module(False, False)
 
     def test_replaced(self):
