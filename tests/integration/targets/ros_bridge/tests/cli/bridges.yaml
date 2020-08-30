@@ -1,0 +1,44 @@
+---
+- debug: msg="START connection={{ ansible_connection }} ros_bridge tests"
+
+- name: ensure the tests bridges does not exists first
+  kilip.routeros.ros_bridge: &id001
+    config:
+      - name: "br-new1"
+      - name: "br-new2"
+    state: deleted
+
+- name: creates new ros_bridge
+  kilip.routeros.ros_bridge: &id002
+    config:
+      - name: "br-new1"
+        comment: br-new1 create
+      - name: "br-new2"
+        comment: br-new2 create
+  register: result
+- assert:
+    that:
+      - result.changed
+
+- name: test should not update with same value
+  kilip.routeros.ros_bridge: *id002
+  register: result
+- assert:
+    that:
+      - not result.changed
+
+- name: test update bridge
+  kilip.routeros.ros_bridge:
+    config:
+      - name: br-new1
+        comment: br-new1 update
+  register: result
+- assert:
+    that:
+      - result.changed
+
+- name: test delete bridge
+  kilip.routeros.ros_bridge: *id001
+- assert:
+    that:
+      - result.changed

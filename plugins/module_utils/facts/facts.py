@@ -5,20 +5,12 @@ __metaclass__ = type
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.facts.facts import (
     FactsBase,
 )
-from .legacy import Default, Hardware, Interfaces, Config
-from ..resources.interface import InterfaceResource
-from ..resources.bridge import BridgeResource
-from ..resources.bridge_port import BridgePortResource
 from .resource import ResourceFacts
+from .legacy import Default, Hardware, Interfaces, Config
+from ..resources.subset import RESOURCE_SUBSETS
 
 FACT_LEGACY_SUBSETS = dict(
     default=Default, hardware=Hardware, interfaces=Interfaces, config=Config
-)
-
-FACT_RESOURCE_SUBSETS = dict(
-    interfaces=InterfaceResource,
-    bridges=BridgeResource,
-    bridge_ports=BridgePortResource,
 )
 
 
@@ -27,7 +19,7 @@ class Facts(FactsBase):
     """
 
     VALID_LEGACY_GATHER_SUBSETS = frozenset(FACT_LEGACY_SUBSETS.keys())
-    VALID_RESOURCE_SUBSETS = frozenset(FACT_RESOURCE_SUBSETS.keys())
+    VALID_RESOURCE_SUBSETS = frozenset(RESOURCE_SUBSETS.keys())
 
     def __init__(self, module):
         super(Facts, self).__init__(module)
@@ -44,7 +36,7 @@ class Facts(FactsBase):
         """
         if self.VALID_RESOURCE_SUBSETS:
             self.get_network_resources_facts(
-                FACT_RESOURCE_SUBSETS, resource_facts_type, data
+                RESOURCE_SUBSETS, resource_facts_type, data
             )
 
         if self.VALID_LEGACY_GATHER_SUBSETS:

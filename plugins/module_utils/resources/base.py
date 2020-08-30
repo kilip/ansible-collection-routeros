@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import re
 from copy import deepcopy
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     generate_dict,
@@ -14,6 +15,7 @@ class ResourceBase(object):
         pass
 
     name = ""
+    config_type = "plural"
     argument_spec = {}
     command_root = ""
     remove_related_resource = False
@@ -24,29 +26,37 @@ class ResourceBase(object):
     resource_keys = ["name"]
     value_filters = []
     use_verbose_mode = False
+    key_prefixes = []
+    facts_argument_spec = dict()
+
+    def has_options(self):
+        return "options" in self.argument_spec["config"]
 
     def generate_dict(self, sub_spec="config", options="options"):
         spec = deepcopy(self.argument_spec)
         if sub_spec:
-            if options:
+            if options and self.has_options():
                 facts_argument_spec = spec[sub_spec][options]
             else:
                 facts_argument_spec = spec[sub_spec]
         else:
             facts_argument_spec = spec
+        self.facts_argument_spec = facts_argument_spec
         return generate_dict(facts_argument_spec)
 
     def render_config(self, spec, conf):
-        config = parse_config(spec, conf)
-        # parse dict type config
-        for key in spec:
-            if type(spec[key]) == dict:
-                config[key] = parse_config(spec[key], conf)
+        split = re.split("set|add", conf)
+        argspec = self.facts_argument_spec
+        del split[0]
+        configs = []
+        for sp in split:
+            config = parse_config(spec, sp, argspec, self.key_prefixes)
+            configs.append(config)
 
-        additional_config = self._custom_config(spec, conf)
-        if additional_config is not None:
-            config.update(additional_config)
-        return config
+        if self.config_type == "plural":
+            return configs
+        else:
+            return configs[0]
 
     def get_command_prefix(self, want, have=None):
         prefix = self.command_root

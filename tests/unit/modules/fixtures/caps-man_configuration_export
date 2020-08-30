@@ -1,0 +1,7 @@
+# aug/30/2020 17:35:35 by RouterOS 6.47.2
+# software id = 
+#
+#
+#
+/caps-man configuration
+add channel.band=2ghz-b/g/n datapath.bridge=br-trunk name=olympus rates.basic=48Mbps,54Mbps security.encryption=aes-ccm,tkip

@@ -1,0 +1,166 @@
+# aug/29/2020 10:12:46 by RouterOS 6.47.2
+# software id = 
+#
+#
+#
+/interface bridge
+add ageing-time=5m arp=enabled arp-timeout=auto auto-mac=yes dhcp-snooping=no \
+    disabled=no fast-forward=yes forward-delay=15s igmp-snooping=no \
+    max-message-age=20s mtu=auto name=br-trunk priority=0x8000 protocol-mode=\
+    rstp transmit-hold-count=6 vlan-filtering=no
+add ageing-time=5m arp=enabled arp-timeout=auto auto-mac=yes dhcp-snooping=no \
+    disabled=no fast-forward=yes forward-delay=15s igmp-snooping=no \
+    max-message-age=20s mtu=auto name=br-wan priority=0x8000 protocol-mode=\
+    rstp transmit-hold-count=6 vlan-filtering=no
+/interface ethernet
+set [ find default-name=ether1 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:56 mtu=1500 name=ether1 orig-mac-address=52:54:00:12:34:56 \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether2 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:57 mtu=1500 name=ether2 orig-mac-address=52:54:00:12:34:57 \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether3 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:58 mtu=1500 name=ether3 orig-mac-address=52:54:00:12:34:58 \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether4 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:59 mtu=1500 name=ether4 orig-mac-address=52:54:00:12:34:59 \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether5 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:5A mtu=1500 name=ether5 orig-mac-address=52:54:00:12:34:5A \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether6 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:5B mtu=1500 name=ether6 orig-mac-address=52:54:00:12:34:5B \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether7 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:5C mtu=1500 name=ether7 orig-mac-address=52:54:00:12:34:5C \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether8 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:5D mtu=1500 name=ether8 orig-mac-address=52:54:00:12:34:5D \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether9 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:5E mtu=1500 name=ether9 orig-mac-address=52:54:00:12:34:5E \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether10 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:5F mtu=1500 name=ether10 orig-mac-address=\
+    52:54:00:12:34:5F rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether11 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:60 mtu=1500 name=ether11 orig-mac-address=\
+    52:54:00:12:34:60 rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether12 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-full arp=enabled arp-timeout=\
+    auto auto-negotiation=yes cable-settings=default disable-running-check=\
+    yes disabled=no full-duplex=yes loop-protect=default \
+    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
+    52:54:00:12:34:61 mtu=1500 name=ether12 orig-mac-address=\
+    52:54:00:12:34:61 rx-flow-control=off speed=1Gbps tx-flow-control=off
+/interface vlan
+add arp=enabled arp-timeout=auto disabled=no interface=br-trunk loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s mtu=1500 name=vlan-100 \
+    use-service-tag=no vlan-id=1
+/interface list
+set [ find name=all ] comment="contains all interfaces" exclude="" include="" \
+    name=all
+set [ find name=none ] comment="contains no interfaces" exclude="" include="" \
+    name=none
+set [ find name=dynamic ] comment="contains dynamic interfaces" exclude="" \
+    include="" name=dynamic
+set [ find name=static ] comment="contains static interfaces" exclude="" \
+    include="" name=static
+/interface lte apn
+set [ find default=yes ] add-default-route=yes apn=internet \
+    default-route-distance=2 name=default use-peer-dns=yes
+/interface wireless security-profiles
+set [ find default=yes ] authentication-types="" disable-pmkid=no \
+    eap-methods=passthrough group-ciphers=aes-ccm group-key-update=5m \
+    interim-update=0s management-protection=disabled \
+    management-protection-key="" mode=none mschapv2-password="" \
+    mschapv2-username="" name=default radius-called-format=mac:ssid \
+    radius-eap-accounting=no radius-mac-accounting=no \
+    radius-mac-authentication=no radius-mac-caching=disabled \
+    radius-mac-format=XX:XX:XX:XX:XX:XX radius-mac-mode=as-username \
+    static-algo-0=none static-algo-1=none static-algo-2=none static-algo-3=\
+    none static-key-0="" static-key-1="" static-key-2="" static-key-3="" \
+    static-sta-private-algo=none static-sta-private-key="" \
+    static-transmit-key=key-0 supplicant-identity=MikroTik tls-certificate=\
+    none tls-mode=no-certificates unicast-ciphers=aes-ccm wpa-pre-shared-key=\
+    "" wpa2-pre-shared-key=""
+/interface bridge settings
+set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no \
+    use-ip-firewall-for-vlan=no
+/interface detect-internet
+set detect-interface-list=none internet-interface-list=none \
+    lan-interface-list=none wan-interface-list=none
+/interface l2tp-server server
+set allow-fast-path=no authentication=pap,chap,mschap1,mschap2 \
+    caller-id-type=ip-address default-profile=default-encryption enabled=no \
+    ipsec-secret="" keepalive-timeout=30 max-mru=1450 max-mtu=1450 \
+    max-sessions=unlimited mrru=disabled one-session-per-host=no use-ipsec=no
+/interface ovpn-server server
+set auth=sha1,md5 cipher=blowfish128,aes128 default-profile=default enabled=\
+    no keepalive-timeout=60 mac-address=FE:47:7F:55:AF:7E max-mtu=1500 mode=\
+    ip netmask=24 port=1194 require-client-certificate=no
+/interface pptp-server server
+set authentication=mschap1,mschap2 default-profile=default-encryption \
+    enabled=no keepalive-timeout=30 max-mru=1450 max-mtu=1450 mrru=disabled
+/interface sstp-server server
+set authentication=pap,chap,mschap1,mschap2 certificate=none default-profile=\
+    default enabled=no force-aes=no keepalive-timeout=60 max-mru=1500 \
+    max-mtu=1500 mrru=disabled pfs=no port=443 tls-version=any \
+    verify-client-certificate=no
+/interface wireless align
+set active-mode=yes audio-max=-20 audio-min=-100 audio-monitor=\
+    00:00:00:00:00:00 filter-mac=00:00:00:00:00:00 frame-size=300 \
+    frames-per-second=25 receive-all=no ssid-all=no
+/interface wireless cap
+set bridge=none caps-man-addresses="" caps-man-certificate-common-names="" \
+    caps-man-names="" certificate=none discovery-interfaces="" enabled=no \
+    interfaces="" lock-to-caps-man=no static-virtual=no
+/interface wireless sniffer
+set channel-time=200ms file-limit=10 file-name="" memory-limit=10 \
+    multiple-channels=no only-headers=no receive-errors=no streaming-enabled=\
+    no streaming-max-rate=0 streaming-server=0.0.0.0
+/interface wireless snooper
+set channel-time=200ms multiple-channels=yes receive-errors=no

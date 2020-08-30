@@ -1,0 +1,1 @@
+plugins/modules/ros_bridge.py validate-modules:invalid-documentation

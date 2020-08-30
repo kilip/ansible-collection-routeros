@@ -1,0 +1,7 @@
+# aug/29/2020 12:06:48 by RouterOS 6.47.2
+# software id = 
+#
+#
+#
+/interface bridge settings
+set use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes allow-fast-path=no

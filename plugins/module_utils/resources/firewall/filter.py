@@ -1,0 +1,202 @@
+from __future__ import absolute_import, division, print_function
+
+__metaclass__ = type
+
+from ..base import ResourceBase
+
+
+class FirewallFilterResource(ResourceBase):
+    resource_name = "firewall_filter"
+    command_root = "/ip firewall filter"
+    related_resources = []
+    gather_network_resources = ["firewall_filter"]
+    resource_keys = []
+    config_type = "plural"
+    argument_spec = {
+        "running_config": {"type": "str"},
+        "state": {"choices": ["overridden"], "type": "str"},
+        "config": {
+            "elements": "dict",
+            "type": "list",
+            "options": {
+                "time": {"options": {"type": "str"}, "type": "list"},
+                "out_interface": {"type": "str"},
+                "per_connection_classifier": {"type": "str"},
+                "ip_sec_policy": {"type": "str"},
+                "action": {
+                    "type": "str",
+                    "choices": [
+                        "accept",
+                        "add-dst-to-address-list",
+                        "add-src-to-address-list",
+                        "drop",
+                        "fasttrack-connection",
+                        "jump",
+                        "log",
+                        "passthrough",
+                        "reject",
+                        "return",
+                        "tarpit",
+                    ],
+                    "default": "accept",
+                },
+                "address_list": {"type": "str"},
+                "address_list_timeout": {"type": "str", "default": "00:00:00"},
+                "chain": {"type": "str"},
+                "comment": {"type": "str"},
+                "connection_bytes": {"type": "int"},
+                "connection_limit": {"type": "int"},
+                "connection_mark": {
+                    "type": "str",
+                    "choices": ["no-mark", "string"],
+                    "default": None,
+                },
+                "connection_nat_state": {
+                    "type": "str",
+                    "choices": ["srcnat", "dstnat"],
+                    "default": None,
+                },
+                "connection_rate": {"type": "int"},
+                "connection_state": {
+                    "type": "str",
+                    "choices": [
+                        "established",
+                        "invalid",
+                        "new",
+                        "related",
+                        "untracked",
+                    ],
+                    "default": None,
+                },
+                "connection_type": {
+                    "type": "str",
+                    "choices": [
+                        "ftp",
+                        "h323",
+                        "irc",
+                        "pptp",
+                        "quake3",
+                        "sip",
+                        "tftp",
+                    ],
+                    "default": None,
+                },
+                "content": {"type": "str"},
+                "dscp": {"type": "int"},
+                "dst_address": {"type": "str"},
+                "dst_address_list": {"type": "str"},
+                "dst_address_type": {
+                    "type": "str",
+                    "choices": ["unicast", "local", "broadcast", "multicast"],
+                    "default": None,
+                },
+                "dst_limit": {"type": "int"},
+                "dst_port": {"type": "int"},
+                "fragment": {
+                    "type": "str",
+                    "choices": ["yes", "no"],
+                    "default": None,
+                },
+                "hotspot": {
+                    "type": "str",
+                    "choices": [
+                        "auth",
+                        "from-client",
+                        "http",
+                        "local-dst",
+                        "to-client",
+                    ],
+                    "default": None,
+                },
+                "icmp_options": {"type": "int"},
+                "in_bridge_port": {"type": "str"},
+                "in_bridge_port_list": {"type": "str"},
+                "in_interface": {"type": "str"},
+                "in_interface_list": {"type": "str"},
+                "ingress_priority": {"type": "int"},
+                "ipsec_policy": {
+                    "type": "str",
+                    "choices": ["in", "ipsec", "none"],
+                    "default": None,
+                },
+                "ipv4_options": {
+                    "type": "str",
+                    "choices": [
+                        "any",
+                        "loose-source-routing",
+                        "no-record-route",
+                        "no-router-alert",
+                        "no-source-routing",
+                        "no-timestamp",
+                        "none",
+                        "record-route",
+                        "router-alert",
+                        "strict-source-routing",
+                        "timestamp",
+                    ],
+                    "default": None,
+                },
+                "jump_target": {"type": "str"},
+                "layer7_protocol": {"type": "str"},
+                "limit": {"type": "int"},
+                "log_prefix": {"type": "str"},
+                "nth": {"type": "int"},
+                "out_bridge_port": {"type": "str"},
+                "out_bridge_port_list": {"type": "str"},
+                "out_interface_list": {"type": "str"},
+                "packet_mark": {
+                    "type": "str",
+                    "choices": ["no-mark", "string"],
+                    "default": None,
+                },
+                "packet_size": {"type": "int"},
+                "port": {"type": "int"},
+                "priority": {"type": "int"},
+                "protocol": {"type": "str", "default": "tcp"},
+                "psd": {"type": "int"},
+                "random": {"type": "int"},
+                "reject_with": {
+                    "type": "str",
+                    "choices": [
+                        "icmp-admin-prohibited",
+                        "icmp-net-prohibited",
+                        "icmp-protocol-unreachablee",
+                        "icmp-host-prohibited",
+                        "icmp-network-unreachablee",
+                        "tcp-reset",
+                        "icmp-host-unreachablee",
+                        "icmp-port-unreachablee",
+                    ],
+                    "default": "icmp-network-unreachable",
+                },
+                "routing_table": {"type": "str"},
+                "routing_mark": {"type": "str"},
+                "src_address": {"type": "str"},
+                "src_address_list": {"type": "str"},
+                "src_address_type": {
+                    "type": "str",
+                    "choices": ["unicast", "local", "broadcast", "multicast"],
+                    "default": None,
+                },
+                "src_port": {"type": "int"},
+                "src_mac_address": {"type": "str"},
+                "tcp_flags": {
+                    "type": "str",
+                    "choices": [
+                        "ack",
+                        "cwr",
+                        "ece",
+                        "fin",
+                        "psh",
+                        "rst",
+                        "syn",
+                        "urg",
+                    ],
+                    "default": None,
+                },
+                "tcp_mss": {"type": "int"},
+                "tls_host": {"type": "str"},
+                "ttl": {"type": "int"},
+            },
+        },
+    }

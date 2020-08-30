@@ -1,9 +1,0 @@
-# aug/27/2020 01:07:46 by RouterOS 6.47.2
-# software id =
-#
-#
-#
-
-/interface bridge port add bridge=br-wan interface=ether1
-tag-stacking=yes frame-types=admit-only-vlan-tagged auto-isolate=yes
-/interface bridge port add bridge=br-trunk interface=ether2

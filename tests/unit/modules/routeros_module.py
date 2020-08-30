@@ -66,6 +66,14 @@ class TestRouterOSModule(ModuleTestCase):
 
         return result
 
+    def load_from_file(*args, **kwargs):
+        commands = kwargs["commands"]
+        output = list()
+        for command in commands:
+            filename = str(command).replace(" ", "_").replace("/", "")
+            output.append(load_fixture("%s" % filename))
+        return output
+
     def failed(self):
         with self.assertRaises(AnsibleFailJson) as exc:
             self.module.main()

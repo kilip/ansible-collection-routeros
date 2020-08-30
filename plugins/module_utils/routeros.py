@@ -45,7 +45,7 @@ def get_config(module, command):
 
     cfg = "\n".join(cfg)
     cfg = to_text(cfg)
-    cfg = normalize_config(cfg)
+
     DEVICE_CONFIGS[key] = cfg
     return cfg
 
@@ -56,7 +56,7 @@ def load_config(module, commands):
     requests = []
     for line in to_list(commands):
         requests.append(line)
-        out = run_commands(module, commands)
+        out = run_commands(module, commands=line)
         results.append("\n".join(out))
         reset_config(line)
 

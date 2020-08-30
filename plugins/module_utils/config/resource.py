@@ -21,6 +21,9 @@ from ..utils import (
 
 
 class ResourceConfig(ConfigBase):
+
+    has_delete_command = False
+
     def __init__(self, module, resource):
         super(ResourceConfig, self).__init__(module)
         self.resource = resource()
@@ -80,12 +83,12 @@ class ResourceConfig(ConfigBase):
         # always remove default values for new resource
         defaults = resource.generate_dict()
         want = remove_default_values(defaults, want)
-
-        values = generate_command_values(want, dict())
+        values = generate_command_values(
+            want, dict(), [], resource.key_prefixes
+        )
         if values:
             cmd = prefix + " ".join(values)
             commands.append(cmd)
-
         return commands
 
     def update(self, want, have, remove_defaults=True):
@@ -102,7 +105,9 @@ class ResourceConfig(ConfigBase):
             want = remove_default_values(defaults, want)
 
         # start generating values
-        values = generate_command_values(want, have, filters)
+        values = generate_command_values(
+            want, have, filters, resource.key_prefixes
+        )
         if values:
             cmd = prefix + " ".join(values)
             commands.append(cmd)
@@ -115,9 +120,7 @@ class ResourceConfig(ConfigBase):
         cmd = f"{prefix} remove {find_command}"
         commands.append(cmd)
 
-        if self.resource.remove_related_resource:
-            cmd = gen_remove_invalid_resource()
-            commands.append(cmd)
+        self.has_delete_command = True
 
         return commands
 
@@ -208,6 +211,10 @@ class ResourceConfig(ConfigBase):
         for resource in want:
             commands.extend(self.add(resource))
 
+        if self.has_delete_command:
+            cmd = gen_remove_invalid_resource()
+            commands.append(cmd)
+
         return commands
 
     def _state_deleted(self, want, have):
@@ -229,6 +236,11 @@ class ResourceConfig(ConfigBase):
         else:
             for each in have:
                 commands.extend(self.delete(each))
+
+        if self.has_delete_command:
+            cmd = gen_remove_invalid_resource()
+            commands.append(cmd)
+
         return commands
 
     def _state_merged(self, want, have):
@@ -248,6 +260,7 @@ class ResourceConfig(ConfigBase):
                 commands.extend(self.add(resource))
             else:
                 commands.extend(self.update(resource, existing))
+
         return commands
 
     def _state_replaced(self, want, have):
@@ -270,6 +283,7 @@ class ResourceConfig(ConfigBase):
                 commands.extend(self._clear_config(existing))
                 new = self._create_empty_resource(existing)
                 commands.extend(self.update(resource, new))
+
         return commands
 
     def _create_empty_resource(self, existing):
@@ -326,7 +340,7 @@ class ResourceConfig(ConfigBase):
         for key in keys:
             if want.get(key) is None:
                 continue
-            finds.append(key + "=" + want[key])
+            finds.append(key.replace("_", "-") + "=" + want[key])
         return "[ find %s ]" % (" and ".join(finds))
 
     def _configure(self, want, have, remove_defaults=True):
