@@ -100,32 +100,20 @@ options:
                     - telnet - policy that grants rights to log in remotely via telnet
                     - ssh - policy that grants rights to log in remotely via secure shell protocol
                     - web - policy that grants rights to log in remotely via WebFig.
-                    - winbox - policy that grants rights to log in remotely via WinBox and bandwidth
-                    test authentication
+                    - winbox - policy that grants rights to log in remotely via WinBox and bandwidth test authentication
                     - password - policy that grants rights to change the password
                     - api - grants rights to access router via API.
                     - tikapp - policy that grants rights to log in remotely via Tik-App.
                     - dude - grants rights to log in to dude server.
-                    - ftp - policy that grants full rights to log in remotely via FTP, to
-                    read/write/erase files and to transfer files from/to the router. Should be used
-                    together with read/write policies.
+                    - ftp - policy that grants full rights to log in remotely via FTP, to read/write/erase files and to transfer files from/to the router. Should be used together with read/write policies.
                     - romon - policy that grants rights to connect to RoMon server.
                     Config Policies:
                     - reboot - policy that allows rebooting the router
-                    - read - policy that grants read access to the routers configuration. All
-                    console commands that do not alter routers configuration are allowed. Doesnt
-                    affect FTP
-                    - write - policy that grants write access to the routers configuration, except
-                    for user management. This policy does not allow to read the configuration, so
-                    make sure to enable read policy as well
-                    - policy - policy that grants user management rights. Should be used together
-                    with write policy. Allows also to see global variables created by other users
-                    (requires also test policy).
-                    - test - policy that grants rights to run ping, traceroute, bandwidth-test,
-                    wireless scan, snooper and other test commands
-                    - sensitive - grants rights to change "hide sensitive" option, if this policy is
-                    disabled sensitive information is not displayed, see below list as to what is
-                    regarded as sensitive.
+                    - read - policy that grants read access to the routers configuration. All console commands that do not alter routers configuration are allowed. Doesnt affect FTP
+                    - write - policy that grants write access to the routers configuration, except for user management. This policy does not allow to read the configuration, so make sure to enable read policy as well
+                    - policy - policy that grants user management rights. Should be used together with write policy. Allows also to see global variables created by other users (requires also test policy).
+                    - test - policy that grants rights to run ping, traceroute, bandwidth-test, wireless scan, snooper and other test commands
+                    - sensitive - grants rights to change "hide sensitive" option, if this policy is disabled sensitive information is not displayed, see below list as to what is regarded as sensitive.
                     - sniff - policy that grants rights to use packet sniffer tool.
             skin:
                 type: str

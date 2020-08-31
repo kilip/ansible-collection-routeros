@@ -49,8 +49,7 @@ options:
             ac_name:
                 type: str
                 description: |
-                    Access Concentrator name, this may be left blank and the client will connect to
-                    any access concentrator on the broadcast domain
+                    Access Concentrator name, this may be left blank and the client will connect to any access concentrator on the broadcast domain
             add_default_route:
                 type: str
                 default: no
@@ -77,8 +76,7 @@ options:
             default_route_distance:
                 type: bytes
                 description: |
-                    sets distance value applied to auto created default route, if add-default-route
-                    is also selected
+                    sets distance value applied to auto created default route, if add-default-route is also selected
             dial_on_demand:
                 type: str
                 default: no
@@ -86,9 +84,7 @@ options:
                     - yes
                     - no
                 description: |
-                    connects to AC only when outbound traffic is generated. If selected, then route
-                    with gateway address from 10.112.112.0/24 network will be added while connection
-                    is not established.
+                    connects to AC only when outbound traffic is generated. If selected, then route with gateway address from 10.112.112.0/24 network will be added while connection is not established.
             interface:
                 type: str
                 description: |
@@ -112,11 +108,7 @@ options:
                 ignore: true
                 default: disabled
                 description: |
-                    maximum packet size that can be received on the link. If a packet is bigger than
-                    tunnel MTU, it will be split into multiple packets, allowing full size IP or
-                    Ethernet packets to be sent over the tunnel. C(<a
-                    href="/wiki/Manual:MLPPP_over_single_and_multiple_links" title="Manual:MLPPP
-                    over single and multiple links"> Read more >></a>)
+                    maximum packet size that can be received on the link. If a packet is bigger than tunnel MTU, it will be split into multiple packets, allowing full size IP or Ethernet packets to be sent over the tunnel. C(<a href="/wiki/Manual:MLPPP_over_single_and_multiple_links" title="Manual:MLPPP over single and multiple links"> Read more >></a>)
             name:
                 type: str
                 required: True
@@ -130,13 +122,11 @@ options:
                 type: str
                 default: default
                 description: |
-                    default profile for the connection defined in L( /ppp
-                    profiles,/wiki/PPP_AAA#User_Profiles)
+                    default profile for the connection defined in L( /ppp profiles,/wiki/PPP_AAA#User_Profiles)
             service_name:
                 type: str
                 description: |
-                    specifies the service name set on the access concentrator, can be left blank to
-                    connect to any PPPoE server
+                    specifies the service name set on the access concentrator, can be left blank to connect to any PPPoE server
             use_peer_dns:
                 type: str
                 default: no

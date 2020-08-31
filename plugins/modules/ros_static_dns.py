@@ -67,8 +67,7 @@ options:
             type:
                 type: str
                 description: |
-                    type of the DNS record. Available values are: A, AAAA, CNAME, FWD, MX, NS,
-                    NXDOMAIN, SRV, TXT
+                    type of the DNS record. Available values are: A, AAAA, CNAME, FWD, MX, NS, NXDOMAIN, SRV, TXT
 
 """
 

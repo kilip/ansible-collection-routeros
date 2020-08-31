@@ -51,9 +51,7 @@ options:
                 type: str
                 default: 1w
                 description: |
-                    Maximum time-to-live for cache records. In other words, cache records will
-                    expire unconditionally after cache-max-ttl time. Shorter TTL received from DNS
-                    servers are respected.
+                    Maximum time-to-live for cache records. In other words, cache records will expire unconditionally after cache-max-ttl time. Shorter TTL received from DNS servers are respected.
             cache_size:
                 type: str
                 default: 2048
@@ -83,9 +81,7 @@ options:
                 type: str
                 default: 10s
                 description: |
-                    Specifies how long to wait for query response in total. Note that this setting
-                    must be configured taking into account query-server-timeout and number of used
-                    DNS server.
+                    Specifies how long to wait for query response in total. Note that this setting must be configured taking into account query-server-timeout and number of used DNS server.
             servers:
                 type: str
                 description: |

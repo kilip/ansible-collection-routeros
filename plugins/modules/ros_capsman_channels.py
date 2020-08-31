@@ -59,8 +59,7 @@ options:
                     - 5ghz-onlyn
                 default: None
                 description: |
-                    Define operational radio frequency band and mode taken from hardware capability
-                    of wireless card
+                    Define operational radio frequency band and mode taken from hardware capability of wireless card
             comment:
                 type: str
                 description: |
@@ -77,8 +76,7 @@ options:
                     - disabled
                 default: None
                 description: |
-                    Extension channel configuration. (E.g. Ce = extension channel is above Control
-                    channel, eC = extension channel is below Control channel)
+                    Extension channel configuration. (E.g. Ce = extension channel is above Control channel, eC = extension channel is below Control channel)
             frequency:
                 type: int
                 description: |
@@ -91,9 +89,7 @@ options:
             tx_power:
                 type: int
                 description: |
-                    TX Power for CAP interface (for the whole interface not for individual chains)
-                    in dBm. It is not possible to set higher than allowed by country regulations or
-                    interface. By default max allowed by country or interface is used.
+                    TX Power for CAP interface (for the whole interface not for individual chains) in dBm. It is not possible to set higher than allowed by country regulations or interface. By default max allowed by country or interface is used.
             width:
                 type: str
                 description: |
@@ -102,9 +98,7 @@ options:
                 type: str
                 default: yes
                 description: |
-                    Saves selected channel for the CAP Radio - will select this channel after the
-                    CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for
-                    this CAP.
+                    Saves selected channel for the CAP Radio - will select this channel after the CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for this CAP.
 
 """
 

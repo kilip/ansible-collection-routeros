@@ -61,7 +61,8 @@ options:
                 type: str
                 default: default
                 description: |
-                    Default L( user profile,/wiki/PPP_AAA#User_Profiles) to use
+                    Default [ user profile](/wiki/PPP_AAA#User_Profiles "PPP
+                    AAA") to use
             interface:
                 type: str
                 description: |
@@ -70,24 +71,17 @@ options:
                 type: str
                 default: 10
                 description: |
-                    Defines the time period (in seconds) after which the router is starting to send
-                    keepalive packets every second. If there is no traffic and no keepalive
-                    responses arrive for that period of time (i.e. 2  keepalive-timeout), the non
-                    responding client is proclaimed disconnected.
+                    Defines the time period (in seconds) after which the router is starting to send keepalive packets every second. If there is no traffic and no keepalive responses arrive for that period of time (i.e. 2  keepalive-timeout), the non responding client is proclaimed disconnected.
             max_mru:
                 type: str
                 default: 1480
                 description: |
-                    Maximum Receive Unit. The optimal value is the MTU of the interface the tunnel
-                    is working over reduced by 20 (so, for 1500-byte Ethernet link, set the MTU to
-                    1480 to avoid fragmentation of packets)
+                    Maximum Receive Unit. The optimal value is the MTU of the interface the tunnel is working over reduced by 20 (so, for 1500-byte Ethernet link, set the MTU to 1480 to avoid fragmentation of packets)
             max_mtu:
                 type: str
                 default: 1480
                 description: |
-                    Maximum Transmission Unit. The optimal value is the MTU of the interface the
-                    tunnel is working over reduced by 20 (so, for 1500-byte Ethernet link, set the
-                    MTU to 1480 to avoid fragmentation of packets)
+                    Maximum Transmission Unit. The optimal value is the MTU of the interface the tunnel is working over reduced by 20 (so, for 1500-byte Ethernet link, set the MTU to 1480 to avoid fragmentation of packets)
             max_sessions:
                 type: str
                 description: |
@@ -97,11 +91,7 @@ options:
                 ignore: true
                 default: disabled
                 description: |
-                    Maximum packet size that can be received on the link. If a packet is bigger than
-                    tunnel MTU, it will be split into multiple packets, allowing full size IP or
-                    Ethernet packets to be sent over the tunnel. C(<a
-                    href="/wiki/Manual:MLPPP_over_single_and_multiple_links" title="Manual:MLPPP
-                    over single and multiple links"> Read more >></a>)
+                    Maximum packet size that can be received on the link. If a packet is bigger than tunnel MTU, it will be split into multiple packets, allowing full size IP or Ethernet packets to be sent over the tunnel. C(<a href="/wiki/Manual:MLPPP_over_single_and_multiple_links" title="Manual:MLPPP over single and multiple links"> Read more >></a>)
             one_session_per_host:
                 type: str
                 default: no
@@ -109,14 +99,11 @@ options:
                     - yes
                     - no
                 description: |
-                    Allow only one session per host (determined by MAC address). If a host tries to
-                    establish a new session, the old one will be closed.
+                    Allow only one session per host (determined by MAC address). If a host tries to establish a new session, the old one will be closed.
             service_name:
                 type: str
                 description: |
-                    The PPPoE service name. Server will accept clients which sends PADI message with
-                    service-names that matches this setting or if service-name field in PADI message
-                    is not set.
+                    The PPPoE service name. Server will accept clients which sends PADI message with service-names that matches this setting or if service-name field in PADI message is not set.
 
 """
 

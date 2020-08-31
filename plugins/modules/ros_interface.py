@@ -37,9 +37,7 @@ options:
             l2mtu:
                 type: int
                 description: |
-                    Layer2 Maximum transmission unit. Note that this property can not be configured
-                    on all interfaces. L( Read more&gt;&gt;
-                    ,/wiki/Maximum_Transmission_Unit_on_RouterBoards)
+                    Layer2 Maximum transmission unit. Note that this property can not be configured on all interfaces. L( Read more&gt;&gt; ,/wiki/Maximum_Transmission_Unit_on_RouterBoards)
             mtu:
                 type: int
                 description: |

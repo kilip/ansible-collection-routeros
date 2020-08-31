@@ -57,8 +57,7 @@ options:
             caps_manager:
                 type: str
                 description: |
-                    Comma-separated list of IP addresses for one or more CAPsMAN system managers.
-                    DHCP Option 138 (capwap) will be used.
+                    Comma-separated list of IP addresses for one or more CAPsMAN system managers. DHCP Option 138 (capwap) will be used.
             dhcp_option:
                 type: str
                 description: |
@@ -74,21 +73,15 @@ options:
                     - yes
                     - no
                 description: |
-                    If set, then DHCP Server will not pass dynamic DNS servers configured on the
-                    router to the DHCP clients if no DNS Server in dns-server is set. By default if
-                    there are no DNS Servers configured, then the dynamic DNS Servers will be passed
-                    to DHCP clients.
+                    If set, then DHCP Server will not pass dynamic DNS servers configured on the router to the DHCP clients if no DNS Server in dns-server is set. By default if there are no DNS Servers configured, then the dynamic DNS Servers will be passed to DHCP clients.
             dns_server:
                 type: str
                 description: |
-                    the DHCP client will use these as the default DNS servers. Two comma-separated
-                    DNS servers can be specified to be used by the DHCP client as primary and
-                    secondary DNS servers
+                    the DHCP client will use these as the default DNS servers. Two comma-separated DNS servers can be specified to be used by the DHCP client as primary and secondary DNS servers
             domain:
                 type: str
                 description: |
-                    The DHCP client will use this as the DNS domain setting for the network
-                    adapter.
+                    The DHCP client will use this as the DNS domain setting for the network adapter.
             gateway:
                 type: str
                 default: 0.0.0.0
@@ -97,8 +90,7 @@ options:
             netmask:
                 type: str
                 description: |
-                    The actual network mask to be used by DHCP client. If set to 0 - netmask from
-                    network address will be used.
+                    The actual network mask to be used by DHCP client. If set to 0 - netmask from network address will be used.
             next_server:
                 type: str
                 description: |
@@ -106,15 +98,11 @@ options:
             ntp_server:
                 type: str
                 description: |
-                    the DHCP client will use these as the default NTP servers. Two comma-separated
-                    NTP servers can be specified to be used by the DHCP client as primary and
-                    secondary NTP servers
+                    the DHCP client will use these as the default NTP servers. Two comma-separated NTP servers can be specified to be used by the DHCP client as primary and secondary NTP servers
             wins_server:
                 type: str
                 description: |
-                    The Windows DHCP client will use these as the default WINS servers. Two
-                    comma-separated WINS servers can be specified to be used by the DHCP client as
-                    primary and secondary WINS servers
+                    The Windows DHCP client will use these as the default WINS servers. Two comma-separated WINS servers can be specified to be used by the DHCP client as primary and secondary WINS servers
 
 """
 

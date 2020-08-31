@@ -54,19 +54,13 @@ options:
                     - no
                     - special-classless
                 description: |
-                    Whether to install default route in routing table received from dhcp server. By
-                    default RouterOS client complies to RFC and ignores option 3 if classless option
-                    121 is received. To force client not to ignore option 3 set special-classless.
-                    This parameter is available in v6rc12+
-                    - yes - adds classless route if received, if not then add default route (old
-                    behavior)
-                    - special-classless - adds both classless route if received and default route
-                    (MS style)
+                    Whether to install default route in routing table received from dhcp server. By default RouterOS client complies to RFC and ignores option 3 if classless option 121 is received. To force client not to ignore option 3 set special-classless. This parameter is available in v6rc12+
+                    - yes - adds classless route if received, if not then add default route (old behavior)
+                    - special-classless - adds both classless route if received and default route (MS style)
             client_id:
                 type: str
                 description: |
-                    Corresponds to the settings suggested by the network administrator or ISP. If
-                    not specified, clients MAC address will be sent
+                    Corresponds to the settings suggested by the network administrator or ISP. If not specified, clients MAC address will be sent
             comment:
                 type: str
                 description: |
@@ -84,8 +78,7 @@ options:
             host_name:
                 type: str
                 description: |
-                    Host name of the client sent to a DHCP server. If not specified, clients system
-                    identity will be used.
+                    Host name of the client sent to a DHCP server. If not specified, clients system identity will be used.
             interface:
                 type: str
                 description: |
@@ -93,8 +86,7 @@ options:
             script:
                 type: str
                 description: |
-                    Execute script on status change. This parameter is available in v6.39rc33+ These
-                    are available variables that are accessible for the event script:
+                    Execute script on status change. This parameter is available in v6.39rc33+ These are available variables that are accessible for the event script:
                     - bound - 1 - lease is added/changed; 0 - lease is removed
                     - server-address - server address
                     - lease-address - lease address provided by server
@@ -102,7 +94,8 @@ options:
                     - gateway-address - gateway address provided by server
                     - vendor-specific - stores value of option 43 received from DHCP server
                     - lease-options - array of received options
-                    L( C(Example >>),/wiki/Manual:IP/DHCP_Client#Lease_script_example)
+                    [ C(Example >>)](/wiki/Manual:IP/DHCP_Client#Lease_script_example "Manual:IP/DHCP
+                    Client")
             use_peer_dns:
                 type: str
                 default: yes
@@ -110,8 +103,7 @@ options:
                     - yes
                     - no
                 description: |
-                    Whether to accept the L( DNS,/wiki/Manual:IP/DNS). (Will override the settings
-                    put in the C(/ip dns) submenu.
+                    Whether to accept the L( DNS,/wiki/Manual:IP/DNS). (Will override the settings put in the C(/ip dns) submenu.
             use_peer_ntp:
                 type: str
                 default: yes
@@ -119,8 +111,7 @@ options:
                     - yes
                     - no
                 description: |
-                    Whether to accept the L( NTP,/wiki/Manual:System/Time#NTP_client_and_server).
-                    (Will override the settings put in the C(/system ntp client) submenu)
+                    Whether to accept the L( NTP,/wiki/Manual:System/Time#NTP_client_and_server). (Will override the settings put in the C(/system ntp client) submenu)
 
 """
 

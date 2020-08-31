@@ -49,8 +49,7 @@ options:
             address:
                 type: str
                 description: |
-                    Specify IP address (or ip pool) for static lease. If set to 0.0.0.0 - pool from
-                    server will be used
+                    Specify IP address (or ip pool) for static lease. If set to 0.0.0.0 - pool from server will be used
             address_list:
                 type: str
                 description: |
@@ -62,10 +61,7 @@ options:
                     - yes
                     - no
                 description: |
-                    Creates a single simple queue entry for both IPv4 and IPv6 addresses, uses the
-                    MAC address and DUID for identification. Requires L( IPv6 DHCP
-                    Server,/wiki/Manual:IPv6/DHCP_Server) to have this option enabled as well to
-                    work properly.
+                    Creates a single simple queue entry for both IPv4 and IPv6 addresses, uses the MAC address and DUID for identification. Requires L( IPv6 DHCP Server,/wiki/Manual:IPv6/DHCP_Server) to have this option enabled as well to work properly.
             always_broadcast:
                 type: str
                 choices:
@@ -98,8 +94,7 @@ options:
                 type: str
                 ignore: true
                 description: |
-                    Specify where to place dynamic simple queue entries for static DCHP leases with
-                    rate-limit parameter set.
+                    Specify where to place dynamic simple queue entries for static DCHP leases with rate-limit parameter set.
             lease_time:
                 type: str
                 default: 0s
@@ -113,16 +108,7 @@ options:
             rate_limit:
                 type: int
                 description: |
-                    Adds a dynamic simple queue to limit IPs bandwidth to a specified rate.
-                    Requires the lease to be static. Format is: rx-rate[/tx-rate]
-                    [rx-burst-rate[/tx-burst-rate] [rx-burst-threshold[/tx-burst-threshold]
-                    [rx-burst-time[/tx-burst-time]]]]. All rates should be numbers with
-                    optional k (1,000s) or M (1,000,000s). If tx-rate is not specified, rx-rate
-                    is as tx-rate too. Same goes for tx-burst-rate and tx-burst-threshold and
-                    tx-burst-time. If both rx-burst-threshold and tx-burst-threshold are not
-                    specified (but burst-rate is specified), rx-rate and tx-rate is used as burst
-                    thresholds. If both rx-burst-time and tx-burst-time are not specified, 1s is
-                    used as default.
+                    Adds a dynamic simple queue to limit IPs bandwidth to a specified rate. Requires the lease to be static. Format is: rx-rate[/tx-rate] [rx-burst-rate[/tx-burst-rate] [rx-burst-threshold[/tx-burst-threshold] [rx-burst-time[/tx-burst-time]]]]. All rates should be numbers with optional k (1,000s) or M (1,000,000s). If tx-rate is not specified, rx-rate is as tx-rate too. Same goes for tx-burst-rate and tx-burst-threshold and tx-burst-time. If both rx-burst-threshold and tx-burst-threshold are not specified (but burst-rate is specified), rx-rate and tx-rate is used as burst thresholds. If both rx-burst-time and tx-burst-time are not specified, 1s is used as default.
             server:
                 type: str
                 description: |
@@ -134,8 +120,7 @@ options:
                     - yes
                     - no
                 description: |
-                    When this option is set server uses source MAC address instead of received
-                    CHADDR to assign address.
+                    When this option is set server uses source MAC address instead of received CHADDR to assign address.
 
 """
 

@@ -45,11 +45,8 @@ options:
                     - yes
                     - no
                 description: |
-                    Force bridged traffic to also be processed by prerouting, forward and
-                    postrouting sections of IP routing (L( Packet
-                    Flow,https://wiki.mikrotik.com/wiki/Manual:Packet_Flow_v6) to traffic in a
-                    bridge. Property use-ip-firewall-for-vlan is required in case bridge
-                    vlan-filtering is used.
+                    Force bridged traffic to also be processed by prerouting, forward and postrouting sections of IP routing ([ Packet Flow](https://wiki.mikrotik.com/wiki/Manual:Packet_Flow_v6 "Manual:Packet Flow
+                    v6")). This does not apply to routed traffic. This property is required in case you want to assign L(Simple Queues,https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) to traffic in a bridge. Property use-ip-firewall-for-vlan is required in case bridge vlan-filtering is used.
             use_ip_firewall_for_pppoe:
                 type: str
                 default: no
@@ -57,9 +54,7 @@ options:
                     - yes
                     - no
                 description: |
-                    Send bridged un-encrypted PPPoE traffic to also be processed by
-                    L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall) to PPPoE
-                    traffic in a bridge.
+                    Send bridged un-encrypted PPPoE traffic to also be processed by L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall) to PPPoE traffic in a bridge.
             use_ip_firewall_for_vlan:
                 type: str
                 default: no
@@ -67,9 +62,7 @@ options:
                     - yes
                     - no
                 description: |
-                    Send bridged VLAN traffic to also be processed by
-                    L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall) to VLAN traffic
-                    in a bridge.
+                    Send bridged VLAN traffic to also be processed by L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall) to VLAN traffic in a bridge.
             allow_fast_path:
                 type: str
                 default: yes

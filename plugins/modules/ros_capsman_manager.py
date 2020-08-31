@@ -80,10 +80,7 @@ options:
                     - string
                 default: None
                 description: |
-                    Folder location for the RouterOS packages. For example, use "/upgrade" to
-                    specify the upgrade folder from the files section. If empty string is set,
-                    CAPsMAN can use built-in RouterOS packages, note that in this case only CAPs
-                    with the same architecture as CAPsMAN will be upgraded.
+                    Folder location for the RouterOS packages. For example, use "/upgrade" to specify the upgrade folder from the files section. If empty string is set, CAPsMAN can use built-in RouterOS packages, note that in this case only CAPs with the same architecture as CAPsMAN will be upgraded.
             upgrade_policy:
                 type: str
                 choices:
@@ -94,10 +91,8 @@ options:
                 description: |
                     Upgrade policy options
                     - none - do not perform upgrade
-                    - require-same-version - CAPsMAN suggest to upgrade the CAP RouterOS version and
-                    if it fails it will not provision the CAP. (Manual provision is still possible)
-                    - suggest-same-version - CAPsMAN suggests to upgrade the CAP RouterOS version
-                    and if it fails it will still be provisioned
+                    - require-same-version - CAPsMAN suggest to upgrade the CAP RouterOS version and if it fails it will not provision the CAP. (Manual provision is still possible)
+                    - suggest-same-version - CAPsMAN suggests to upgrade the CAP RouterOS version and if it fails it will still be provisioned
 config:
     type: list
 state:

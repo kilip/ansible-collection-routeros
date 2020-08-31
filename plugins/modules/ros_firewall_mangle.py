@@ -59,51 +59,29 @@ options:
                 description: |
                     Action to take if packet is matched by the rule:
                     - accept - accept the packet. Packet is not passed to next firewall rule.
-                    - add-dst-to-address-list - add destination address to L(Address
-                    list,/wiki/Address_list) specified by C(address-list) parameter
-                    - add-src-to-address-list - add source address to L(Address
-                    list,/wiki/Address_list) specified by C(address-list) parameter
-                    - change-dscp - change Differentiated Services Code Point (DSCP) field value
-                    specified by the new-dscp parameter
-                    - change-mss - change Maximum Segment Size field value of the packet to a value
-                    specified by the new-mss parameter
-                    - change-ttl - change Time to Live field value of the packet to a value
-                    specified by the new-ttl parameter
+                    - add-dst-to-address-list - add destination address to L(Address list,/wiki/Address_list) specified by C(address-list) parameter
+                    - add-src-to-address-list - add source address to L(Address list,/wiki/Address_list) specified by C(address-list) parameter
+                    - change-dscp - change Differentiated Services Code Point (DSCP) field value specified by the new-dscp parameter
+                    - change-mss - change Maximum Segment Size field value of the packet to a value specified by the new-mss parameter
+                    - change-ttl - change Time to Live field value of the packet to a value specified by the new-ttl parameter
                     - clear-df - clear Do Not Fragment Flag
                     - fasttrack-connection - shows fasttrack counters, useful for statistics
-                    - jump - jump to the user defined chain specified by the value of C(jump-target)
-                    parameter
-                    - log - add a message to the system log containing following data: in-interface,
-                    out-interface, src-mac, protocol, src-ip:port-&gt;dst-ip:port and length of the
-                    packet. After packet is matched it is passed to next rule in the list, similar
-                    as C(passthrough)
-                    - mark-connection - place a mark specified by the new-connection-mark parameter
-                    on the entire connection that matches the rule
-                    - mark-packet - place a mark specified by the new-packet-mark parameter on a
-                    packet that matches the rule
-                    - mark-routing - place a mark specified by the new-routing-mark parameter on a
-                    packet. This kind of marks is used for policy routing purposes only
-                    - passthrough - if packet is matched by the rule, increase counter and go to
-                    next rule (useful for statistics).
+                    - jump - jump to the user defined chain specified by the value of C(jump-target) parameter
+                    - log - add a message to the system log containing following data: in-interface, out-interface, src-mac, protocol, src-ip:port-&gt;dst-ip:port and length of the packet. After packet is matched it is passed to next rule in the list, similar as C(passthrough)
+                    - mark-connection - place a mark specified by the new-connection-mark parameter on the entire connection that matches the rule
+                    - mark-packet - place a mark specified by the new-packet-mark parameter on a packet that matches the rule
+                    - mark-routing - place a mark specified by the new-routing-mark parameter on a packet. This kind of marks is used for policy routing purposes only
+                    - passthrough - if packet is matched by the rule, increase counter and go to next rule (useful for statistics).
                     - return - pass control back to the chain from where the jump took place
-                    - route - forces packets to a specific gateway IP by ignoring normal routing
-                    decision (prerouting chain only)
-                    - set-priority - set priority specified by the new-priority parameter on the
-                    packets sent out through a link that is capable of transporting priority (VLAN
-                    or WMM-enabled wireless interface). L( Read
-                    more&gt;,/wiki/WMM#How_to_set_priority)
+                    - route - forces packets to a specific gateway IP by ignoring normal routing decision (prerouting chain only)
+                    - set-priority - set priority specified by the new-priority parameter on the packets sent out through a link that is capable of transporting priority (VLAN or WMM-enabled wireless interface). L( Read more&gt;,/wiki/WMM#How_to_set_priority)
                     - sniff-pc - send a packet to a remote L( RouterOS CALEA,/wiki/CALEA) server.
-                    - sniff-tzsp - send packet to a remote TZSP compatible system (such as
-                    Wireshark). Set remote target with C(sniff-target) and C(sniff-target-port)
-                    parameters (Wireshark recommends port 37008)
-                    - strip-ipv4-options - strip IPv4 option fields from IP header, action does not
-                    actually remove IPv4 options but rather replaces all option octets with NOP,
-                    further matcher with ipv4-options=any will still match the packet.
+                    - sniff-tzsp - send packet to a remote TZSP compatible system (such as Wireshark). Set remote target with C(sniff-target) and C(sniff-target-port) parameters (Wireshark recommends port 37008)
+                    - strip-ipv4-options - strip IPv4 option fields from IP header, action does not actually remove IPv4 options but rather replaces all option octets with NOP, further matcher with ipv4-options=any will still match the packet.
             address_list:
                 type: str
                 description: |
-                    Name of the address list to be used. Applicable if action is
-                    C(add-dst-to-address-list) or C(add-src-to-address-list)
+                    Name of the address list to be used. Applicable if action is C(add-dst-to-address-list) or C(add-src-to-address-list)
             address_list_timeout:
                 type: str
                 default: none-dynamic
@@ -112,13 +90,9 @@ options:
                     - none-static
                     - time
                 description: |
-                    Time interval after which the address will be removed from the address list
-                    specified by C(address-list) parameter. Used in conjunction with
-                    C(add-dst-to-address-list) or C(add-src-to-address-list) actions
-                    - Value of none-dynamic (C(00:00:00)) will leave the address in the address list
-                    till reboot
-                    - Value of none-static will leave the address in the address list forever and
-                    will be included in configuration export/backup
+                    Time interval after which the address will be removed from the address list specified by C(address-list) parameter. Used in conjunction with C(add-dst-to-address-list) or C(add-src-to-address-list) actions
+                    - Value of none-dynamic (C(00:00:00)) will leave the address in the address list till reboot
+                    - Value of none-static will leave the address in the address list forever and will be included in configuration export/backup
             chain:
                 required: True
                 choices:
@@ -129,8 +103,7 @@ options:
                     - prerouting
                 type: str
                 description: |
-                    Specifies to which chain the rule will be added. If the input does not match the
-                    name of an already defined chain, a new chain will be created.
+                    Specifies to which chain the rule will be added. If the input does not match the name of an already defined chain, a new chain will be created.
             comment:
                 type: str
                 description: |
@@ -138,10 +111,7 @@ options:
             connection_bytes:
                 type: int
                 description: |
-                    Matches packets only if a given amount of bytes has been transfered through the
-                    particular connection. 0 - means infinity, for example
-                    C(connection-bytes=2000000-0) means that the rule matches if more than 2MB
-                    (upload and download) has been transfered through the relevant connection
+                    Matches packets only if a given amount of bytes has been transfered through the particular connection. 0 - means infinity, for example C(connection-bytes=2000000-0) means that the rule matches if more than 2MB (upload and download) has been transfered through the relevant connection
             connection_limit:
                 type: int
                 description: |
@@ -153,8 +123,7 @@ options:
                     - string
                 default: None
                 description: |
-                    Matches packets marked via mangle facility with particular connection mark. If
-                    no-mark is set, rule will match any unmarked connection.
+                    Matches packets marked via mangle facility with particular connection mark. If no-mark is set, rule will match any unmarked connection.
             connection_nat_state:
                 type: str
                 choices:
@@ -162,17 +131,11 @@ options:
                     - dstnat
                 default: None
                 description: |
-                    Can match connections that are srcnatted, dstnatted or both. Note that
-                    connection-state=related connections connection-nat-state is determined by
-                    direction of the first packet. and if connection tracking needs to use dst-nat
-                    to deliver this connection to same hosts as main connection it will be in
-                    connection-nat-state=dstnat even if there are no dst-nat rules at all.
+                    Can match connections that are srcnatted, dstnatted or both. Note that connection-state=related connections connection-nat-state is determined by direction of the first packet. and if connection tracking needs to use dst-nat to deliver this connection to same hosts as main connection it will be in connection-nat-state=dstnat even if there are no dst-nat rules at all.
             connection_rate:
                 type: int
                 description: |
-                    Connection Rate is a firewall matcher that allows the capture of traffic based
-                    on the present speed of the connection. C(<a class="mw-redirect"
-                    href="/wiki/Connection_Rate" title="Connection Rate"> Read more >></a>)
+                    Connection Rate is a firewall matcher that allows the capture of traffic based on the present speed of the connection. C(<a class="mw-redirect" href="/wiki/Connection_Rate" title="Connection Rate"> Read more >></a>)
             connection_state:
                 type: str
                 choices:
@@ -184,18 +147,10 @@ options:
                 description: |
                     Interprets the connection tracking analysis data for a particular packet:
                     - established - a packet which belongs to an existing connection
-                    - invalid - a packet that does not have determined state in connection tracking
-                    (ussualy - sevear out-of-order packets, packets with wrong sequence/ack number,
-                    or in case of resource overusage on router), for this reason invalid packet will
-                    not participate in NAT (as only connection-state=new packets do), and will still
-                    contain original source IP address when routed. We strongly suggest to drop all
-                    connection-state=invalid packets in firewall filter forward and input chains
-                    - new - the packet has started a new connection, or otherwise associated with a
-                    connection which has not seen packets in both directions
-                    - related - a packet which is related to, but not part of an existing
-                    connection, such as ICMP errors or a packet which begins FTP data connection
-                    - untracked packet which was set to bypass connection tracking in L(Firewall
-                    RAW,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/Raw) tables.
+                    - invalid - a packet that does not have determined state in connection tracking (ussualy - sevear out-of-order packets, packets with wrong sequence/ack number, or in case of resource overusage on router), for this reason invalid packet will not participate in NAT (as only connection-state=new packets do), and will still contain original source IP address when routed. We strongly suggest to drop all connection-state=invalid packets in firewall filter forward and input chains
+                    - new - the packet has started a new connection, or otherwise associated with a connection which has not seen packets in both directions
+                    - related - a packet which is related to, but not part of an existing connection, such as ICMP errors or a packet which begins FTP data connection
+                    - untracked packet which was set to bypass connection tracking in L(Firewall RAW,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall/Raw) tables.
             connection_type:
                 type: str
                 choices:
@@ -208,9 +163,7 @@ options:
                     - tftp
                 default: None
                 description: |
-                    Matches packets from related connections based on information from their
-                    connection tracking helpers. A relevant connection helper must be enabled under
-                    L( /ip firewall service-port,/wiki/IP/Services)
+                    Matches packets from related connections based on information from their connection tracking helpers. A relevant connection helper must be enabled under L( /ip firewall service-port,/wiki/IP/Services)
             content:
                 type: str
                 description: |
@@ -222,13 +175,11 @@ options:
             dst_address:
                 type: str
                 description: |
-                    Matches packets where destination is equal to specified IP or falls into
-                    specified IP range.
+                    Matches packets where destination is equal to specified IP or falls into specified IP range.
             dst_address_list:
                 type: str
                 description: |
-                    Matches destination address of a packet against user-defined L( address
-                    list,/wiki/Address_list)
+                    Matches destination address of a packet against user-defined L( address list,/wiki/Address_list)
             dst_address_type:
                 type: str
                 choices:
@@ -246,16 +197,12 @@ options:
             dst_limit:
                 type: str
                 description: |
-                    Matches packets until a given pps limit is exceeded. As opposed to the limit
-                    matcher, every destination IP address / destination port has its own limit.
-                    Parameters are written in following format: C(count[/time],burst,mode[/expire]).
+                    Matches packets until a given pps limit is exceeded. As opposed to the limit matcher, every destination IP address / destination port has its own limit. Parameters are written in following format: C(count[/time],burst,mode[/expire]).
                     - count - maximum average packet rate measured in packets per C(time) interval
-                    - time - specifies the time interval in which the packet rate is measured
-                    (optional)
+                    - time - specifies the time interval in which the packet rate is measured (optional)
                     - burst - number of packets which are not counted by packet rate
                     - mode - the classifier for packet rate limiting
-                    - expire - specifies interval after which recored ip address /port will be
-                    deleted (optional)
+                    - expire - specifies interval after which recored ip address /port will be deleted (optional)
             dst_port:
                 type: int
                 description: |
@@ -267,9 +214,7 @@ options:
                     - no
                 default: None
                 description: |
-                    Matches fragmented packets. First (starting) fragment does not count. If
-                    connection tracking is enabled there will be no fragments as system
-                    automatically assembles every packet
+                    Matches fragmented packets. First (starting) fragment does not count. If connection tracking is enabled there will be no fragments as system automatically assembles every packet
             hotspot:
                 type: str
                 choices:
@@ -293,8 +238,7 @@ options:
             in_bridge_port:
                 type: str
                 description: |
-                    Actual interface the packet has entered the router, if incoming interface is
-                    bridge
+                    Actual interface the packet has entered the router, if incoming interface is bridge
             in_interface:
                 type: str
                 description: |
@@ -302,9 +246,7 @@ options:
             ingress_priority:
                 type: int
                 description: |
-                    Matches ingress priority of the packet. Priority may be derived from VLAN, WMM
-                    or MPLS EXP bit. C(<a class="mw-redirect" href="/wiki/WMM" title="WMM"> Read
-                    more >></a>)
+                    Matches ingress priority of the packet. Priority may be derived from VLAN, WMM or MPLS EXP bit. C(<a class="mw-redirect" href="/wiki/WMM" title="WMM"> Read more >></a>)
             ipsec_policy:
                 type: str
                 choices:
@@ -313,17 +255,12 @@ options:
                     - none
                 default: None
                 description: |
-                    Matches the policy used by IpSec. Value is written in following format:
-                    C(<b>direction, policy</b>). Direction is Used to select whether to match the
-                    policy used for decapsulation or the policy that will be used for encapsulation.
+                    Matches the policy used by IpSec. Value is written in following format: C(<b>direction, policy</b>). Direction is Used to select whether to match the policy used for decapsulation or the policy that will be used for encapsulation.
                     - in - valid in the PREROUTING, INPUT and FORWARD chains
                     - out - valid in the POSTROUTING, OUTPUT and FORWARD chains
                     - ipsec - matches if the packet is subject to IpSec processing;
-                    - none - matches packet that is not subject to IpSec processing (for example,
-                    IpSec transport packet).
-                    For example, if router receives Ipsec encapsulated Gre packet, then rule
-                    C(ipsec-policy=in,ipsec) will match Gre packet, but rule C(ipsec-policy=in,none)
-                    will match ESP packet.
+                    - none - matches packet that is not subject to IpSec processing (for example, IpSec transport packet).
+                    For example, if router receives Ipsec encapsulated Gre packet, then rule C(ipsec-policy=in,ipsec) will match Gre packet, but rule C(ipsec-policy=in,none) will match ESP packet.
             ipv4_options:
                 type: str
                 choices:
@@ -342,11 +279,8 @@ options:
                 description: |
                     Matches IPv4 header options.
                     - any - match packet with at least one of the ipv4 options
-                    - loose-source-routing - match packets with loose source routing option. This
-                    option is used to route the internet datagram based on information supplied by
-                    the source
-                    - no-record-route - match packets with no record route option. This option is
-                    used to route the internet datagram based on information supplied by the source
+                    - loose-source-routing - match packets with loose source routing option. This option is used to route the internet datagram based on information supplied by the source
+                    - no-record-route - match packets with no record route option. This option is used to route the internet datagram based on information supplied by the source
                     - no-router-alert - match packets with no router alter option
                     - no-source-routing - match packets with no source routing option
                     - no-timestamp - match packets with no timestamp option
@@ -361,22 +295,18 @@ options:
             layer7_protocol:
                 type: str
                 description: |
-                    Layer7 filter name defined in L( layer7 protocol
-                    menu,/wiki/Manual:IP/Firewall/L7).
+                    Layer7 filter name defined in L( layer7 protocol menu,/wiki/Manual:IP/Firewall/L7).
             limit:
                 type: int
                 description: |
-                    Matches packets until a given pps limit is exceeded. Parameters are written in
-                    following format: C(count[/time],burst).
+                    Matches packets until a given pps limit is exceeded. Parameters are written in following format: C(count[/time],burst).
                     - count - maximum average packet rate measured in packets per C(time) interval
-                    - time - specifies the time interval in which the packet rate is measured
-                    (optional, 1s will be used if not specified)
+                    - time - specifies the time interval in which the packet rate is measured (optional, 1s will be used if not specified)
                     - burst - number of packets which are not counted by packet rate
             log_prefix:
                 type: str
                 description: |
-                    Adds specified text at the beginning of every log message. Applicable if
-                    C(action=log)
+                    Adds specified text at the beginning of every log message. Applicable if C(action=log)
             new_connection_mark:
                 type: str
             new_dscp:
@@ -386,8 +316,7 @@ options:
             new_mss:
                 type: int
                 description: |
-                    Sets a new MSS for a packet. clamp-to-pmtu option dynamically sets the MSS size
-                    acordingly to the Path MTU.
+                    Sets a new MSS for a packet. clamp-to-pmtu option dynamically sets the MSS size acordingly to the Path MTU.
             new_packet_mark:
                 type: str
             new_priority:
@@ -399,9 +328,7 @@ options:
                     - from-ingress
                 default: None
                 description: |
-                    Sets a new priority for a packet. This can be the VLAN, WMM, DSCP or MPLS EXP
-                    priority L( Read more &gt;&gt;,/wiki/WMM). This property can also be used to set
-                    an internal priority.
+                    Sets a new priority for a packet. This can be the VLAN, WMM, DSCP or MPLS EXP priority L( Read more &gt;&gt;,/wiki/WMM). This property can also be used to set an internal priority.
             new_routing_mark:
                 type: str
             new_ttl:
@@ -419,13 +346,11 @@ options:
             nth:
                 type: int
                 description: |
-                    Matches every nth packet. L(Read more
-                    ,https://wiki.mikrotik.com/wiki/NTH_load_balancing_with_masquerade)
+                    Matches every nth packet. L(Read more ,https://wiki.mikrotik.com/wiki/NTH_load_balancing_with_masquerade)
             out_bridge_port:
                 type: str
                 description: |
-                    Actual interface the packet is leaving the router, if outgoing interface is
-                    bridge
+                    Actual interface the packet is leaving the router, if outgoing interface is bridge
             out_interface:
                 type: str
                 description: |
@@ -437,8 +362,7 @@ options:
                     - string
                 default: None
                 description: |
-                    Matches packets marked via mangle facility with particular packet mark. If
-                    no-mark is set, rule will match any unmarked packet.
+                    Matches packets marked via mangle facility with particular packet mark. If no-mark is set, rule will match any unmarked packet.
             packet_size:
                 type: int
                 description: |
@@ -450,19 +374,15 @@ options:
                     - yes
                     - no
                 description: |
-                    whether to let the packet to pass further (like action passthrough) into
-                    firewall or not (property only valid some actions).
+                    whether to let the packet to pass further (like action passthrough) into firewall or not (property only valid some actions).
             per_connection_classifier:
                 type: str
                 description: |
-                    PCC matcher allows division of traffic into equal streams with ability to keep
-                    packets with specific set of options in one particular stream. C(<a
-                    class="mw-redirect" href="/wiki/PCC" title="PCC"> Read more >></a>)
+                    PCC matcher allows division of traffic into equal streams with ability to keep packets with specific set of options in one particular stream. C(<a class="mw-redirect" href="/wiki/PCC" title="PCC"> Read more >></a>)
             port:
                 type: int
                 description: |
-                    Matches if any (source or destination) port matches the specified list of ports
-                    or port ranges. Applicable only if C(protocol) is TCP or UDP
+                    Matches if any (source or destination) port matches the specified list of ports or port ranges. Applicable only if C(protocol) is TCP or UDP
             protocol:
                 type: str
                 default: tcp
@@ -471,14 +391,10 @@ options:
             psd:
                 type: int
                 description: |
-                    Attempts to detect TCP and UDP scans. Parameters are in following format
-                    C(WeightThreshold, DelayThreshold, LowPortWeight, HighPortWeight)
-                    - WeightThreshold - total weight of the latest TCP/UDP packets with different
-                    destination ports coming from the same host to be treated as port scan sequence
-                    - DelayThreshold - delay for the packets with different destination ports coming
-                    from the same host to be treated as possible port scan subsequence
-                    - LowPortWeight - weight of the packets with privileged (&lt;1024) destination
-                    port
+                    Attempts to detect TCP and UDP scans. Parameters are in following format C(WeightThreshold, DelayThreshold, LowPortWeight, HighPortWeight)
+                    - WeightThreshold - total weight of the latest TCP/UDP packets with different destination ports coming from the same host to be treated as port scan sequence
+                    - DelayThreshold - delay for the packets with different destination ports coming from the same host to be treated as possible port scan subsequence
+                    - LowPortWeight - weight of the packets with privileged (&lt;1024) destination port
                     - HighPortWeight - weight of the packet with non-priviliged destination port
             random:
                 type: int
@@ -491,20 +407,15 @@ options:
             priority:
                 type: int
                 description: |
-                    Matches packets priority after a new priority has been set. Priority may be
-                    derived from VLAN, WMM, DSCP, MPLS EXP bit or from internal priority that has
-                    been set using the set-priority action. C(<a class="mw-redirect"
-                    href="/wiki/WMM" title="WMM"> Read more >></a>)
+                    Matches packets priority after a new priority has been set. Priority may be derived from VLAN, WMM, DSCP, MPLS EXP bit or from internal priority that has been set using the set-priority action. C(<a class="mw-redirect" href="/wiki/WMM" title="WMM"> Read more >></a>)
             src_address:
                 type: str
                 description: |
-                    Matches packets where source is equal to specified IP or falls into specified IP
-                    range.
+                    Matches packets where source is equal to specified IP or falls into specified IP range.
             src_address_list:
                 type: str
                 description: |
-                    Matches source address of a packet against user-defined L( address
-                    list,/wiki/Address_list)
+                    Matches source address of a packet against user-defined L( address list,/wiki/Address_list)
             src_address_type:
                 type: str
                 choices:
@@ -522,8 +433,7 @@ options:
             src_port:
                 type: int
                 description: |
-                    List of source ports and ranges of source ports. Applicable only if protocol is
-                    TCP or UDP.
+                    List of source ports and ranges of source ports. Applicable only if protocol is TCP or UDP.
             src_mac_address:
                 type: str
                 description: |
@@ -557,10 +467,7 @@ options:
             tls_host:
                 type: str
                 description: |
-                    Allows to match traffic based on TLS hostname. Accepts L(GLOB
-                    syntax,https://en.wikipedia.org/wiki/Glob_(programming)) for wildcard matching.
-                    Note that matcher will not be able to match hostname if TLS handshake frame is
-                    fragmented into multiple TCP segments (packets).
+                    Allows to match traffic based on TLS hostname. Accepts L(GLOB syntax,https://en.wikipedia.org/wiki/Glob_(programming)) for wildcard matching. Note that matcher will not be able to match hostname if TLS handshake frame is fragmented into multiple TCP segments (packets).
             ttl:
                 type: str
                 description: |

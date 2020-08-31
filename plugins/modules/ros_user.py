@@ -58,14 +58,11 @@ options:
                 type: str
                 required: True
                 description: |
-                    User name. Although it must start with an alphanumeric character, it may contain
-                    "", "_", "." and "@" symbols.
+                    User name. Although it must start with an alphanumeric character, it may contain "", "_", "." and "@" symbols.
             password:
                 type: str
                 description: |
-                    User password. If not specified, it is left blank (hit [Enter] when logging
-                    in). It conforms to standard Unix characteristics of passwords and may contain
-                    letters, digits, "" and "_" symbols.
+                    User password. If not specified, it is left blank (hit [Enter] when logging in). It conforms to standard Unix characteristics of passwords and may contain letters, digits, "" and "_" symbols.
             last_logged_in:
                 type: str
                 description: |

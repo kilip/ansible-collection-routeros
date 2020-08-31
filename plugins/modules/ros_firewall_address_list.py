@@ -50,9 +50,7 @@ options:
                 type: str
                 required: True
                 description: |
-                    A single IP address or range of IPs to add to address list or DNS name. You can
-                    input for example, 192.168.0.0-192.168.1.255 and it will auto modify the typed
-                    entry to 192.168.0.0/23 on saving.
+                    A single IP address or range of IPs to add to address list or DNS name. You can input for example, 192.168.0.0-192.168.1.255 and it will auto modify the typed entry to 192.168.0.0/23 on saving.
             list:
                 type: str
                 required: True
@@ -61,8 +59,7 @@ options:
             timeout:
                 type: str
                 description: |
-                    Time after address will be removed from address list. If timeout is not
-                    specified, the address will be stored into the address list permanently.
+                    Time after address will be removed from address list. If timeout is not specified, the address will be stored into the address list permanently.
 
 """
 

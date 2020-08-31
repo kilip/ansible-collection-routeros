@@ -42,9 +42,7 @@ options:
                 type: str
                 default: xx:xx:xx:xx:xx:xx
                 description: |
-                    Controls how MAC address of the client is encoded by Access Point in the
-                    User-Name attribute of the MAC authentication and MAC accounting RADIUS
-                    requests.
+                    Controls how MAC address of the client is encoded by Access Point in the User-Name attribute of the MAC authentication and MAC accounting RADIUS requests.
             mac_mode:
                 type: str
                 choices:
@@ -52,10 +50,7 @@ options:
                     - as-username-and-password
                 default: None
                 description: |
-                    By default Access Point uses an empty password, when sending Access-Request
-                    during MAC authentication. When this property is set to
-                    as-username-and-password, Access Point will use the same value for User-Password
-                    attribute as for the User-Name attribute.
+                    By default Access Point uses an empty password, when sending Access-Request during MAC authentication. When this property is set to as-username-and-password, Access Point will use the same value for User-Password attribute as for the User-Name attribute.
             mac_caching:
                 type: str
                 default: disabled
@@ -63,10 +58,7 @@ options:
                     - disabled
                     - time-interval
                 description: |
-                    If this value is set to time interval, the Access Point will cache RADIUS MAC
-                    authentication responses for specified time, and will not contact RADIUS server
-                    if matching cache entry already exists. Value disabled will disable cache,
-                    Access Point will always contact RADIUS server.
+                    If this value is set to time interval, the Access Point will cache RADIUS MAC authentication responses for specified time, and will not contact RADIUS server if matching cache entry already exists. Value disabled will disable cache, Access Point will always contact RADIUS server.
             interim_update:
                 type: str
                 default: disabled
@@ -74,11 +66,7 @@ options:
                     - disabled
                     - time-interval
                 description: |
-                    When RADIUS accounting is used, Access Point periodically sends accounting
-                    information updates to the RADIUS server. This property specifies default update
-                    interval that can be overridden by the RADIUS server using the L(
-                    Acct-Interim-Interval,/wiki/Manual:Interface/Wireless#RADIUS_MAC_authentication)
-                    attribute.
+                    When RADIUS accounting is used, Access Point periodically sends accounting information updates to the RADIUS server. This property specifies default update interval that can be overridden by the RADIUS server using the L( Acct-Interim-Interval,/wiki/Manual:Interface/Wireless#RADIUS_MAC_authentication) attribute.
             called_format:
                 type: str
                 default: mac:ssid
@@ -86,9 +74,7 @@ options:
                     - mac
                     - mac
                 description: |
-                    Format of how the "called-id" identifier will be passed to RADIUS. When
-                    configuring radius server clients, you can specify "called-id" in order to
-                    separate multiple entires.
+                    Format of how the "called-id" identifier will be passed to RADIUS. When configuring radius server clients, you can specify "called-id" in order to separate multiple entires.
 config:
     type: list
 state:

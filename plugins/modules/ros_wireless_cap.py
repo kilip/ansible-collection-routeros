@@ -74,14 +74,12 @@ options:
                 type: list
                 elements: str
                 description: |
-                    An ordered list of CAPs Manager names that the CAP will connect to, if empty -
-                    CAP does not check Manager name
+                    An ordered list of CAPs Manager names that the CAP will connect to, if empty - CAP does not check Manager name
             caps_man_certificate_common_names:
                 type: list
                 elements: str
                 description: |
-                    List of Manager certificate CommonNames that CAP will connect to, if empty - CAP
-                    does not check Manager certificate CommonName
+                    List of Manager certificate CommonNames that CAP will connect to, if empty - CAP does not check Manager certificate CommonName
             bridge:
                 type: str
                 description: |
@@ -93,10 +91,7 @@ options:
                     - no
                 default: no
                 description: |
-                    CAP will create Static Virtual Interfaces instead of Dynamic and will try to
-                    reuse the same interface on reconnect to CAPsMAN if the MAC address will be the
-                    same. Note if two or more interfaces will have the same MAC address the
-                    assignment from the CAPsMAN could be random between those interfaces.
+                    CAP will create Static Virtual Interfaces instead of Dynamic and will try to reuse the same interface on reconnect to CAPsMAN if the MAC address will be the same. Note if two or more interfaces will have the same MAC address the assignment from the CAPsMAN could be random between those interfaces.
 config:
     type: list
 state:

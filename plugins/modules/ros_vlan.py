@@ -67,8 +67,7 @@ options:
             l2mtu:
                 type: int
                 description: |
-                    Layer2 MTU. For VLANS this value is not configurable. L( Read
-                    more&gt;&gt;,/wiki/Maximum_Transmission_Unit_on_RouterBoards)
+                    Layer2 MTU. For VLANS this value is not configurable. L( Read more&gt;&gt;,/wiki/Maximum_Transmission_Unit_on_RouterBoards)
             mtu:
                 type: str
                 default: 1500
@@ -91,8 +90,7 @@ options:
                 type: str
                 default: 1
                 description: |
-                    Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal
-                    for all computers that belong to the same VLAN.
+                    Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal for all computers that belong to the same VLAN.
 
 """
 
