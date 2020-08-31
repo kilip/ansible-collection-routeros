@@ -25,7 +25,7 @@ class ResourceConfig(ConfigBase):
     has_delete_command = False
 
     def __init__(self, module, resource):
-        super(ResourceConfig, self).__init__(module)
+        ConfigBase.__init__(self, module)
         self.resource = resource()
 
     def get_resource_facts(self, data=None):

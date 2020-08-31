@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_capsman_datapath
+short_description: Manage configuration for C(/caps-man datapath)
+description: This M(ros_capsman_datapath) module provides management for RouterOS C(/caps-man datapath).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_capsman_datapath) will update existing C(/caps-man datapath) configuration, or create new C(/caps-man datapath) when resource not found
-            - I(replaced) M(ros_capsman_datapath) will restore existing C(/caps-man datapath) configuration to its default value, then update existing resource with the new configuration. If the resource C(/caps-man datapath) not found, M(ros_capsman_datapath) will create resource in C(/caps-man datapath)
-            - I(overridden) M(ros_capsman_datapath) will remove any resource in C(/caps-man datapath) first, and then create new C(/caps-man datapath) resources.
-            - I(deleted) M({module}) when found module will delete C(/caps-man datapath)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_capsman_datapath) will update existing C(/caps-man datapath) configuration
+            -  When Resource Not Exists:
+               *  M(ros_capsman_datapath) will create new C(/caps-man datapath),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_capsman_datapath) will restore related C(/caps-man datapath) to its default value.
+               *  M(ros_capsman_datapath) will update C(/caps-man datapath) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_capsman_datapath) will create new C(/caps-man datapath)
+            Overridden:
+            *  M(ros_capsman_datapath) will remove any existing item in C(/caps-man datapath)
+            *  M(ros_capsman_datapath) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_capsman_datapath) will remove that item from C(/caps-man datapath) configuration
     config:
         description: A dictionary for L(ros_capsman_datapath)
         type: list

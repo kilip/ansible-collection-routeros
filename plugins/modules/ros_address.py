@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_address
+short_description: Manage configuration for C(/ip address)
+description: This M(ros_address) module provides management for RouterOS C(/ip address).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_address) will update existing C(/ip address) configuration, or create new C(/ip address) when resource not found
-            - I(replaced) M(ros_address) will restore existing C(/ip address) configuration to its default value, then update existing resource with the new configuration. If the resource C(/ip address) not found, M(ros_address) will create resource in C(/ip address)
-            - I(overridden) M(ros_address) will remove any resource in C(/ip address) first, and then create new C(/ip address) resources.
-            - I(deleted) M({module}) when found module will delete C(/ip address)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_address) will update existing C(/ip address) configuration
+            -  When Resource Not Exists:
+               *  M(ros_address) will create new C(/ip address),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_address) will restore related C(/ip address) to its default value.
+               *  M(ros_address) will update C(/ip address) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_address) will create new C(/ip address)
+            Overridden:
+            *  M(ros_address) will remove any existing item in C(/ip address)
+            *  M(ros_address) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_address) will remove that item from C(/ip address) configuration
     config:
         description: A dictionary for L(ros_address)
         type: list
@@ -40,7 +55,8 @@ options:
                 type: str
                 default: 255.255.255.255
                 description: |
-                    roadcasting IP address, calculated by default from an IP address and a network mask. Starting from v5RC6 this parameter is removed
+                    roadcasting IP address, calculated by default from an IP address and a network
+                    mask. Starting from v5RC6 this parameter is removed
             interface:
                 type: str
                 description: |
@@ -54,7 +70,9 @@ options:
                 type: str
                 default: 0.0.0.0
                 description: |
-                    IP address for the network. For point-to-point links it should be the address of the remote end. Starting from v5RC6 this parameter is configurable only for addresses with /32 netmask (point to point links)
+                    IP address for the network. For point-to-point links it should be the address of
+                    the remote end. Starting from v5RC6 this parameter is configurable only for
+                    addresses with /32 netmask (point to point links)
 
 """
 

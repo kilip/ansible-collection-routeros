@@ -11,10 +11,31 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_dns
+short_description: Manage configuration for C(/ip dns)
+description: This M(ros_dns) module provides management for RouterOS C(/ip dns).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_documentation: DNS Cache Configuration
 options:
+    state:
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_dns) will update existing C(/ip dns) configuration
+            -  When Resource Not Exists:
+               *  M(ros_dns) will create new C(/ip dns),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_dns) will restore related C(/ip dns) to its default value.
+               *  M(ros_dns) will update C(/ip dns) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_dns) will create new C(/ip dns)
+            Overridden:
+            *  M(ros_dns) will remove any existing item in C(/ip dns)
+            *  M(ros_dns) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_dns) will remove that item from C(/ip dns) configuration
     config:
         description: A dictionary for L(ros_dns)
         suboptions:
@@ -30,7 +51,9 @@ options:
                 type: str
                 default: 1w
                 description: |
-                    Maximum time-to-live for cache records. In other words, cache records will expire unconditionally after cache-max-ttl time. Shorter TTL received from DNS servers are respected.
+                    Maximum time-to-live for cache records. In other words, cache records will
+                    expire unconditionally after cache-max-ttl time. Shorter TTL received from DNS
+                    servers are respected.
             cache_size:
                 type: str
                 default: 2048
@@ -60,7 +83,9 @@ options:
                 type: str
                 default: 10s
                 description: |
-                    Specifies how long to wait for query response in total. Note that this setting must be configured taking into account query-server-timeout and number of used DNS server.
+                    Specifies how long to wait for query response in total. Note that this setting
+                    must be configured taking into account query-server-timeout and number of used
+                    DNS server.
             servers:
                 type: str
                 description: |
@@ -72,9 +97,6 @@ state:
         - present
         - reset
     default: present
-    description:
-        - I(present) will update C(/ip dns) config with passed argument_spec values.
-        - I(reset) will restore C(/ip dns) to its default values
 
 """
 

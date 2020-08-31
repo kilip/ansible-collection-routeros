@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_firewall_raw
+short_description: Manage configuration for C(/ip firewall raw)
+description: This M(ros_firewall_raw) module provides management for RouterOS C(/ip firewall raw).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,10 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_firewall_raw) will update existing C(/ip firewall raw) configuration, or create new C(/ip firewall raw) when resource not found
-            - I(replaced) M(ros_firewall_raw) will restore existing C(/ip firewall raw) configuration to its default value, then update existing resource with the new configuration. If the resource C(/ip firewall raw) not found, M(ros_firewall_raw) will create resource in C(/ip firewall raw)
-            - I(overridden) M(ros_firewall_raw) will remove any resource in C(/ip firewall raw) first, and then create new C(/ip firewall raw) resources.
-            - I(deleted) M({module}) when found module will delete C(/ip firewall raw)
+        description: |
+            Overridden:
+            *  M(ros_firewall_raw) will remove any existing item in C(/ip firewall raw)
+            *  M(ros_firewall_raw) will create new item using value in the C(argument_spec)
     config:
         description: A dictionary for L(ros_firewall_raw)
         type: list
@@ -47,18 +48,27 @@ options:
                 description: |
                     Action to take if packet is matched by the rule:
                     - accept - accept the packet. Packet is not passed to next firewall rule.
-                    - add-dst-to-address-list - add destination address to L( address list,/wiki/Manual:IP/Firewall/Address_list) specified by C(address-list) parameter
-                    - add-src-to-address-list - add source address to L( address list,/wiki/Manual:IP/Firewall/Address_list) specified by C(address-list) parameter
+                    - add-dst-to-address-list - add destination address to L( address
+                    list,/wiki/Manual:IP/Firewall/Address_list) specified by C(address-list)
+                    parameter
+                    - add-src-to-address-list - add source address to L( address
+                    list,/wiki/Manual:IP/Firewall/Address_list) specified by C(address-list)
+                    parameter
                     - drop - silently drop the packet
-                    - jump - jump to the user defined chain specified by the value of C(jump-target) parameter
-                    - log - add a message to the system log containing following data: in-interface, out-interface, src-mac, protocol, src-ip:port-&gt;dst-ip:port and length of the packet. After packet is matched it is passed to next rule in the list, similar as C(passthrough)
+                    - jump - jump to the user defined chain specified by the value of C(jump-target)
+                    parameter
+                    - log - add a message to the system log containing following data: in-interface,
+                    out-interface, src-mac, protocol, src-ip:port-&gt;dst-ip:port and length of the
+                    packet. After packet is matched it is passed to next rule in the list, similar
+                    as C(passthrough)
                     - notrack - do not send packet to connection tracking.
                     - passthrough - ignore this rule and go to next one (useful for statistics).
                     - return - passes control back to the chain from where the jump took place
             address_list:
                 type: str
                 description: |
-                    Name of the address list to be used. Applicable if action is C(add-dst-to-address-list) or C(add-src-to-address-list)
+                    Name of the address list to be used. Applicable if action is
+                    C(add-dst-to-address-list) or C(add-src-to-address-list)
             address_list_timeout:
                 type: str
                 default: none-dynamic
@@ -67,13 +77,18 @@ options:
                     - none-static
                     - time
                 description: |
-                    Time interval after which the address will be removed from the address list specified by C(address-list) parameter. Used in conjunction with C(add-dst-to-address-list) or C(add-src-to-address-list) actions
-                    - Value of none-dynamic (C(00:00:00)) will leave the address in the address list till reboot
-                    - Value of none-static will leave the address in the address list forever and will be included in configuration export/backup
+                    Time interval after which the address will be removed from the address list
+                    specified by C(address-list) parameter. Used in conjunction with
+                    C(add-dst-to-address-list) or C(add-src-to-address-list) actions
+                    - Value of none-dynamic (C(00:00:00)) will leave the address in the address list
+                    till reboot
+                    - Value of none-static will leave the address in the address list forever and
+                    will be included in configuration export/backup
             chain:
                 type: str
                 description: |
-                    Specifies to which chain rule will be added. If the input does not match the name of an already defined chain, a new chain will be created.
+                    Specifies to which chain rule will be added. If the input does not match the
+                    name of an already defined chain, a new chain will be created.
             comment:
                 type: str
                 description: |
@@ -85,11 +100,13 @@ options:
             dst_address:
                 type: str
                 description: |
-                    Matches packets which destination is equal to specified IP or falls into specified IP range.
+                    Matches packets which destination is equal to specified IP or falls into
+                    specified IP range.
             dst_address_list:
                 type: str
                 description: |
-                    Matches destination address of a packet against user-defined L( address list,/wiki/Manual:IP/Firewall/Address_list)
+                    Matches destination address of a packet against user-defined L( address
+                    list,/wiki/Manual:IP/Firewall/Address_list)
             dst_address_type:
                 type: str
                 choices:
@@ -107,12 +124,19 @@ options:
             dst_limit:
                 type: int
                 description: |
-                    Matches packets until a given rate is exceeded. Rate is defined as packets per time interval. As opposed to the limit matcher, every flow has its own limit. Flow is defined by mode parameter. Parameters are written in following format: C(count[/time],burst,mode[/expire]).
+                    Matches packets until a given rate is exceeded. Rate is defined as packets per
+                    time interval. As opposed to the limit matcher, every flow has its own limit.
+                    Flow is defined by mode parameter. Parameters are written in following format:
+                    C(count[/time],burst,mode[/expire]).
                     - count - packet count per time interval per flow to match
-                    - time - specifies the time interval in which the packet count per flow cannot be exceeded (optional, 1s will be used if not specified)
-                    - burst - initial number of packets per flow to match: this number gets recharged by one every C(time)/C(count), up to this number
-                    - mode - this parameter specifies what unique fields define flow (src-address, dst-address, src-and-dst-address, dst-address-and-port, addresses-and-dst-port)
-                    - expire - specifies interval after which flow with no packets will be allowed to be deleted (optional)
+                    - time - specifies the time interval in which the packet count per flow cannot
+                    be exceeded (optional, 1s will be used if not specified)
+                    - burst - initial number of packets per flow to match: this number gets
+                    recharged by one every C(time)/C(count), up to this number
+                    - mode - this parameter specifies what unique fields define flow (src-address,
+                    dst-address, src-and-dst-address, dst-address-and-port, addresses-and-dst-port)
+                    - expire - specifies interval after which flow with no packets will be allowed
+                    to be deleted (optional)
             dst_port:
                 type: int
                 description: |
@@ -124,7 +148,9 @@ options:
                     - no
                 default: None
                 description: |
-                    Matches fragmented packets. First (starting) fragment does not count. If connection tracking is enabled there will be no fragments as system automatically assembles every packet
+                    Matches fragmented packets. First (starting) fragment does not count. If
+                    connection tracking is enabled there will be no fragments as system
+                    automatically assembles every packet
             hotspot:
                 type: str
                 choices:
@@ -134,7 +160,6 @@ options:
                     - local-dst
                     - to-client
                 default: None
-                description: |
             icmp_options:
                 type: int
                 description: |
@@ -142,7 +167,8 @@ options:
             in_bridge_port:
                 type: str
                 description: |
-                    Actual interface the packet has entered the router, if incoming interface is bridge. Works only if use-ip-firewall is enabled in bridge settings.
+                    Actual interface the packet has entered the router, if incoming interface is
+                    bridge. Works only if use-ip-firewall is enabled in bridge settings.
             in_interface:
                 type: str
                 description: |
@@ -150,11 +176,13 @@ options:
             in_interface_list:
                 type: str
                 description: |
-                    Set of interfaces defined in L( interface list,/wiki/Manual:Interface/List). Works the same as in-interface
+                    Set of interfaces defined in L( interface list,/wiki/Manual:Interface/List).
+                    Works the same as in-interface
             ingress_priority:
                 type: int
                 description: |
-                    Matches ingress priority of the packet. Priority may be derived from VLAN, WMM or MPLS EXP bit. L( Read more&gt;&gt;,/wiki/Manual:WMM)
+                    Matches ingress priority of the packet. Priority may be derived from VLAN, WMM
+                    or MPLS EXP bit. L( Read more&gt;&gt;,/wiki/Manual:WMM)
             ipsec_policy:
                 type: str
                 choices:
@@ -163,12 +191,17 @@ options:
                     - none
                 default: None
                 description: |
-                    Matches the policy used by IPsec. Value is written in following format: C(<b>direction, policy</b>). Direction is Used to select whether to match the policy used for decapsulation or the policy that will be used for encapsulation.
+                    Matches the policy used by IPsec. Value is written in following format:
+                    C(<b>direction, policy</b>). Direction is Used to select whether to match the
+                    policy used for decapsulation or the policy that will be used for encapsulation.
                     - in - valid in the PREROUTING chain
                     - out - valid in the OUTPUT chain
                     - ipsec - matches if the packet is subject to IPsec processing;
-                    - none - matches packet that is not subject to IPsec processing (for example, IpSec transport packet).
-                    For example, if router receives IPsec encapsulated Gre packet, then rule C(ipsec-policy=in,ipsec) will match Gre packet, but rule C(ipsec-policy=in,none) will match ESP packet.
+                    - none - matches packet that is not subject to IPsec processing (for example,
+                    IpSec transport packet).
+                    For example, if router receives IPsec encapsulated Gre packet, then rule
+                    C(ipsec-policy=in,ipsec) will match Gre packet, but rule C(ipsec-policy=in,none)
+                    will match ESP packet.
             ipv4_options:
                 type: str
                 choices:
@@ -187,8 +220,11 @@ options:
                 description: |
                     Matches IPv4 header options.
                     - any - match packet with at least one of the ipv4 options
-                    - loose-source-routing - match packets with loose source routing option. This option is used to route the internet datagram based on information supplied by the source
-                    - no-record-route - match packets with no record route option. This option is used to route the internet datagram based on information supplied by the source
+                    - loose-source-routing - match packets with loose source routing option. This
+                    option is used to route the internet datagram based on information supplied by
+                    the source
+                    - no-record-route - match packets with no record route option. This option is
+                    used to route the internet datagram based on information supplied by the source
                     - no-router-alert - match packets with no router alter option
                     - no-source-routing - match packets with no source routing option
                     - no-timestamp - match packets with no timestamp option
@@ -203,10 +239,14 @@ options:
             limit:
                 type: int
                 description: |
-                    Matches packets up to a limited rate (packet rate or bit rate). Rule using this matcher will match until this limit is reached. Parameters are written in following format: C(count[/time],burst:mode).
+                    Matches packets up to a limited rate (packet rate or bit rate). Rule using this
+                    matcher will match until this limit is reached. Parameters are written in
+                    following format: C(count[/time],burst:mode).
                     - count - packet or bit count per time interval to match
-                    - time - specifies the time interval in which the packet or bit count cannot be exceeded (optional, 1s will be used if not specified)
-                    - burst - initial number of packets or bits to match: this number gets recharged every 10ms so burst should be at least 1/100 of rate per second
+                    - time - specifies the time interval in which the packet or bit count cannot be
+                    exceeded (optional, 1s will be used if not specified)
+                    - burst - initial number of packets or bits to match: this number gets recharged
+                    every 10ms so burst should be at least 1/100 of rate per second
                     - mode - packet or bit mode
             log:
                 type: str
@@ -219,15 +259,18 @@ options:
             log_prefix:
                 type: str
                 description: |
-                    Adds specified text at the beginning of every log message. Applicable if C(action=log)
+                    Adds specified text at the beginning of every log message. Applicable if
+                    C(action=log)
             nth:
                 type: int
                 description: |
-                    Matches every nth packet. L( Read more &gt;&gt;,/wiki/Manual:NTH_in_RouterOS_3.x)
+                    Matches every nth packet. L( Read more
+                    &gt;&gt;,/wiki/Manual:NTH_in_RouterOS_3.x)
             out_bridge_port:
                 type: str
                 description: |
-                    Actual interface the packet is leaving the router, if outgoing interface is bridge. Works only if use-ip-firewall is enabled in bridge settings.
+                    Actual interface the packet is leaving the router, if outgoing interface is
+                    bridge. Works only if use-ip-firewall is enabled in bridge settings.
             out_interface:
                 type: str
                 description: |
@@ -235,7 +278,8 @@ options:
             out_interface_list:
                 type: str
                 description: |
-                    Set of interfaces defined in L( interface list,/wiki/Manual:Interface/List). Works the same as out-interface
+                    Set of interfaces defined in L( interface list,/wiki/Manual:Interface/List).
+                    Works the same as out-interface
             packet_size:
                 type: int
                 description: |
@@ -243,14 +287,16 @@ options:
             per_connection_classifier:
                 type: str
                 description: |
-                    PCC matcher allows to divide traffic into equal streams with ability to keep packets with specific set of options in one particular stream. L( Read more &gt;&gt;,/wiki/Manual:PCC)
+                    PCC matcher allows to divide traffic into equal streams with ability to keep
+                    packets with specific set of options in one particular stream. L( Read more
+                    &gt;&gt;,/wiki/Manual:PCC)
             port:
                 type: int
                 description: |
-                    Matches if any (source or destination) port matches the specified list of ports or port ranges. Applicable only if C(protocol) is TCP or UDP
+                    Matches if any (source or destination) port matches the specified list of ports
+                    or port ranges. Applicable only if C(protocol) is TCP or UDP
             priority:
                 type: int
-                description: |
             protocol:
                 type: str
                 default: tcp
@@ -259,10 +305,14 @@ options:
             psd:
                 type: int
                 description: |
-                    Attempts to detect TCP and UDP scans. Parameters are in following format C(WeightThreshold, DelayThreshold, LowPortWeight, HighPortWeight)
-                    - WeightThreshold - total weight of the latest TCP/UDP packets with different destination ports coming from the same host to be treated as port scan sequence
-                    - DelayThreshold - delay for the packets with different destination ports coming from the same host to be treated as possible port scan subsequence
-                    - LowPortWeight - weight of the packets with privileged (&lt;1024) destination port
+                    Attempts to detect TCP and UDP scans. Parameters are in following format
+                    C(WeightThreshold, DelayThreshold, LowPortWeight, HighPortWeight)
+                    - WeightThreshold - total weight of the latest TCP/UDP packets with different
+                    destination ports coming from the same host to be treated as port scan sequence
+                    - DelayThreshold - delay for the packets with different destination ports coming
+                    from the same host to be treated as possible port scan subsequence
+                    - LowPortWeight - weight of the packets with privileged (&lt;1024) destination
+                    port
                     - HighPortWeight - weight of the packet with non-priviliged destination port
             random:
                 type: int
@@ -271,11 +321,13 @@ options:
             src_address:
                 type: str
                 description: |
-                    Matches packets which source is equal to specified IP or falls into specified IP range.
+                    Matches packets which source is equal to specified IP or falls into specified IP
+                    range.
             src_address_list:
                 type: str
                 description: |
-                    Matches source address of a packet against user-defined L( address list,/wiki/Manual:IP/Firewall/Address_list)
+                    Matches source address of a packet against user-defined L( address
+                    list,/wiki/Manual:IP/Firewall/Address_list)
             src_address_type:
                 type: str
                 choices:
@@ -293,7 +345,8 @@ options:
             src_port:
                 type: int
                 description: |
-                    List of source ports and ranges of source ports. Applicable only if protocol is TCP or UDP.
+                    List of source ports and ranges of source ports. Applicable only if protocol is
+                    TCP or UDP.
             src_mac_address:
                 type: str
                 description: |
@@ -327,7 +380,10 @@ options:
             tls_host:
                 type: str
                 description: |
-                    Allows to match traffic based on TLS hostname. Accepts L(GLOB syntax,https://en.wikipedia.org/wiki/Glob_(programming)) for wildcard matching. Note that matcher will not be able to match hostname if TLS handshake frame is fragmented into multiple TCP segments (packets).
+                    Allows to match traffic based on TLS hostname. Accepts L(GLOB
+                    syntax,https://en.wikipedia.org/wiki/Glob_(programming)) for wildcard matching.
+                    Note that matcher will not be able to match hostname if TLS handshake frame is
+                    fragmented into multiple TCP segments (packets).
             ttl:
                 type: int
                 description: |

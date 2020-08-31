@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_dhcp_network
+short_description: Manage configuration for C(/ip dhcp-server network)
+description: This M(ros_dhcp_network) module provides management for RouterOS C(/ip dhcp-server network).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_dhcp_network) will update existing C(/ip dhcp-server network) configuration, or create new C(/ip dhcp-server network) when resource not found
-            - I(replaced) M(ros_dhcp_network) will restore existing C(/ip dhcp-server network) configuration to its default value, then update existing resource with the new configuration. If the resource C(/ip dhcp-server network) not found, M(ros_dhcp_network) will create resource in C(/ip dhcp-server network)
-            - I(overridden) M(ros_dhcp_network) will remove any resource in C(/ip dhcp-server network) first, and then create new C(/ip dhcp-server network) resources.
-            - I(deleted) M({module}) when found module will delete C(/ip dhcp-server network)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_dhcp_network) will update existing C(/ip dhcp-server network) configuration
+            -  When Resource Not Exists:
+               *  M(ros_dhcp_network) will create new C(/ip dhcp-server network),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_dhcp_network) will restore related C(/ip dhcp-server network) to its default value.
+               *  M(ros_dhcp_network) will update C(/ip dhcp-server network) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_dhcp_network) will create new C(/ip dhcp-server network)
+            Overridden:
+            *  M(ros_dhcp_network) will remove any existing item in C(/ip dhcp-server network)
+            *  M(ros_dhcp_network) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_dhcp_network) will remove that item from C(/ip dhcp-server network) configuration
     config:
         description: A dictionary for L(ros_dhcp_network)
         type: list
@@ -42,7 +57,8 @@ options:
             caps_manager:
                 type: str
                 description: |
-                    Comma-separated list of IP addresses for one or more CAPsMAN system managers. DHCP Option 138 (capwap) will be used.
+                    Comma-separated list of IP addresses for one or more CAPsMAN system managers.
+                    DHCP Option 138 (capwap) will be used.
             dhcp_option:
                 type: str
                 description: |
@@ -58,15 +74,21 @@ options:
                     - yes
                     - no
                 description: |
-                    If set, then DHCP Server will not pass dynamic DNS servers configured on the router to the DHCP clients if no DNS Server in dns-server is set. By default if there are no DNS Servers configured, then the dynamic DNS Servers will be passed to DHCP clients.
+                    If set, then DHCP Server will not pass dynamic DNS servers configured on the
+                    router to the DHCP clients if no DNS Server in dns-server is set. By default if
+                    there are no DNS Servers configured, then the dynamic DNS Servers will be passed
+                    to DHCP clients.
             dns_server:
                 type: str
                 description: |
-                    the DHCP client will use these as the default DNS servers. Two comma-separated DNS servers can be specified to be used by the DHCP client as primary and secondary DNS servers
+                    the DHCP client will use these as the default DNS servers. Two comma-separated
+                    DNS servers can be specified to be used by the DHCP client as primary and
+                    secondary DNS servers
             domain:
                 type: str
                 description: |
-                    The DHCP client will use this as the DNS domain setting for the network adapter.
+                    The DHCP client will use this as the DNS domain setting for the network
+                    adapter.
             gateway:
                 type: str
                 default: 0.0.0.0
@@ -75,7 +97,8 @@ options:
             netmask:
                 type: str
                 description: |
-                    The actual network mask to be used by DHCP client. If set to 0 - netmask from network address will be used.
+                    The actual network mask to be used by DHCP client. If set to 0 - netmask from
+                    network address will be used.
             next_server:
                 type: str
                 description: |
@@ -83,11 +106,15 @@ options:
             ntp_server:
                 type: str
                 description: |
-                    the DHCP client will use these as the default NTP servers. Two comma-separated NTP servers can be specified to be used by the DHCP client as primary and secondary NTP servers
+                    the DHCP client will use these as the default NTP servers. Two comma-separated
+                    NTP servers can be specified to be used by the DHCP client as primary and
+                    secondary NTP servers
             wins_server:
                 type: str
                 description: |
-                    The Windows DHCP client will use these as the default WINS servers. Two comma-separated WINS servers can be specified to be used by the DHCP client as primary and secondary WINS servers
+                    The Windows DHCP client will use these as the default WINS servers. Two
+                    comma-separated WINS servers can be specified to be used by the DHCP client as
+                    primary and secondary WINS servers
 
 """
 

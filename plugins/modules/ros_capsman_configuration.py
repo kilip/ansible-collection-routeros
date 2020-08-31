@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_capsman_configuration
+short_description: Manage configuration for C(/caps-man configuration)
+description: This M(ros_capsman_configuration) module provides management for RouterOS C(/caps-man configuration).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_capsman_configuration) will update existing C(/caps-man configuration) configuration, or create new C(/caps-man configuration) when resource not found
-            - I(replaced) M(ros_capsman_configuration) will restore existing C(/caps-man configuration) configuration to its default value, then update existing resource with the new configuration. If the resource C(/caps-man configuration) not found, M(ros_capsman_configuration) will create resource in C(/caps-man configuration)
-            - I(overridden) M(ros_capsman_configuration) will remove any resource in C(/caps-man configuration) first, and then create new C(/caps-man configuration) resources.
-            - I(deleted) M({module}) when found module will delete C(/caps-man configuration)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_capsman_configuration) will update existing C(/caps-man configuration) configuration
+            -  When Resource Not Exists:
+               *  M(ros_capsman_configuration) will create new C(/caps-man configuration),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_capsman_configuration) will restore related C(/caps-man configuration) to its default value.
+               *  M(ros_capsman_configuration) will update C(/caps-man configuration) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_capsman_configuration) will create new C(/caps-man configuration)
+            Overridden:
+            *  M(ros_capsman_configuration) will remove any existing item in C(/caps-man configuration)
+            *  M(ros_capsman_configuration) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_capsman_configuration) will remove that item from C(/caps-man configuration) configuration
     config:
         description: A dictionary for L(ros_capsman_configuration)
         type: list
@@ -75,15 +90,18 @@ options:
                     - disabled
                 default: None
                 description: |
-                    Extension channel configuration. (E.g. Ce = extension channel is above Control channel, eC = extension channel is below Control channel)
+                    Extension channel configuration. (E.g. Ce = extension channel is above Control
+                    channel, eC = extension channel is below Control channel)
             channel_frequency:
                 type: int
                 description: |
-                    Channel frequency value in MHz on which AP will operate. If left blank, CAPsMAN will automatically determine the best frequency that is least occupied.
+                    Channel frequency value in MHz on which AP will operate. If left blank, CAPsMAN
+                    will automatically determine the best frequency that is least occupied.
             channel_reselect_interval:
                 type: str
                 description: |
-                    Interval after which least occupied frequency is chosen. Works only if channel.frequency is left blank.
+                    Interval after which least occupied frequency is chosen. Works only if
+                    channel.frequency is left blank.
             channel_save_selected:
                 type: str
                 default: no
@@ -91,12 +109,14 @@ options:
                     - yes
                     - no
                 description: |
-                    If channel frequency is chosen automatically and channel.reselect-interval is used, then saves the last picked frequency.
+                    If channel frequency is chosen automatically and channel.reselect-interval is
+                    used, then saves the last picked frequency.
             channel_secondary_frequency:
                 type: str
                 default: auto
                 description: |
-                    Specifies the second frequency that will be used for 80+80MHz configuration. Set it to Disabled in order to disable 80+80MHz capability.
+                    Specifies the second frequency that will be used for 80+80MHz configuration. Set
+                    it to Disabled in order to disable 80+80MHz capability.
             channel_skip_dfs_channels:
                 type: str
                 default: no
@@ -108,7 +128,9 @@ options:
             channel_tx_power:
                 type: int
                 description: |
-                    TX Power for CAP interface (for the whole interface not for individual chains) in dBm. It is not possible to set higher than allowed by country regulations or interface. By default max allowed by country or interface is used.
+                    TX Power for CAP interface (for the whole interface not for individual chains)
+                    in dBm. It is not possible to set higher than allowed by country regulations or
+                    interface. By default max allowed by country or interface is used.
             channel_width:
                 type: str
                 description: |
@@ -127,7 +149,9 @@ options:
                     - country
                     - no_country_set
                 description: |
-                    Limits available bands, frequencies and maximum transmit power for each frequency. Also specifies default value of scan-list. Value no_country_set is an FCC compliant set of channels.
+                    Limits available bands, frequencies and maximum transmit power for each
+                    frequency. Also specifies default value of scan-list. Value no_country_set is
+                    an FCC compliant set of channels.
             datapath:
                 type: str
                 description: |
@@ -135,7 +159,8 @@ options:
             datapath_bridge:
                 type: str
                 description: |
-                    Bridge to which particular interface should be automatically added as port. Required only when local-forwarding is not used.
+                    Bridge to which particular interface should be automatically added as port.
+                    Required only when local-forwarding is not used.
             datapath_bridge_cost:
                 type: int
                 description: |
@@ -151,10 +176,11 @@ options:
                     - yes
                     - no
                 description: |
-                    controls if client-to-client forwarding between wireless clients connected to interface should be allowed, in local forwarding mode this function is performed by CAP, otherwise it is performed by CAPsMAN
+                    controls if client-to-client forwarding between wireless clients connected to
+                    interface should be allowed, in local forwarding mode this function is performed
+                    by CAP, otherwise it is performed by CAPsMAN
             datapath_interface_list:
                 type: str
-                description: |
             datapath_l2mtu:
                 type: str
                 description: |
@@ -166,8 +192,11 @@ options:
                     - yes
                     - no
                 description: |
-                    Controls forwarding mode. If disabled, all L2 and L3 data will be forwarded to CAPsMAN, and further forwarding decisions will be made only then.
-                    Note, if disabled, make sure that each CAP interface MAC Address that participates in the same broadcast domain is unique (including local MACs, like Bridge-MAC).
+                    Controls forwarding mode. If disabled, all L2 and L3 data will be forwarded to
+                    CAPsMAN, and further forwarding decisions will be made only then.
+                    Note, if disabled, make sure that each CAP interface MAC Address that
+                    participates in the same broadcast domain is unique (including local MACs, like
+                    Bridge-MAC).
             datapath_mtu:
                 type: str
                 description: |
@@ -187,16 +216,15 @@ options:
                     - use-tag
                 default: None
                 description: |
-                    Enables and specifies the type of VLAN tag to be assigned to the interface (causes all received data to get tagged with VLAN tag and allows the interface to only send out data tagged with given tag)
+                    Enables and specifies the type of VLAN tag to be assigned to the interface
+                    (causes all received data to get tagged with VLAN tag and allows the interface
+                    to only send out data tagged with given tag)
             disconnect_timeout:
                 type: str
-                description: |
             distance:
                 type: str
-                description: |
             frame_lifetime:
                 type: str
-                description: |
             guard_interval:
                 type: str
                 default: any
@@ -204,7 +232,9 @@ options:
                     - any
                     - long
                 description: |
-                    Whether to allow the use of short guard interval (refer to 802.11n MCS specification to see how this may affect throughput). "any" will use either short or long, depending on data rate, "long" will use long only.
+                    Whether to allow the use of short guard interval (refer to 802.11n MCS
+                    specification to see how this may affect throughput). "any" will use either
+                    short or long, depending on data rate, "long" will use long only.
             hide_ssid:
                 type: str
                 choices:
@@ -212,15 +242,18 @@ options:
                     - no
                 default: None
                 description: |
-                     - yes - AP does not include SSID in the beacon frames and does not reply to probe requests that have broadcast SSID.
-                    - no - AP includes SSID in the beacon frames and replies to probe requests that have broadcast SSID.
-                    This property has effect only in AP mode. Setting it to yes can remove this network from the list of wireless networks that are shown by some client software. Changing this setting does not improve the security of the wireless network, because SSID is included in other frames sent by the AP.
+                    - yes - AP does not include SSID in the beacon frames and does not reply to
+                    probe requests that have broadcast SSID.
+                    - no - AP includes SSID in the beacon frames and replies to probe requests that
+                    have broadcast SSID.
+                    This property has effect only in AP mode. Setting it to yes can remove this
+                    network from the list of wireless networks that are shown by some client
+                    software. Changing this setting does not improve the security of the wireless
+                    network, because SSID is included in other frames sent by the AP.
             hw_protection_mode:
                 type: str
-                description: |
             hw_retries:
                 type: str
-                description: |
             installation:
                 type: str
                 default: any
@@ -228,18 +261,19 @@ options:
                     - any
                     - indoor
                     - outdoor
-                description: |
             keepalive_frames:
                 type: str
                 default: enabled
                 choices:
                     - enabled
                     - disabled
-                description: |
             load_balancing_group:
                 type: str
                 description: |
-                    Tags the interface to the load balancing group. For a client to connect to interface in this group, the interface should have the same number of already connected clients as all other interfaces in the group or smaller. Useful in setups where ranges of CAPs mostly overlap.
+                    Tags the interface to the load balancing group. For a client to connect to
+                    interface in this group, the interface should have the same number of already
+                    connected clients as all other interfaces in the group or smaller. Useful in
+                    setups where ranges of CAPs mostly overlap.
             max_sta_count:
                 type: int
                 description: |
@@ -257,10 +291,17 @@ options:
                     - disabled
                     - full
                 description: |
-                    When set to full multicast packets will be sent with unicast destination MAC address, resolving L( multicast problem,/wiki/Manual:Multicast_detailed_example#Multicast_and_Wireless) on a wireless link. This option should be enabled only on the access point, clients should be configured in station-bridge mode. Available starting from v5.15.
-                    - disabled - disables the helper and sends multicast packets with multicast destination MAC addresses
-                    - full - all multicast packet mac address are changed to unicast mac addresses prior sending them out
-                    - default - default choice that currently is set to disabled. Value can be changed in future releases.
+                    When set to full multicast packets will be sent with unicast destination MAC
+                    address, resolving L( multicast
+                    problem,/wiki/Manual:Multicast_detailed_example#Multicast_and_Wireless) on a
+                    wireless link. This option should be enabled only on the access point, clients
+                    should be configured in station-bridge mode. Available starting from v5.15.
+                    - disabled - disables the helper and sends multicast packets with multicast
+                    destination MAC addresses
+                    - full - all multicast packet mac address are changed to unicast mac addresses
+                    prior sending them out
+                    - default - default choice that currently is set to disabled. Value can be
+                    changed in future releases.
             name:
                 type: str
                 required: True
@@ -286,7 +327,6 @@ options:
                     - 48mbps
                     - 54mbps
                 default: None
-                description: |
             rates_supported:
                 type: str
                 choices:
@@ -303,7 +343,6 @@ options:
                     - 48mbps
                     - 54mbps
                 default: None
-                description: |
             rates_ht_basic_mcs:
                 type: str
                 choices:
@@ -335,7 +374,9 @@ options:
                     - mcs-23)
                 default: None
                 description: |
-                    L(Modulation and Coding Schemes,http://en.wikipedia.org/wiki/IEEE_802.11n-2009#Data_rates) that every connecting client must support. Refer to 802.11n for MCS specification.
+                    L(Modulation and Coding
+                    Schemes,http://en.wikipedia.org/wiki/IEEE_802.11n-2009#Data_rates) that every
+                    connecting client must support. Refer to 802.11n for MCS specification.
             rates_ht_supported_mcs:
                 type: str
                 choices:
@@ -367,7 +408,9 @@ options:
                     - mcs-23)
                 default: None
                 description: |
-                    L(Modulation and Coding Schemes,http://en.wikipedia.org/wiki/IEEE_802.11n-2009#Data_rates) that this device advertises as supported. Refer to 802.11n for MCS specification.
+                    L(Modulation and Coding
+                    Schemes,http://en.wikipedia.org/wiki/IEEE_802.11n-2009#Data_rates) that this
+                    device advertises as supported. Refer to 802.11n for MCS specification.
             rates_vht_basic_mcs:
                 type: str
                 choices:
@@ -380,7 +423,10 @@ options:
                     - 0-9
                 default: None
                 description: |
-                    L(Modulation and Coding Schemes,http://en.wikipedia.org/wiki/IEEE_802.11ac#Data_rates_and_speed) that every connecting client must support. Refer to 802.11ac for MCS specification. You can set MCS interval for each of Spatial Stream
+                    L(Modulation and Coding
+                    Schemes,http://en.wikipedia.org/wiki/IEEE_802.11ac#Data_rates_and_speed) that
+                    every connecting client must support. Refer to 802.11ac for MCS specification.
+                    You can set MCS interval for each of Spatial Stream
                     - none - will not use selected Spatial Stream
                     - MCS 0-7 - client must support MCS-0 to MCS-7
                     - MCS 0-8 - client must support MCS-0 to MCS-8
@@ -397,7 +443,10 @@ options:
                     - 0-9
                 default: None
                 description: |
-                    L(Modulation and Coding Schemes,http://en.wikipedia.org/wiki/IEEE_802.11ac#Data_rates_and_speed) that this device advertises as supported. Refer to 802.11ac for MCS specification. You can set MCS interval for each of Spatial Stream
+                    L(Modulation and Coding
+                    Schemes,http://en.wikipedia.org/wiki/IEEE_802.11ac#Data_rates_and_speed) that
+                    this device advertises as supported. Refer to 802.11ac for MCS specification.
+                    You can set MCS interval for each of Spatial Stream
                     - none - will not use selected Spatial Stream
                     - MCS 0-7 - devices will advertise as supported MCS-0 to MCS-7
                     - MCS 0-8 - devices will advertise as supported MCS-0 to MCS-8
@@ -416,7 +465,6 @@ options:
                     Specify the type of Authentication from wpa-psk, wpa2-psk, wpa-eap or wpa2-eap
             security_disable_pmkid:
                 type: str
-                description: |
             security_eap_methods:
                 type: str
                 choices:
@@ -424,12 +472,14 @@ options:
                     - passthrough
                 default: None
                 description: |
-                     - eap-tls - Use built-in EAP TLS authentication.
-                    - passthrough - Access point will relay authentication process to the RADIUS server.
+                    - eap-tls - Use built-in EAP TLS authentication.
+                    - passthrough - Access point will relay authentication process to the RADIUS
+                    server.
             security_eap_radius_accounting:
                 type: str
                 description: |
-                    specifies if RADIUS traffic accounting should be used if RADIUS authentication gets done for this client
+                    specifies if RADIUS traffic accounting should be used if RADIUS authentication
+                    gets done for this client
             security_encryption:
                 type: list
                 elements: str
@@ -446,14 +496,22 @@ options:
                     - aes-ccm
                     - tkip
                 description: |
-                    Access Point advertises one of these ciphers, multiple values can be selected. Access Point uses it to encrypt all broadcast and multicast frames. Client attempts connection only to Access Points that use one of the specified group ciphers.
-                    - tkip - Temporal Key Integrity Protocol - encryption protocol, compatible with legacy WEP equipment, but enhanced to correct some of the WEP flaws.
-                    - aes-ccm - more secure WPA encryption protocol, based on the reliable AES (Advanced Encryption Standard). Networks free of WEP legacy should use only this cipher.
+                    Access Point advertises one of these ciphers, multiple values can be selected.
+                    Access Point uses it to encrypt all broadcast and multicast frames. Client
+                    attempts connection only to Access Points that use one of the specified group
+                    ciphers.
+                    - tkip - Temporal Key Integrity Protocol - encryption protocol, compatible with
+                    legacy WEP equipment, but enhanced to correct some of the WEP flaws.
+                    - aes-ccm - more secure WPA encryption protocol, based on the reliable AES
+                    (Advanced Encryption Standard). Networks free of WEP legacy should use only this
+                    cipher.
             security_group_key_update:
                 type: str
                 default: 5m
                 description: |
-                    Controls how often Access Point updates the group key. This key is used to encrypt all broadcast and multicast frames. property only has effect for Access Points.
+                    Controls how often Access Point updates the group key. This key is used to
+                    encrypt all broadcast and multicast frames. property only has effect for Access
+                    Points.
             security_passphrase:
                 type: str
                 description: |
@@ -465,7 +523,8 @@ options:
                     - name
                 default: None
                 description: |
-                    Access Point always needs a certificate when security.tls-mode is set to value other than no-certificates.
+                    Access Point always needs a certificate when security.tls-mode is set to value
+                    other than no-certificates.
             security_tls_mode:
                 type: str
                 choices:
@@ -476,14 +535,23 @@ options:
                 default: None
                 description: |
                     This property has effect only when security.eap-methods contains eap-tls.
-                    - verify-certificate - Require remote device to have valid certificate. Check that it is signed by known certificate authority. No additional identity verification is done. Certificate may include information about time period during which it is valid. If router has incorrect time and date, it may reject valid certificate because routers clock is outside that period. See also the L( Certificates,/wiki/Manual:System/Certificates) configuration.
-                    - dont-verify-certificate - Do not check certificate of the remote device. Access Point will not require client to provide certificate.
-                    - no-certificates - Do not use certificates. TLS session is established using 2048 bit anonymous Diffie-Hellman key exchange.
-                    - verify-certificate-with-crl - Same as verify-certificate but also checks if the certificate is valid by checking the Certificate Revocation List.
+                    - verify-certificate - Require remote device to have valid certificate. Check
+                    that it is signed by known certificate authority. No additional identity
+                    verification is done. Certificate may include information about time period
+                    during which it is valid. If router has incorrect time and date, it may reject
+                    valid certificate because routers clock is outside that period. See also the L(
+                    Certificates,/wiki/Manual:System/Certificates) configuration.
+                    - dont-verify-certificate - Do not check certificate of the remote device.
+                    Access Point will not require client to provide certificate.
+                    - no-certificates - Do not use certificates. TLS session is established using
+                    2048 bit anonymous Diffie-Hellman key exchange.
+                    - verify-certificate-with-crl - Same as verify-certificate but also checks if
+                    the certificate is valid by checking the Certificate Revocation List.
             ssid:
                 type: str
                 description: |
-                    SSID (service set identifier) is a name broadcast in the beacons that identifies wireless network.
+                    SSID (service set identifier) is a name broadcast in the beacons that identifies
+                    wireless network.
             tx_chains:
                 type: str
                 description: |

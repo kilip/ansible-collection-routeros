@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_capsman_channels
+short_description: Manage configuration for C(/caps-man channels)
+description: This M(ros_capsman_channels) module provides management for RouterOS C(/caps-man channels).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_capsman_channels) will update existing C(/caps-man channels) configuration, or create new C(/caps-man channels) when resource not found
-            - I(replaced) M(ros_capsman_channels) will restore existing C(/caps-man channels) configuration to its default value, then update existing resource with the new configuration. If the resource C(/caps-man channels) not found, M(ros_capsman_channels) will create resource in C(/caps-man channels)
-            - I(overridden) M(ros_capsman_channels) will remove any resource in C(/caps-man channels) first, and then create new C(/caps-man channels) resources.
-            - I(deleted) M({module}) when found module will delete C(/caps-man channels)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_capsman_channels) will update existing C(/caps-man channels) configuration
+            -  When Resource Not Exists:
+               *  M(ros_capsman_channels) will create new C(/caps-man channels),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_capsman_channels) will restore related C(/caps-man channels) to its default value.
+               *  M(ros_capsman_channels) will update C(/caps-man channels) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_capsman_channels) will create new C(/caps-man channels)
+            Overridden:
+            *  M(ros_capsman_channels) will remove any existing item in C(/caps-man channels)
+            *  M(ros_capsman_channels) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_capsman_channels) will remove that item from C(/caps-man channels) configuration
     config:
         description: A dictionary for L(ros_capsman_channels)
         type: list
@@ -44,7 +59,8 @@ options:
                     - 5ghz-onlyn
                 default: None
                 description: |
-                    Define operational radio frequency band and mode taken from hardware capability of wireless card
+                    Define operational radio frequency band and mode taken from hardware capability
+                    of wireless card
             comment:
                 type: str
                 description: |
@@ -61,7 +77,8 @@ options:
                     - disabled
                 default: None
                 description: |
-                    Extension channel configuration. (E.g. Ce = extension channel is above Control channel, eC = extension channel is below Control channel)
+                    Extension channel configuration. (E.g. Ce = extension channel is above Control
+                    channel, eC = extension channel is below Control channel)
             frequency:
                 type: int
                 description: |
@@ -74,7 +91,9 @@ options:
             tx_power:
                 type: int
                 description: |
-                    TX Power for CAP interface (for the whole interface not for individual chains) in dBm. It is not possible to set higher than allowed by country regulations or interface. By default max allowed by country or interface is used.
+                    TX Power for CAP interface (for the whole interface not for individual chains)
+                    in dBm. It is not possible to set higher than allowed by country regulations or
+                    interface. By default max allowed by country or interface is used.
             width:
                 type: str
                 description: |
@@ -83,7 +102,9 @@ options:
                 type: str
                 default: yes
                 description: |
-                    Saves selected channel for the CAP Radio - will select this channel after the CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for this CAP.
+                    Saves selected channel for the CAP Radio - will select this channel after the
+                    CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for
+                    this CAP.
 
 """
 

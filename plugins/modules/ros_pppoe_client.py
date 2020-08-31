@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_pppoe_client
+short_description: Manage configuration for C(/interface pppoe-client)
+description: This M(ros_pppoe_client) module provides management for RouterOS C(/interface pppoe-client).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_pppoe_client) will update existing C(/interface pppoe-client) configuration, or create new C(/interface pppoe-client) when resource not found
-            - I(replaced) M(ros_pppoe_client) will restore existing C(/interface pppoe-client) configuration to its default value, then update existing resource with the new configuration. If the resource C(/interface pppoe-client) not found, M(ros_pppoe_client) will create resource in C(/interface pppoe-client)
-            - I(overridden) M(ros_pppoe_client) will remove any resource in C(/interface pppoe-client) first, and then create new C(/interface pppoe-client) resources.
-            - I(deleted) M({module}) when found module will delete C(/interface pppoe-client)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_pppoe_client) will update existing C(/interface pppoe-client) configuration
+            -  When Resource Not Exists:
+               *  M(ros_pppoe_client) will create new C(/interface pppoe-client),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_pppoe_client) will restore related C(/interface pppoe-client) to its default value.
+               *  M(ros_pppoe_client) will update C(/interface pppoe-client) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_pppoe_client) will create new C(/interface pppoe-client)
+            Overridden:
+            *  M(ros_pppoe_client) will remove any existing item in C(/interface pppoe-client)
+            *  M(ros_pppoe_client) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_pppoe_client) will remove that item from C(/interface pppoe-client) configuration
     config:
         description: A dictionary for L(ros_pppoe_client)
         type: list
@@ -34,7 +49,8 @@ options:
             ac_name:
                 type: str
                 description: |
-                    Access Concentrator name, this may be left blank and the client will connect to any access concentrator on the broadcast domain
+                    Access Concentrator name, this may be left blank and the client will connect to
+                    any access concentrator on the broadcast domain
             add_default_route:
                 type: str
                 default: no
@@ -61,7 +77,8 @@ options:
             default_route_distance:
                 type: bytes
                 description: |
-                    sets distance value applied to auto created default route, if add-default-route is also selected
+                    sets distance value applied to auto created default route, if add-default-route
+                    is also selected
             dial_on_demand:
                 type: str
                 default: no
@@ -69,7 +86,9 @@ options:
                     - yes
                     - no
                 description: |
-                    connects to AC only when outbound traffic is generated. If selected, then route with gateway address from 10.112.112.0/24 network will be added while connection is not established.
+                    connects to AC only when outbound traffic is generated. If selected, then route
+                    with gateway address from 10.112.112.0/24 network will be added while connection
+                    is not established.
             interface:
                 type: str
                 description: |
@@ -93,7 +112,11 @@ options:
                 ignore: true
                 default: disabled
                 description: |
-                    maximum packet size that can be received on the link. If a packet is bigger than tunnel MTU, it will be split into multiple packets, allowing full size IP or Ethernet packets to be sent over the tunnel. C(<a href="/wiki/Manual:MLPPP_over_single_and_multiple_links" title="Manual:MLPPP over single and multiple links"> Read more >></a>)
+                    maximum packet size that can be received on the link. If a packet is bigger than
+                    tunnel MTU, it will be split into multiple packets, allowing full size IP or
+                    Ethernet packets to be sent over the tunnel. C(<a
+                    href="/wiki/Manual:MLPPP_over_single_and_multiple_links" title="Manual:MLPPP
+                    over single and multiple links"> Read more >></a>)
             name:
                 type: str
                 required: True
@@ -107,11 +130,13 @@ options:
                 type: str
                 default: default
                 description: |
-                    default profile for the connection defined in L( /ppp profiles,/wiki/PPP_AAA#User_Profiles)
+                    default profile for the connection defined in L( /ppp
+                    profiles,/wiki/PPP_AAA#User_Profiles)
             service_name:
                 type: str
                 description: |
-                    specifies the service name set on the access concentrator, can be left blank to connect to any PPPoE server
+                    specifies the service name set on the access concentrator, can be left blank to
+                    connect to any PPPoE server
             use_peer_dns:
                 type: str
                 default: no

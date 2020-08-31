@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_firewall_address_list
+short_description: Manage configuration for C(/ip firewall address-list)
+description: This M(ros_firewall_address_list) module provides management for RouterOS C(/ip firewall address-list).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -21,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_firewall_address_list) will update existing C(/ip firewall address-list) configuration, or create new C(/ip firewall address-list) when resource not found
-            - I(replaced) M(ros_firewall_address_list) will restore existing C(/ip firewall address-list) configuration to its default value, then update existing resource with the new configuration. If the resource C(/ip firewall address-list) not found, M(ros_firewall_address_list) will create resource in C(/ip firewall address-list)
-            - I(overridden) M(ros_firewall_address_list) will remove any resource in C(/ip firewall address-list) first, and then create new C(/ip firewall address-list) resources.
-            - I(deleted) M({module}) when found module will delete C(/ip firewall address-list)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_firewall_address_list) will update existing C(/ip firewall address-list) configuration
+            -  When Resource Not Exists:
+               *  M(ros_firewall_address_list) will create new C(/ip firewall address-list),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_firewall_address_list) will restore related C(/ip firewall address-list) to its default value.
+               *  M(ros_firewall_address_list) will update C(/ip firewall address-list) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_firewall_address_list) will create new C(/ip firewall address-list)
+            Overridden:
+            *  M(ros_firewall_address_list) will remove any existing item in C(/ip firewall address-list)
+            *  M(ros_firewall_address_list) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_firewall_address_list) will remove that item from C(/ip firewall address-list) configuration
     config:
         description: A dictionary for L(ros_firewall_address_list)
         type: list
@@ -35,7 +50,9 @@ options:
                 type: str
                 required: True
                 description: |
-                    A single IP address or range of IPs to add to address list or DNS name. You can input for example, 192.168.0.0-192.168.1.255 and it will auto modify the typed entry to 192.168.0.0/23 on saving.
+                    A single IP address or range of IPs to add to address list or DNS name. You can
+                    input for example, 192.168.0.0-192.168.1.255 and it will auto modify the typed
+                    entry to 192.168.0.0/23 on saving.
             list:
                 type: str
                 required: True
@@ -44,7 +61,8 @@ options:
             timeout:
                 type: str
                 description: |
-                    Time after address will be removed from address list. If timeout is not specified, the address will be stored into the address list permanently.
+                    Time after address will be removed from address list. If timeout is not
+                    specified, the address will be stored into the address list permanently.
 
 """
 

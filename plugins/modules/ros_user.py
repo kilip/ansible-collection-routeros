@@ -23,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_user) will update existing C(/user) configuration, or create new C(/user) when resource not found
-            - I(replaced) M(ros_user) will restore existing C(/user) configuration to its default value, then update existing resource with the new configuration. If the resource C(/user) not found, M(ros_user) will create resource in C(/user)
-            - I(overridden) M(ros_user) will remove any resource in C(/user) first, and then create new C(/user) resources.
-            - I(deleted) M({module}) when found module will delete C(/user)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_user) will update existing C(/user) configuration
+            -  When Resource Not Exists:
+               *  M(ros_user) will create new C(/user),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_user) will restore related C(/user) to its default value.
+               *  M(ros_user) will update C(/user) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_user) will create new C(/user)
+            Overridden:
+            *  M(ros_user) will remove any existing item in C(/user)
+            *  M(ros_user) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_user) will remove that item from C(/user) configuration
     config:
         description: A dictionary for L(ros_user)
         type: list
@@ -45,11 +58,14 @@ options:
                 type: str
                 required: True
                 description: |
-                    User name. Although it must start with an alphanumeric character, it may contain "", "_", "." and "@" symbols.
+                    User name. Although it must start with an alphanumeric character, it may contain
+                    "", "_", "." and "@" symbols.
             password:
                 type: str
                 description: |
-                    User password. If not specified, it is left blank (hit [Enter] when logging in). It conforms to standard Unix characteristics of passwords and may contain letters, digits, "" and "_" symbols.
+                    User password. If not specified, it is left blank (hit [Enter] when logging
+                    in). It conforms to standard Unix characteristics of passwords and may contain
+                    letters, digits, "" and "_" symbols.
             last_logged_in:
                 type: str
                 description: |

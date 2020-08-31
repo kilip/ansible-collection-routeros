@@ -23,6 +23,7 @@ class RouteResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
+                "gateway": {"type": "str"},
                 "check_gateway": {
                     "type": "str",
                     "choices": ["arp", "ping"],
@@ -31,11 +32,6 @@ class RouteResource(ResourceBase):
                 "comment": {"type": "str"},
                 "distance": {"type": "str", "default": "1"},
                 "dst_address": {"type": "str", "default": "0.0.0.0/0"},
-                "gateway": {
-                    "type": "str",
-                    "choices": ", ip | string, [..]",
-                    "default": None,
-                },
                 "pref_src": {"type": "str"},
                 "route_tag": {"type": "int"},
                 "routing_mark": {"type": "str"},

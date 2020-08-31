@@ -11,6 +11,8 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_static_dns
+short_description: Manage configuration for C(/ip dns static)
+description: This M(ros_static_dns) module provides management for RouterOS C(/ip dns static).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_documentation: DNS Cache Configuration
@@ -22,11 +24,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_static_dns) will update existing C(/ip dns static) configuration, or create new C(/ip dns static) when resource not found
-            - I(replaced) M(ros_static_dns) will restore existing C(/ip dns static) configuration to its default value, then update existing resource with the new configuration. If the resource C(/ip dns static) not found, M(ros_static_dns) will create resource in C(/ip dns static)
-            - I(overridden) M(ros_static_dns) will remove any resource in C(/ip dns static) first, and then create new C(/ip dns static) resources.
-            - I(deleted) M({module}) when found module will delete C(/ip dns static)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_static_dns) will update existing C(/ip dns static) configuration
+            -  When Resource Not Exists:
+               *  M(ros_static_dns) will create new C(/ip dns static),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_static_dns) will restore related C(/ip dns static) to its default value.
+               *  M(ros_static_dns) will update C(/ip dns static) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_static_dns) will create new C(/ip dns static)
+            Overridden:
+            *  M(ros_static_dns) will remove any existing item in C(/ip dns static)
+            *  M(ros_static_dns) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_static_dns) will remove that item from C(/ip dns static) configuration
     config:
         description: A dictionary for L(ros_static_dns)
         type: list
@@ -52,7 +67,8 @@ options:
             type:
                 type: str
                 description: |
-                    type of the DNS record. Available values are: A, AAAA, CNAME, FWD, MX, NS, NXDOMAIN, SRV, TXT
+                    type of the DNS record. Available values are: A, AAAA, CNAME, FWD, MX, NS,
+                    NXDOMAIN, SRV, TXT
 
 """
 

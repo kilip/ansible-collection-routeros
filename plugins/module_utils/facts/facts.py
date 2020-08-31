@@ -22,7 +22,7 @@ class Facts(FactsBase):
     VALID_RESOURCE_SUBSETS = frozenset(RESOURCE_SUBSETS.keys())
 
     def __init__(self, module):
-        super(Facts, self).__init__(module)
+        FactsBase.__init__(self, module)
 
     def get_facts(
         self, legacy_facts_type=None, resource_facts_type=None, data=None

@@ -13,7 +13,9 @@ DOCUMENTATION = """
 module: ros_vlan
 short_description: VLAN Interface Configuration
 description: |
-    Virtual Local Area Network (VLAN) is a Layer 2 method that allows multiple Virtual LANs on a single physical interface (ethernet, wireless, etc.), giving the ability to segregate LANs efficiently.
+    Virtual Local Area Network (VLAN) is a Layer 2 method
+    that allows multiple Virtual LANs on a single physical interface (ethernet, wireless, etc.),
+    giving the ability to segregate LANs efficiently.
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
@@ -24,11 +26,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_vlan) will update existing C(/interface vlan) configuration, or create new C(/interface vlan) when resource not found
-            - I(replaced) M(ros_vlan) will restore existing C(/interface vlan) configuration to its default value, then update existing resource with the new configuration. If the resource C(/interface vlan) not found, M(ros_vlan) will create resource in C(/interface vlan)
-            - I(overridden) M(ros_vlan) will remove any resource in C(/interface vlan) first, and then create new C(/interface vlan) resources.
-            - I(deleted) M({module}) when found module will delete C(/interface vlan)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_vlan) will update existing C(/interface vlan) configuration
+            -  When Resource Not Exists:
+               *  M(ros_vlan) will create new C(/interface vlan),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_vlan) will restore related C(/interface vlan) to its default value.
+               *  M(ros_vlan) will update C(/interface vlan) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_vlan) will create new C(/interface vlan)
+            Overridden:
+            *  M(ros_vlan) will remove any existing item in C(/interface vlan)
+            *  M(ros_vlan) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_vlan) will remove that item from C(/interface vlan) configuration
     config:
         description: A dictionary for L(ros_vlan)
         type: list
@@ -52,7 +67,8 @@ options:
             l2mtu:
                 type: int
                 description: |
-                    Layer2 MTU. For VLANS this value is not configurable. L( Read more&gt;&gt;,/wiki/Maximum_Transmission_Unit_on_RouterBoards)
+                    Layer2 MTU. For VLANS this value is not configurable. L( Read
+                    more&gt;&gt;,/wiki/Maximum_Transmission_Unit_on_RouterBoards)
             mtu:
                 type: str
                 default: 1500
@@ -75,7 +91,8 @@ options:
                 type: str
                 default: 1
                 description: |
-                    Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal for all computers that belong to the same VLAN.
+                    Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal
+                    for all computers that belong to the same VLAN.
 
 """
 

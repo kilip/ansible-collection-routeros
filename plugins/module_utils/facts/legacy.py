@@ -36,7 +36,7 @@ class Default(FactsBase):
     ]
 
     def populate(self):
-        super(Default, self).populate()
+        FactsBase.populate(self)
         data = self.responses[0]
         if data:
             self.facts["hostname"] = self.parse_hostname(data)
@@ -75,7 +75,7 @@ class Hardware(FactsBase):
     COMMANDS = ["/system resource print without-paging"]
 
     def populate(self):
-        super(Hardware, self).populate()
+        FactsBase.populate(self)
         data = self.responses[0]
         if data:
             self.parse_filesystem_info(data)
@@ -112,7 +112,7 @@ class Config(FactsBase):
     COMMANDS = ["/export"]
 
     def populate(self):
-        super(Config, self).populate()
+        FactsBase.populate(self)
         data = self.responses[0]
         if data:
             self.facts["config"] = data
@@ -132,7 +132,7 @@ class Interfaces(FactsBase):
     WRAPPED_LINE_RE = re.compile(r"^\s+(?!\d)")
 
     def populate(self):
-        super(Interfaces, self).populate()
+        FactsBase.populate(self)
 
         self.facts["interfaces"] = dict()
         self.facts["all_ipv4_addresses"] = list()

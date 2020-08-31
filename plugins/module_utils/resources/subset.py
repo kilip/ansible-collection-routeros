@@ -16,11 +16,11 @@ from .ip.address import AddressResource
 from .ip.dhcp_server import DhcpServerResource
 from .ip.dhcp_network import DhcpNetworkResource
 from .ip.dhcp_client import DhcpClientResource
+from .interface.vlan import VlanResource
 from .bridge.bridge import BridgeResource
 from .bridge.settings import BridgeSettingsResource
 from .bridge.port import BridgePortResource
 from .interface.interface import InterfaceResource
-from .interface.vlan import VlanResource
 from .interface.pppoe_client import PppoeClientResource
 from .interface.ethernet import EthernetResource
 from .interface.pppoe_server import PppoeServerResource
@@ -49,11 +49,11 @@ RESOURCE_SUBSETS = dict(
     dhcp_server=DhcpServerResource,
     dhcp_network=DhcpNetworkResource,
     dhcp_client=DhcpClientResource,
+    vlan=VlanResource,
     bridge=BridgeResource,
     bridge_settings=BridgeSettingsResource,
     bridge_port=BridgePortResource,
     interface=InterfaceResource,
-    vlan=VlanResource,
     pppoe_client=PppoeClientResource,
     ethernet=EthernetResource,
     pppoe_server=PppoeServerResource,

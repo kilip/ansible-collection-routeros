@@ -23,11 +23,24 @@ options:
             - overridden
             - deleted
         default: merged
-        description:
-            - I(merged) M(ros_group) will update existing C(/user group) configuration, or create new C(/user group) when resource not found
-            - I(replaced) M(ros_group) will restore existing C(/user group) configuration to its default value, then update existing resource with the new configuration. If the resource C(/user group) not found, M(ros_group) will create resource in C(/user group)
-            - I(overridden) M(ros_group) will remove any resource in C(/user group) first, and then create new C(/user group) resources.
-            - I(deleted) M({module}) when found module will delete C(/user group)
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_group) will update existing C(/user group) configuration
+            -  When Resource Not Exists:
+               *  M(ros_group) will create new C(/user group),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_group) will restore related C(/user group) to its default value.
+               *  M(ros_group) will update C(/user group) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_group) will create new C(/user group)
+            Overridden:
+            *  M(ros_group) will remove any existing item in C(/user group)
+            *  M(ros_group) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_group) will remove that item from C(/user group) configuration
     config:
         description: A dictionary for L(ros_group)
         type: list
@@ -61,24 +74,24 @@ options:
                     - romon
                     - dude
                     - tikapp
-                    - !local
-                    - !telnet
-                    - !ssh
-                    - !ftp
-                    - !reboot
-                    - !read
-                    - !write
-                    - !policy
-                    - !test
-                    - !winbox
-                    - !password
-                    - !web
-                    - !sniff
-                    - !sensitive
-                    - !api
-                    - !romon
-                    - !dude
-                    - !tikapp
+                    - "!local"
+                    - "!telnet"
+                    - "!ssh"
+                    - "!ftp"
+                    - "!reboot"
+                    - "!read"
+                    - "!write"
+                    - "!policy"
+                    - "!test"
+                    - "!winbox"
+                    - "!password"
+                    - "!web"
+                    - "!sniff"
+                    - "!sensitive"
+                    - "!api"
+                    - "!romon"
+                    - "!dude"
+                    - "!tikapp"
                 default: None
                 description: |
                     List of allowed policies:
@@ -87,20 +100,32 @@ options:
                     - telnet - policy that grants rights to log in remotely via telnet
                     - ssh - policy that grants rights to log in remotely via secure shell protocol
                     - web - policy that grants rights to log in remotely via WebFig.
-                    - winbox - policy that grants rights to log in remotely via WinBox and bandwidth test authentication
+                    - winbox - policy that grants rights to log in remotely via WinBox and bandwidth
+                    test authentication
                     - password - policy that grants rights to change the password
                     - api - grants rights to access router via API.
                     - tikapp - policy that grants rights to log in remotely via Tik-App.
                     - dude - grants rights to log in to dude server.
-                    - ftp - policy that grants full rights to log in remotely via FTP, to read/write/erase files and to transfer files from/to the router. Should be used together with read/write policies.
+                    - ftp - policy that grants full rights to log in remotely via FTP, to
+                    read/write/erase files and to transfer files from/to the router. Should be used
+                    together with read/write policies.
                     - romon - policy that grants rights to connect to RoMon server.
                     Config Policies:
                     - reboot - policy that allows rebooting the router
-                    - read - policy that grants read access to the routers configuration. All console commands that do not alter routers configuration are allowed. Doesnt affect FTP
-                    - write - policy that grants write access to the routers configuration, except for user management. This policy does not allow to read the configuration, so make sure to enable read policy as well
-                    - policy - policy that grants user management rights. Should be used together with write policy. Allows also to see global variables created by other users (requires also test policy).
-                    - test - policy that grants rights to run ping, traceroute, bandwidth-test, wireless scan, snooper and other test commands
-                    - sensitive - grants rights to change "hide sensitive" option, if this policy is disabled sensitive information is not displayed, see below list as to what is regarded as sensitive.
+                    - read - policy that grants read access to the routers configuration. All
+                    console commands that do not alter routers configuration are allowed. Doesnt
+                    affect FTP
+                    - write - policy that grants write access to the routers configuration, except
+                    for user management. This policy does not allow to read the configuration, so
+                    make sure to enable read policy as well
+                    - policy - policy that grants user management rights. Should be used together
+                    with write policy. Allows also to see global variables created by other users
+                    (requires also test policy).
+                    - test - policy that grants rights to run ping, traceroute, bandwidth-test,
+                    wireless scan, snooper and other test commands
+                    - sensitive - grants rights to change "hide sensitive" option, if this policy is
+                    disabled sensitive information is not displayed, see below list as to what is
+                    regarded as sensitive.
                     - sniff - policy that grants rights to use packet sniffer tool.
             skin:
                 type: str

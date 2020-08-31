@@ -11,9 +11,30 @@ __metaclass__ = type
 
 DOCUMENTATION = """
 module: ros_wireless_cap
+short_description: Manage configuration for C(/interface wireless cap)
+description: This M(ros_wireless_cap) module provides management for RouterOS C(/interface wireless cap).
 version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 options:
+    state:
+        description: |
+            Merged:
+            -  When Resource Exists:
+               *  M(ros_wireless_cap) will update existing C(/interface wireless cap) configuration
+            -  When Resource Not Exists:
+               *  M(ros_wireless_cap) will create new C(/interface wireless cap),
+            Replaced
+            -  When Resource Exists:
+               *  M(ros_wireless_cap) will restore related C(/interface wireless cap) to its default value.
+               *  M(ros_wireless_cap) will update C(/interface wireless cap) item using the passed C(argument_spec).
+            -  When Resource Not Exists:
+               *  M(ros_wireless_cap) will create new C(/interface wireless cap)
+            Overridden:
+            *  M(ros_wireless_cap) will remove any existing item in C(/interface wireless cap)
+            *  M(ros_wireless_cap) will create new item using value in the C(argument_spec)
+            Deleted:
+            ----
+            *  If item exists M(ros_wireless_cap) will remove that item from C(/interface wireless cap) configuration
     config:
         description: A dictionary for L(ros_wireless_cap)
         suboptions:
@@ -53,12 +74,14 @@ options:
                 type: list
                 elements: str
                 description: |
-                    An ordered list of CAPs Manager names that the CAP will connect to, if empty - CAP does not check Manager name
+                    An ordered list of CAPs Manager names that the CAP will connect to, if empty -
+                    CAP does not check Manager name
             caps_man_certificate_common_names:
                 type: list
                 elements: str
                 description: |
-                    List of Manager certificate CommonNames that CAP will connect to, if empty - CAP does not check Manager certificate CommonName
+                    List of Manager certificate CommonNames that CAP will connect to, if empty - CAP
+                    does not check Manager certificate CommonName
             bridge:
                 type: str
                 description: |
@@ -70,7 +93,10 @@ options:
                     - no
                 default: no
                 description: |
-                    CAP will create Static Virtual Interfaces instead of Dynamic and will try to reuse the same interface on reconnect to CAPsMAN if the MAC address will be the same. Note if two or more interfaces will have the same MAC address the assignment from the CAPsMAN could be random between those interfaces.
+                    CAP will create Static Virtual Interfaces instead of Dynamic and will try to
+                    reuse the same interface on reconnect to CAPsMAN if the MAC address will be the
+                    same. Note if two or more interfaces will have the same MAC address the
+                    assignment from the CAPsMAN could be random between those interfaces.
 config:
     type: list
 state:
@@ -78,9 +104,6 @@ state:
         - present
         - reset
     default: present
-    description:
-        - I(present) will update C(/interface wireless cap) config with passed argument_spec values.
-        - I(reset) will restore C(/interface wireless cap) to its default values
 
 """
 
