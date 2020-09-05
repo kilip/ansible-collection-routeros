@@ -27,7 +27,9 @@ def normalize_config(config):
     :rtype string
     :return: normalized config
     """
-    return re.sub(r"([a-z|=|\-])(\n)", "\\1", config)
+    config = re.sub(r"([a-z|=|\\|\-])(\n)(\s+)", "\\1", config)
+    config = config.replace("\\", "")
+    return config
 
 
 def reset_config(command):
@@ -45,7 +47,7 @@ def get_config(module, command):
 
     cfg = "\n".join(cfg)
     cfg = to_text(cfg)
-
+    cfg = normalize_config(cfg)
     DEVICE_CONFIGS[key] = cfg
     return cfg
 
