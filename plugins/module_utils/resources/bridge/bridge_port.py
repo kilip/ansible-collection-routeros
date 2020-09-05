@@ -91,7 +91,7 @@ class BridgePortResource(ResourceBase):
                     ],
                     "default": "admit-all",
                 },
-                "horizon": {"type": "int", "default": 0},
+                "horizon": {"type": "int"},
                 "ingress_filtering": {
                     "type": "str",
                     "choices": ["no", "yes"],

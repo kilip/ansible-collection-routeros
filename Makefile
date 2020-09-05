@@ -12,7 +12,7 @@ resources:
 	$(MAKE) test-unit
 
 sanity:
-	ansible-test sanity --docker -v --color
+	ansible-test sanity --docker -v --color --skip-test rstcheck
 
 test-unit:
 	ansible-test units --python ${PYTHON} --color

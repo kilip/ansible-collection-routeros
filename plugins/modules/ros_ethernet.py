@@ -46,6 +46,7 @@ options:
     suboptions:
         advertise:
           type: list
+          elements: "str"
           choices:
             - '10000M-full'
             - '1000M-full'
@@ -103,7 +104,7 @@ options:
 
         bandwidth:
           type: int
-          default: 0
+
           description: |
             Sets max rx/tx bandwidth in kbps that will be handled by an interface. TX limit
             is supported on all Atheros L(switch-chip,https://wiki.mikrotik.com/wiki/Manual:Switch_Chip_Features) ports. RX limit is supported only on

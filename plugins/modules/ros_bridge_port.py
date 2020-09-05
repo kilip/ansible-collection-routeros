@@ -173,7 +173,7 @@ options:
 
         horizon:
           type: int
-          default: 0
+
           description: |
             Use split horizon bridging to prevent bridging loops. Set the same value for
             group of ports, to prevent them from sending data to ports with the same horizon

@@ -70,7 +70,7 @@ class EthernetResource(ResourceBase):
                     "choices": ["no", "yes"],
                     "default": "yes",
                 },
-                "bandwidth": {"type": "int", "default": 0},
+                "bandwidth": {"type": "int"},
                 "cable_setting": {
                     "type": "str",
                     "choices": ["default", "short", "standard"],

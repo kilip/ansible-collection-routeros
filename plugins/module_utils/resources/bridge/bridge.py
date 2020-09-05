@@ -118,7 +118,7 @@ class BridgeResource(ResourceBase):
                     "choices": ["1", "2"],
                     "default": "1",
                 },
-                "mtu": {"type": "int", "default": 0},
+                "mtu": {"type": "int"},
                 "multicast_querier": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -141,7 +141,7 @@ class BridgeResource(ResourceBase):
                 "query_interval": {"type": "str", "default": "2m5s"},
                 "query_response_interval": {"type": "str", "default": "10s"},
                 "region_name": {"type": "str"},
-                "region_revision": {"type": "int", "default": 0},
+                "region_revision": {"type": "int"},
                 "startup_query_count": {"type": "int", "default": 2},
                 "startup_query_interval": {
                     "type": "str",

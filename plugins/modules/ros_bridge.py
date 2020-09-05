@@ -264,7 +264,7 @@ options:
 
         mtu:
           type: int
-          default: 0
+
           description: |
             Maximum transmission unit, by default, the bridge will set MTU automatically and
             it will use the lowest MTU value of any associated bridge port. The default
@@ -385,7 +385,7 @@ options:
 
         region_revision:
           type: int
-          default: 0
+
           description: |
             MSTP configuration revision number. This property only has effect when
             protocol-mode is set to C(mstp).
