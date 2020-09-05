@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# Copyright (C) 2020 Anthonius Munthi
+# GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
 
@@ -30,6 +32,22 @@ options:
       not be collected. Valid subsets are 'all', 'interface'
     type: list
     elements: str
+"""
+EXAMPLES = """
+- name: Gather all legacy facts
+  kilip.routeros.ros_facts:
+    gather_subset: all
+
+- name: Gather legacy and resource facts
+  kilip.routeros.ros_facts:
+    gather_subset: all
+    gather_network_resources: all
+"""
+RETURN = """
+ansible_net_gather_network_resources:
+  description: The list of fact for network resource subsets collected from the device
+  returned: when the resource is configured
+  type: list
 """
 
 from ansible.module_utils.basic import AnsibleModule

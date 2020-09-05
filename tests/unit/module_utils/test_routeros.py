@@ -13,7 +13,7 @@ from ..compat.mock import patch
 
 class TestRouterOS(TestCase):
     def setUp(self):
-        super(TestRouterOS, self).setUp()
+        TestCase.setUp(self)
         self.mock_run_commands = patch(
             "ansible_collections.kilip.routeros.plugins.module_utils.routeros.run_commands"
         )

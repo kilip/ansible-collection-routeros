@@ -1,1 +1,5 @@
-plugins/modules/ros_bridge.py validate-modules:invalid-documentation
+plugins/modules/ros_bridge.py pep8:E501
+plugins/modules/ros_bridge_settings.py pep8:E501
+tests/unit/compat/mock.py pylint:import-outside-toplevel
+tests/unit/modules/test_resource_modules.py pylint:no-method-argument
+tests/unit/modules/test_ros_facts.py pylint:no-method-argument

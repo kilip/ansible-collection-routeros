@@ -183,7 +183,8 @@ class Interfaces(FactsBase):
         for line in data.split("\n"):
             if len(line) == 0 or line[:5] == "Flags":
                 continue
-            elif not re.match(self.WRAPPED_LINE_RE, line):
+
+            if not re.match(self.WRAPPED_LINE_RE, line):
                 preprocessed.append(line)
             else:
                 preprocessed[-1] += line

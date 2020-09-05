@@ -1,8 +1,0 @@
-# aug/29/2020 12:02:12 by RouterOS 6.47.2
-# software id = 
-#
-#
-#
-/interface bridge
-add name=br-trunk vlan-filtering=yes
-add name=br-wan vlan-filtering=no

@@ -3,10 +3,32 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+import yaml
+import os
+from glob import glob
+from parameterized import parameterized
 from ..compat.mock import patch
-from ansible_collections.kilip.routeros.plugins.modules import ros_facts
 from .utils import set_module_args
-from .routeros_module import TestRouterOSModule
+from .routeros_module import TestRouterOSModule, load_fixture
+from ansible_collections.kilip.routeros.plugins.modules import ros_facts
+
+
+def load_facts_fixtures():
+    data = []
+    path = os.path.join(os.path.dirname(__file__) + "/fixtures", "facts")
+    files = glob(path + "/*.*")
+    for file in files:
+        with open(file, "r") as stream:
+            try:
+                parsed = yaml.safe_load(stream)
+                data.append((parsed["resource"], parsed))
+            except yaml.YAMLError as exc:
+                print(exc)
+    return data
+
+
+resource_fixtures = load_facts_fixtures()
+fixtures = dict()
 
 
 class TestROSFactsModule(TestRouterOSModule):
@@ -14,7 +36,7 @@ class TestROSFactsModule(TestRouterOSModule):
     module = ros_facts
 
     def setUp(self):
-        super(TestROSFactsModule, self).setUp()
+        TestRouterOSModule.setUp(self)
         self.mock_run_commands = patch(
             "ansible_collections.kilip.routeros.plugins.module_utils.facts.legacy.run_commands"
         )
@@ -25,9 +47,26 @@ class TestROSFactsModule(TestRouterOSModule):
         )
         self.routeros = self.mock_routeros.start()
 
+    def load_from_file(*args, **kwargs):
+        commands = kwargs["commands"]
+        output = list()
+        for command in commands:
+            filename = str(command).replace(" ", "_").replace("/", "")
+            output.append(load_fixture(f"facts/legacy/{filename}"))
+        return output
+
+    def load_config(*args, **kwargs):
+        cmds = kwargs["commands"]
+        output = []
+        for cmd in cmds:
+            cmd = str(cmd).replace(" ", "_").replace("/", "")
+            cmd = fixtures[cmd]
+            output.append(cmd)
+        return output
+
     def load_fixtures(self, commands=None):
         self.run_commands.side_effect = self.load_from_file
-        self.routeros.side_effect = self.load_from_file
+        self.routeros.side_effect = self.load_config
 
     def gather_network_resource(self, name):
         set_module_args(dict(gather_network_resources=name))
@@ -43,67 +82,15 @@ class TestROSFactsModule(TestRouterOSModule):
             "RouterBOARD 3011UiAS",
         )
 
-    def test_gather_interface_facts(self):
-        set_module_args(dict(gather_network_resources="interface"))
+    @parameterized.expand(resource_fixtures)
+    def test_resource_facts(self, resource, config):
+        fixtures.update(config["fixtures"])
+        asserts = config["asserts"]
 
+        set_module_args(
+            dict(gather_subset="config", gather_network_resources=resource)
+        )
         result = self.execute_module()
-        interfaces = result["ansible_facts"]["ansible_network_resources"][
-            "interface"
-        ]
-        self.assertEqual(len(interfaces), 15)
-
-    def test_gather_bridge_facts(self):
-        set_module_args(dict(gather_network_resources="bridge"))
-
-        result = self.execute_module()
-        bridges = result["ansible_facts"]["ansible_network_resources"][
-            "bridge"
-        ]
-        self.assertEqual(len(bridges), 2)
-        bridge1 = bridges[0]
-        bridge2 = bridges[1]
-
-        self.assertEqual(bridge1["name"], "br-trunk")
-        self.assertEqual(bridge2["name"], "br-wan")
-
-    def test_gather_bridge_settings(self):
-        result = self.gather_network_resource("bridge_settings")
-        self.assertTrue(result["use_ip_firewall"])
-        self.assertTrue(result["use_ip_firewall_for_pppoe"])
-        self.assertTrue(result["use_ip_firewall_for_vlan"])
-        self.assertFalse(result["allow_fast_path"])
-
-    def test_gather_vlan(self):
-        result = self.gather_network_resource("vlan")
-        vlan1 = result[0]
-        vlan2 = result[1]
-
-        self.assertEqual(vlan1["interface"], "br-trunk")
-        self.assertEqual(vlan2["interface"], "br-trunk")
-
-    def test_bridge_port(self):
-        result = self.gather_network_resource("bridge_port")
-        port1 = result[0]
-        port2 = result[1]
-        port3 = result[2]
-
-        self.assertEqual(port1["bridge"], "br-wan")
-        self.assertEqual(port1["interface"], "ether1")
-
-        self.assertEqual(port2["bridge"], "br-local")
-        self.assertEqual(port2["interface"], "ether2")
-
-        self.assertEqual(port3["bridge"], "br-local")
-        self.assertEqual(port3["interface"], "ether3")
-
-    def test_group(self):
-        result = self.gather_network_resource("group")
-        group = result[0]
-        self.assertEqual(group["name"], "group1")
-        self.assertEqual(group["policy"], ["reboot", "!api"])
-
-    def test_capsman_configuration(self):
-        result = self.gather_network_resource("capsman_configuration")
-        config = result[0]
-        print(config)
-        self.assertEqual(config["datapath_bridge"], "br-trunk")
+        config = result["ansible_facts"]["ansible_network_resources"][resource]
+        for ass in asserts:
+            eval(ass, dict(), dict(result=config, self=self))

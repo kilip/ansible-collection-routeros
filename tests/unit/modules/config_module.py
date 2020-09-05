@@ -9,7 +9,7 @@ from .routeros_module import TestRouterOSModule
 
 class TestConfigModule(TestRouterOSModule):
     def setUp(self):
-        super(TestConfigModule, self).setUp()
+        TestRouterOSModule.setUp(self)
         self.mock_run_commands = patch(
             "ansible_collections.kilip.routeros.plugins.module_utils.routeros.run_commands"
         )

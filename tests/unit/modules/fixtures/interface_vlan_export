@@ -1,8 +1,0 @@
-# aug/29/2020 15:22:55 by RouterOS 6.47.2
-# software id = 
-#
-#
-#
-/interface vlan
-add interface=br-trunk name=vlan-100 vlan-id=1000
-add interface=br-trunk name=vlan-200 vlan-id=2000

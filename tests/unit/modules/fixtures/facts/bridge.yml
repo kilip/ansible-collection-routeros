@@ -1,0 +1,17 @@
+asserts:
+  - 'self.assertEqual(result[0]["name"], "br-trunk")'
+  - 'self.assertEqual(result[0]["comment"], "trunk bridge")'
+  - 'self.assertEqual(result[0]["vlan_filtering"], "no")'
+  - 'self.assertEqual(result[0]["arp"], "reply-only")'
+resource: bridge
+fixtures:
+  interface_bridge_export: |
+    # sep/04/2020 10:10:14 by RouterOS 6.47.2
+    # software id = 
+    #
+    #
+    #
+    /interface bridge
+    add comment="trunk bridge" name=br-trunk arp=reply-only
+    add comment="wan bridge" name=br-wan arp=reply-only
+    

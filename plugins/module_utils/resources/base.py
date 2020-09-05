@@ -15,19 +15,21 @@ class ResourceBase(object):
         pass
 
     name = ""
-    config_type = "plural"
+    type = "config"
     argument_spec = {}
-    command_root = ""
-    remove_related_resource = False
-    related_resource_key = "name"
+    command = ""
     gather_subset = ["!all", "!min"]
     gather_network_resources = []
     resource_name = ""
-    resource_keys = ["name"]
-    value_filters = []
+    keys = ["name"]
+    filters = []
     use_verbose_mode = False
-    key_prefixes = []
+    prefixes = []
     facts_argument_spec = dict()
+    supports = []
+
+    def support(self, feature):
+        return feature in self.supports
 
     def has_options(self):
         return "options" in self.argument_spec["config"]
@@ -50,16 +52,16 @@ class ResourceBase(object):
         del split[0]
         configs = []
         for sp in split:
-            config = parse_config(spec, sp, argspec, self.key_prefixes)
+            config = parse_config(spec, sp, argspec, self.prefixes)
             configs.append(config)
 
-        if self.config_type == "plural":
+        if self.type == "config":
             return configs
         else:
             return configs[0]
 
     def get_command_prefix(self, want, have=None):
-        prefix = self.command_root
+        prefix = self.command
         return prefix
 
     def _custom_config(self, spec, conf):

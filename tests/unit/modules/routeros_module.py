@@ -5,11 +5,7 @@ __metaclass__ = type
 import os
 import json
 
-from ansible_collections.kilip.routeros.tests.unit.modules.utils import (
-    AnsibleExitJson,
-    AnsibleFailJson,
-    ModuleTestCase,
-)
+from .utils import AnsibleExitJson, AnsibleFailJson, ModuleTestCase
 
 
 fixture_path = os.path.join(os.path.dirname(__file__), "fixtures")
@@ -65,14 +61,6 @@ class TestRouterOSModule(ModuleTestCase):
                 )
 
         return result
-
-    def load_from_file(*args, **kwargs):
-        commands = kwargs["commands"]
-        output = list()
-        for command in commands:
-            filename = str(command).replace(" ", "_").replace("/", "")
-            output.append(load_fixture("%s" % filename))
-        return output
 
     def failed(self):
         with self.assertRaises(AnsibleFailJson) as exc:

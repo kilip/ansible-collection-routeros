@@ -46,9 +46,7 @@ def parse_config(spec, conf, argspec, key_prefixes):
                 if -1 != key.find(prefix):
                     mt_key = key.replace(prefix + "_", prefix + ".")
 
-        value = parse_conf_arg(conf, mt_key)
-        if value == "yes" or value == "no":
-            value = True if value == "yes" else False
+        value = parse_conf_arg(conf, mt_key, argspec[key])
 
         if argspec is not None:
             vtype = argspec[key]["type"]
@@ -61,7 +59,7 @@ def parse_config(spec, conf, argspec, key_prefixes):
     return net_utils.remove_empties(config)
 
 
-def parse_conf_arg(cfg, arg):
+def parse_conf_arg(cfg, arg, argspec):
     """
     Parse config based on argument
 
@@ -76,6 +74,14 @@ def parse_conf_arg(cfg, arg):
         result = result.replace('"', "")
     else:
         result = None
+
+    vtype = argspec["type"]
+    if result is not None:
+        if vtype == "int":
+            result = int(result)
+        if vtype == "str":
+            result = str(result)
+
     return result
 
 
@@ -110,7 +116,10 @@ def dict_to_set(sample_dict):
     return return_set
 
 
-def key_to_routeros(key, prefixes=[]):
+def key_to_routeros(key, prefixes=None):
+    if prefixes is None:
+        prefixes = list()
+
     if prefixes:
         for prefix in prefixes:
             if -1 != key.find(prefix):
@@ -261,23 +270,5 @@ def remove_duplicate_interface(commands):
 
 def gen_remove_invalid_resource():
     script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
-    command = f"/system script run {script_name};"
+    command = f"/system script run {script_name}"
     return command
-
-
-def remove_default_values(defaults, config):
-    values = dict()
-    for key in config:
-        if type(config[key]) == dict:
-            values[key] = remove_default_values(defaults[key], config[key])
-            continue
-
-        value = config[key]
-        if defaults.get(key) is not None:
-            default = defaults.get(key)
-            if value == default:
-                value = None
-        if value is not None:
-            values[key] = value
-
-    return values

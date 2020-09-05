@@ -1,7 +1,0 @@
-# aug/30/2020 11:57:15 by RouterOS 6.47.2
-# software id = 
-#
-#
-#
-/user group
-add name=group1 policy=reboot,!api

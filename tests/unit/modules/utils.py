@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
-import json
 
+import json
 from ansible_collections.kilip.routeros.tests.unit.compat import unittest
 from ansible_collections.kilip.routeros.tests.unit.compat.mock import patch
 from ansible.module_utils import basic

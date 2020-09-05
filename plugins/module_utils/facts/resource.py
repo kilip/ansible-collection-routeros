@@ -16,12 +16,12 @@ class ResourceFacts(object):
         if not data:
             data = self._get_resources_data()
 
-        configs = data.split(resource.command_root)
+        configs = data.split(resource.command)
 
         # remove export header
         del configs[0]
 
-        if resource.config_type == "plural":
+        if resource.type == "config":
             resources = []
             for config in configs:
                 objs = resource.render_config(self.generated_spec, config)
@@ -41,7 +41,7 @@ class ResourceFacts(object):
         return ansible_facts
 
     def _get_resources_data(self):
-        command = self._resource.command_root + " export"
-        if self._resource.use_verbose_mode:
+        command = self._resource.command + " export"
+        if self._resource.support("facts_verbose_mode"):
             command = command + " verbose"
         return get_config(self._module, command)
