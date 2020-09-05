@@ -52,7 +52,7 @@ class TestROSFactsModule(TestRouterOSModule):
         output = list()
         for command in commands:
             filename = str(command).replace(" ", "_").replace("/", "")
-            output.append(load_fixture(f"facts/legacy/{filename}"))
+            output.append(load_fixture("facts/legacy/{0}".format(filename)))
         return output
 
     def load_config(*args, **kwargs):

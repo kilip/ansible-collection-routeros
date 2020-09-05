@@ -77,7 +77,7 @@ class Config(ConfigBase):
         resource = self.resource
         commands = []
         command_prefix = self.get_command_prefix(want)
-        prefix = f"{command_prefix} add "
+        prefix = '{0} add '.format(command_prefix)
 
         # always remove default values for new resource
         defaults = resource.generate_dict()
@@ -91,7 +91,7 @@ class Config(ConfigBase):
         resource = self.resource
         find_command = self._create_find_command(want)
         command_prefix = self.get_command_prefix(want, have)
-        prefix = f"{command_prefix} set {find_command} "
+        prefix = "{0} set {1} ".format(command_prefix, find_command)
         commands = []
         filters = resource.keys
         for filter in resource.filters:
@@ -110,7 +110,7 @@ class Config(ConfigBase):
         commands = []
         prefix = self.get_command_prefix(want)
         find_command = self._create_find_command(want)
-        cmd = f"{prefix} remove {find_command}"
+        cmd = "{0} remove {1}".format(prefix, find_command)
         commands.append(cmd)
 
         self.has_delete_command = True
@@ -134,7 +134,7 @@ class Config(ConfigBase):
             "/ip dhcp-server remove [find invalid];",
         ]
         scripts = "".join(lines)
-        commands = f'/system script add name={script_name} policy=read,write source="{scripts}"'
+        commands = '/system script add name={0} policy=read,write source="{1}"'.format(script_name, scripts)
         match = re.search(r"name\=" + script_name, existing, re.M)
         if not match:
             load_config(self._module, commands)

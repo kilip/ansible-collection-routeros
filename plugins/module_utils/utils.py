@@ -270,5 +270,5 @@ def remove_duplicate_interface(commands):
 
 def gen_remove_invalid_resource():
     script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
-    command = f"/system script run {script_name}"
+    command = "/system script run {0}".format(script_name)
     return command

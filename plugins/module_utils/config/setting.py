@@ -72,7 +72,7 @@ class Setting(object):
         commands = []
         resource = self._resource
         prefix = resource.get_command_prefix(want, have)
-        prefix = f"{prefix} set "
+        prefix = "{0} set ".format(prefix)
 
         values = generate_command_values(
             want, have, [], self._resource.prefixes
@@ -87,7 +87,7 @@ class Setting(object):
         commands = []
         want = self._resource.generate_dict()
         prefix = self._resource.get_command_prefix(want, have)
-        prefix = f"{prefix} set "
+        prefix = "{0} set ".format(prefix)
 
         values = generate_command_values(
             want, have, [], self._resource.prefixes
