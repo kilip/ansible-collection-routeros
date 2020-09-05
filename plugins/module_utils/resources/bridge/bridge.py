@@ -129,7 +129,7 @@ class BridgeResource(ResourceBase):
                     "choices": ["disabled", "permanent", "temporary-query"],
                     "default": "temporary-query",
                 },
-                "name": {"type": "str", "default": "bridgeN"},
+                "name": {"type": "str", "required": True},
                 "priority": {"type": "int", "default": 32768},
                 "protocol_mode": {
                     "type": "str",

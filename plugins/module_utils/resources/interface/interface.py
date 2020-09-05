@@ -45,7 +45,7 @@ class InterfaceResource(ResourceBase):
                 },
                 "l2mtu": {"type": "int"},
                 "mtu": {"type": "int"},
-                "name": {"type": "str"},
+                "name": {"type": "str", "required": True},
                 "comment": {"type": "str"},
             },
         },

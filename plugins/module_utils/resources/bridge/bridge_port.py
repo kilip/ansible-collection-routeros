@@ -54,7 +54,7 @@ class BridgePortResource(ResourceBase):
                     "choices": ["no", "yes"],
                     "default": "no",
                 },
-                "bridge": {"type": "str", "default": "none"},
+                "bridge": {"type": "str", "required": True},
                 "broadcast_flood": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -107,7 +107,7 @@ class BridgePortResource(ResourceBase):
                 },
                 "horizon": {"type": "int", "default": 0},
                 "internal_path_cost": {"type": "int", "default": 10},
-                "interface": {"type": "str", "default": "none"},
+                "interface": {"type": "str", "required": True},
                 "path_cost": {"type": "int", "default": 10},
                 "point_to_point": {
                     "type": "str",

@@ -314,7 +314,8 @@ options:
 
         name:
           type: str
-          default: "bridgeN"
+          required: True
+
           description: |
             Name of the bridge interface
 

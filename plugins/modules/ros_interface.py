@@ -67,6 +67,7 @@ options:
 
         name:
           type: str
+          required: True
 
           description: |
             Name of an interface

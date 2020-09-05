@@ -304,6 +304,18 @@ class Config(ConfigBase):
         want = defaults
         empty_resource = self._create_empty_resource(existing)
         want.update(empty_resource)
+        spec = resource.facts_argument_spec
+
+        # remove required option from clear config
+        for key in spec:
+            if key in resource.keys:
+                continue
+            option = spec[key]
+            required = option.get("required")
+            if required is True:
+                del want[key]
+                del existing[key]
+
         cmd = self.update(want, existing)
         return cmd
 

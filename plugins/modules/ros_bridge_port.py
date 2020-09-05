@@ -79,7 +79,8 @@ options:
 
         bridge:
           type: str
-          default: "none"
+          required: True
+
           description: |
             The bridge interface the respective interface is grouped in.
 
@@ -233,7 +234,8 @@ options:
 
         interface:
           type: str
-          default: "none"
+          required: True
+
           description: |
             Name of the interface.
 

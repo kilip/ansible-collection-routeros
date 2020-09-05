@@ -27,7 +27,7 @@ class BridgeSettingsResource(ResourceBase):
     resource_name = "bridge_settings"
     command = "/interface bridge settings"
     gather_network_resources = ["bridge_settings"]
-    keys = ["name"]
+    keys = []
     type = "setting"
     supports = ["facts_verbose_mode"]
     argument_spec = {
