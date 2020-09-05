@@ -160,11 +160,18 @@ def generate_command_values(want, have, filters, key_prefixes):
                     )
                 )
             elif type(value) is list:
-                cmd.append(ros_key + "=" + ",".join(value))
+                cmd.append(ros_key + "=" + list_to_routeros(value))
             else:
                 value = value_to_routeros(value)
                 cmd.append(ros_key + "=" + str(value))
     return cmd
+
+
+def list_to_routeros(value):
+    converted = []
+    for val in value:
+        converted.append(str(val))
+    return ",".join(converted)
 
 
 def find_existing_resource(keys, want, have):
