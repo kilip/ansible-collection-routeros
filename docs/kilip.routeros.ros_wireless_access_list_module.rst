@@ -49,23 +49,7 @@ config
                               aes-ccm
                             </li><li><div style="color: blue"><b>none</b>&nbsp;&larr;</div></li><li>
                               tkip
-                            </li></ul></td><td><p>Only for WEP modes.</p></td></tr><tr><td><b>private_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Only for WEP modes.</p></td></tr><tr><td><b>private_pre_shared_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Used in WPA PSK mode.</p></td></tr><tr><td><b>signal_range</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Rule matches if signal strength of the station is within the range.</p><p>If signal strength of the station will go out of the range that is specified in the rule, access point will disconnect that station.</p></td></tr><tr><td><b>time</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td><ul style="margin: 0; padding: 0;"><li>
-                              *TIME-TIME
-                            </li><li>
-                              fri
-                            </li><li>
-                              mon
-                            </li><li>
-                              sat* - *TIME* is time interval 0..86400 seconds; all day names are optional; value can be unset
-                            </li><li>
-                              sun
-                            </li><li>
-                              thu
-                            </li><li>
-                              tue
-                            </li><li>
-                              wed
-                            </li></ul></td><td><p>Rule will match only during specified time.</p><p>Station will be disconnected after specified time ends. Both start and end time is expressed as time since midnight, 00:00.</p><p>Rule will match only during specified days of the week.</p></td></tr></table>
+                            </li></ul></td><td><p>Only for WEP modes.</p></td></tr><tr><td><b>private_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Only for WEP modes.</p></td></tr><tr><td><b>private_pre_shared_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Used in WPA PSK mode.</p></td></tr><tr><td><b>signal_range</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Rule matches if signal strength of the station is within the range.</p><p>If signal strength of the station will go out of the range that is specified in the rule, access point will disconnect that station.</p></td></tr><tr><td><b>time</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Rule will match only during specified time.</p><p>Station will be disconnected after specified time ends. Both start and end time is expressed as time since midnight, 00:00.</p><p>Rule will match only during specified days of the week.</p></td></tr></table>
 
 
 Examples

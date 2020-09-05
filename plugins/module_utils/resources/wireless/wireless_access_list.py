@@ -74,19 +74,7 @@ class WirelessAccessListResource(ResourceBase):
                 "private_key": {"type": "str"},
                 "private_pre_shared_key": {"type": "str"},
                 "signal_range": {"type": "str", "default": "-120..120"},
-                "time": {
-                    "type": "str",
-                    "choices": [
-                        "*TIME-TIME",
-                        "fri",
-                        "mon",
-                        "sat* - *TIME* is time interval 0..86400 seconds; all day names are optional; value can be unset",
-                        "sun",
-                        "thu",
-                        "tue",
-                        "wed",
-                    ],
-                },
+                "time": {"type": "str"},
             },
         },
     }

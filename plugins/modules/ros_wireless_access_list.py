@@ -151,15 +151,6 @@ options:
 
         time:
           type: str
-          choices:
-            - '*TIME-TIME'
-            - 'fri'
-            - 'mon'
-            - 'sat* - *TIME* is time interval 0..86400 seconds; all day names are optional; value can be unset'
-            - 'sun'
-            - 'thu'
-            - 'tue'
-            - 'wed'
 
           description: |
             Rule will match only during specified time.
