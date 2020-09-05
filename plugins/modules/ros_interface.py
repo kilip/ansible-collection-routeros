@@ -119,7 +119,8 @@ EXAMPLES = """
 #  set [ find default-name=ether2 ] comment="ether2 updated" mtu=2000
 #  /interface bridge
 #  add name=br-wan comment="br-wan updated" mtu=3000 disabled=yes
-#"""
+#
+"""
 
 RETURN = """
 before:

@@ -447,7 +447,8 @@ EXAMPLES = """
 #  /interface bridge
 #  add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
 #  add comment="wan bridge" name=br-wan arp=enabled
-## ----
+#
+# ----
 # Using Replaced
 # ----
 # before:
@@ -470,7 +471,8 @@ EXAMPLES = """
 #  /interface bridge
 #  add comment="replaced comment" name=br-trunk arp=enabled
 #  add comment="replaced comment" name=br-wan arp=enabled
-## ----
+#
+# ----
 # Using Overridden
 # ----
 # before:
@@ -491,7 +493,8 @@ EXAMPLES = """
 #  [admin@MikroTik] > /interface bridge export
 #  /interface bridge
 #  add comment="new bridge" name=br-new
-## ----
+#
+# ----
 # Using deleted state
 # ----
 # before:
@@ -512,7 +515,8 @@ EXAMPLES = """
 # after:
 #  All existing bridge will be removed and replaced with the new configuration.
 #  [admin@MikroTik] > /interface bridge export
-#  # empty bridge config"""
+#  # empty bridge config
+"""
 
 RETURN = """
 before:

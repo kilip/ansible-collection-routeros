@@ -111,7 +111,8 @@ EXAMPLES = """
 #  [admin@MikroTik] > /interface bridge settings export verbose
 #  /interface bridge settings
 #  set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
-## ----
+#
+# ----
 # Change Bridge Setting Configuration
 # ----
 # before:
@@ -126,7 +127,8 @@ EXAMPLES = """
 # after:
 #  [admin@MikroTik] > /interface bridge settings export verbose
 #  /interface bridge settings
-#  set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no"""
+#  set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
+"""
 
 RETURN = """
 before:

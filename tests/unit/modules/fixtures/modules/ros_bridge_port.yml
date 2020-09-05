@@ -1,0 +1,67 @@
+module: ros_bridge_port
+fixtures:
+  interface_bridge_port_export: |
+    # sep/04/2020 10:10:14 by RouterOS 6.47.2
+    # software id = 
+    #
+    #
+    #
+    /interface bridge port
+    add bridge=br-wan interface=ether1
+    add bridge=br-trunk interface=ether2 disabled=yes
+    
+tests:
+  -
+    commands:
+      - '/interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"'
+      - '/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no'
+    argument_spec:
+      config:
+        -
+          bridge: br-wan
+          interface: ether1
+          comment: 'new comment'
+        -
+          bridge: br-trunk
+          interface: ether2
+          comment: 'new comment'
+      state: merged
+  -
+    commands:
+      - '/interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"'
+      - '/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] disabled=no'
+      - '/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment"'
+    argument_spec:
+      config:
+        -
+          bridge: br-wan
+          interface: ether1
+          comment: 'new comment'
+        -
+          bridge: br-trunk
+          interface: ether2
+          comment: 'new comment'
+      state: replaced
+  -
+    commands:
+      - '/interface bridge port remove [ find bridge=br-wan and interface=ether1 ]'
+      - '/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]'
+      - '/interface bridge port add bridge=br-new interface=ether2 comment="new comment"'
+      - '/system script run ansible-remove-invalid'
+    argument_spec:
+      config:
+        -
+          bridge: br-new
+          interface: ether2
+          comment: 'new comment'
+      state: overridden
+  -
+    commands:
+      - '/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]'
+      - '/system script run ansible-remove-invalid'
+    argument_spec:
+      config:
+        -
+          bridge: br-trunk
+          interface: ether2
+      state: deleted
