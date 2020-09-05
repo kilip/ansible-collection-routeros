@@ -64,7 +64,9 @@ options:
 
           description: |
             Layer2 Maximum transmission unit. Note that this property can not be configured
-            on all interfaces. L(Read more&gt;&gt; ,https://wiki.mikrotik.com/wiki/Maximum_Transmission_Unit_on_RouterBoards)
+            on all interfaces. [ Read more&gt;&gt;
+            ](https://wiki.mikrotik.com/wiki/Maximum_Transmission_Unit_on_RouterBoards
+            'Maximum Transmission Unit on RouterBoards')
 
         mtu:
           type: int

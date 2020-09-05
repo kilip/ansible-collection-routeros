@@ -178,7 +178,9 @@ options:
             Use split horizon bridging to prevent bridging loops. Set the same value for
             group of ports, to prevent them from sending data to ports with the same horizon
             value. Split horizon is a software feature that disables hardware offloading.
-            Read more about L(Bridge split horizon,https://wiki.mikrotik.com/wiki/MPLSVPLS#Split_horizon_bridging).
+            Read more about [ Bridge split
+            horizon](https://wiki.mikrotik.com/wiki/MPLSVPLS#Split_horizon_bridging
+            'MPLSVPLS').
 
         ingress_filtering:
           type: str
@@ -219,8 +221,12 @@ options:
             - C(no) - disables MAC learning
             - C(auto) - detects if bridge port is a Wireless interface and uses Wireless
               registration table instead of MAC learning, will use Wireless registration table
-              if the L(Wireless interface,https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless) is set to one of ap-bridge,bridge,wds-slave mode
-              and bridge mode for the L(Wireless interface,https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless) is disabled.
+              if the [ Wireless
+              interface](https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless
+              'Manual:Interface/Wireless') is set to one of ap-bridge,bridge,wds-slave mode
+              and bridge mode for the [ Wireless
+              interface](https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless
+              'Manual:Interface/Wireless') is disabled.
 
         multicast_router:
           type: str
@@ -250,8 +256,8 @@ options:
           type: int
           default: 10
           description: |
-            Path cost to the interface, used by STP to determine the "best" path, used by
-            MSTP to determine "best" path between regions. This property has no effect when
+            Path cost to the interface, used by STP to determine the 'best' path, used by
+            MSTP to determine 'best' path between regions. This property has no effect when
             protocol-mode is set to C(none).
 
         point_to_point:

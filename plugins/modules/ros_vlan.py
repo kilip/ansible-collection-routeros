@@ -72,7 +72,8 @@ options:
           type: int
 
           description: |
-            Layer2 MTU. For VLANS this value is not configurable. L(Read more&gt;&gt;,https://wiki.mikrotik.com/wiki/Maximum_Transmission_Unit_on_RouterBoards)
+            Layer2 MTU. For VLANS this value is not configurable. [ Read
+            more&gt;&gt;](https://wiki.mikrotik.com/wiki/Maximum_Transmission_Unit_on_RouterBoards 'Maximum Transmission Unit on RouterBoards')
 
         mtu:
           type: int

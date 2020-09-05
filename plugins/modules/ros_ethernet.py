@@ -83,7 +83,7 @@ options:
               to other interfaces
             - reply-only - the interface will only reply to requests originated from
               matching IP address/MAC address combinations which are entered as static entries
-              in the L(ARP,https://wiki.mikrotik.com/wiki/Manual:IP/ARP)
+              in the [ ARP](https://wiki.mikrotik.com/wiki/Manual:IP/ARP 'Manual:IP/ARP')
               table. No dynamic entries will be automatically stored in the ARP table.
               Therefore for communications to be successful, a valid static entry must already
               exist.
@@ -95,7 +95,7 @@ options:
             - 'yes'
           default: "yes"
           description: |
-            When enabled, the interface "advertises" its maximum capabilities to achieve the
+            When enabled, the interface 'advertises' its maximum capabilities to achieve the
             best connection possible.
             - **Note1:** Auto-negotiation should not be disabled on one end only, otherwise
               Ethernet Interfaces may not work properly.
@@ -107,7 +107,9 @@ options:
 
           description: |
             Sets max rx/tx bandwidth in kbps that will be handled by an interface. TX limit
-            is supported on all Atheros L(switch-chip,https://wiki.mikrotik.com/wiki/Manual:Switch_Chip_Features) ports. RX limit is supported only on
+            is supported on all Atheros [
+            switch-chip](https://wiki.mikrotik.com/wiki/Manual:Switch_Chip_Features
+            'Manual:Switch Chip Features') ports. RX limit is supported only on
             Atheros8327/QCA8337 switch-chip ports.
 
         cable_setting:
@@ -176,7 +178,9 @@ options:
           type: int
 
           description: |
-            Layer2 Maximum transmission unit. L(Read more&gt;&gt; ,https://wiki.mikrotik.com/wiki/Maximum_Transmission_Unit_on_RouterBoards)
+            Layer2 Maximum transmission unit. [ Read more&gt;&gt;
+            ](https://wiki.mikrotik.com/wiki/Maximum_Transmission_Unit_on_RouterBoards
+            'Maximum Transmission Unit on RouterBoards')
 
         mac_address:
           type: str
@@ -188,7 +192,9 @@ options:
           type: str
           default: "none"
           description: |
-            Outdated property, more details about this property can be found in the L(Master-port,https://wiki.mikrotik.com/wiki/Manual:Master-port) page.
+            Outdated property, more details about this property can be found in the [
+            Master-port](https://wiki.mikrotik.com/wiki/Manual:Master-port
+            'Manual:Master-port') page.
 
         mdix_enable:
           type: str
@@ -222,13 +228,15 @@ options:
             - 'off'
           default: "off"
           description: |
-            Poe Out settings. L(C(Read more >>),https://wiki.mikrotik.com/wiki/Manual:PoE-Out)
+            Poe Out settings. [ C(Read more
+            >>)](https://wiki.mikrotik.com/wiki/Manual:PoE-Out 'Manual:PoE-Out')
 
         poe_priority:
           type: int
 
           description: |
-            Poe Out settings. L(C(Read more >>),https://wiki.mikrotik.com/wiki/Manual:PoE-Out)
+            Poe Out settings. [ C(Read more
+            >>)](https://wiki.mikrotik.com/wiki/Manual:PoE-Out 'Manual:PoE-Out')
 
         rx_flow_control:
           type: str

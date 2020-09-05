@@ -139,7 +139,8 @@ options:
             - 'reply-only'
           default: "enabled"
           description: |
-            L(C(Read more >>),https://wiki.mikrotik.com/wiki/Manual:IP/ARP#ARP_Modes)
+            [ C(Read more >>)](https://wiki.mikrotik.com/wiki/Manual:IP/ARP#ARP_Modes
+            'Manual:IP/ARP')
 
         arp_timeout:
           type: str
@@ -207,7 +208,8 @@ options:
             - 'enabled'
           default: "enabled"
           description: |
-            Allows to use station-bridge mode. L(C(Read more >>),https://wiki.mikrotik.com/wiki/Manual:Wireless_Station_Modes#Mode_station-bridge)
+            Allows to use station-bridge mode. [ C(Read more
+            >>)](https://wiki.mikrotik.com/wiki/Manual:Wireless_Station_Modes#Mode_station-bridge 'Manual:Wireless Station Modes')
 
         burst_time:
           type: int
@@ -250,7 +252,7 @@ options:
             160MHz) of spectrum in total thus increasing max throughput. Channel widths with
             XX and XXXX extensions automatically scan for a less crowded control channel
             frequency based on the number of concurrent devices running in every frequency
-            and chooses the “C” - Control channel frequency automatically.
+            and chooses the '''C''' - Control channel frequency automatically.
 
         comment:
           type: str
@@ -341,7 +343,7 @@ options:
             failed. During **disconnect-timeout** packet transmission will be retried with
             **on-fail-retry-time** interval. If no frame can be transmitted successfully
             during **disconnect-timeout**, the connection is closed, and this event is
-            logged as "extensive data loss". Successful frame transmission resets this
+            logged as 'extensive data loss'. Successful frame transmission resets this
             timer.
 
         distance:
@@ -376,7 +378,7 @@ options:
             setting and wireless card capabilities. This setting has **no effect** if
             interface is in any of **station** modes, or in *wds-slave* mode, or if DFS is
             active.
-            *Note*: If using mode "superchannel", any frequency supported by the card will
+            *Note*: If using mode 'superchannel', any frequency supported by the card will
             be accepted, but on the RouterOS client, any non-standard frequency must be
             configured in the L(scan-list,#scan-list), otherwise it will not be scanning in
             non-standard range. In Winbox, scanlist frequencies are in *bold*, any other
@@ -422,8 +424,8 @@ options:
           default: "any"
           description: |
             Whether to allow use of short guard interval (refer to 802.11n MCS specification
-            to see how this may affect throughput). "any" will use either short or long,
-            depending on data rate, "long" will use long.
+            to see how this may affect throughput). 'any' will use either short or long,
+            depending on data rate, 'long' will use long.
 
         hide_ssid:
           type: str
@@ -575,8 +577,8 @@ options:
           default: "enabled"
           description: |
             Applies only if wireless interface is in mode=**ap-bridge**. If a client has not
-            communicated for around 20 seconds, AP sends a "keepalive-frame".
-            **Note**, disabling the feature can lead to "ghost" clients in
+            communicated for around 20 seconds, AP sends a 'keepalive-frame'.
+            **Note**, disabling the feature can lead to 'ghost' clients in
             registration-table.
 
         l2mtu:
@@ -594,8 +596,8 @@ options:
 
           description: |
             Name of wireless interface that has *virtual-ap* capability. [Virtual
-            AP](/index.php?title=Virtual_AP&action=edit&redlink=1 "Virtual AP (page does not
-            exist)") interface will only work if master interface is in *ap-bridge*,
+            AP](/index.php?title=Virtual_AP&action=edit&redlink=1 'Virtual AP (page does not
+            exist)') interface will only work if master interface is in *ap-bridge*,
             *bridge*, *station* or *wds-slave* mode. This property is only for virtual AP
             interfaces.
 
@@ -621,12 +623,13 @@ options:
           default: "station"
           description: |
             Selection between different station and access point (AP) modes.
-            L(Station modes,https://wiki.mikrotik.com/wiki/Manual:Wireless_Station_Modes):
+            [Station modes](https://wiki.mikrotik.com/wiki/Manual:Wireless_Station_Modes
+            'Manual:Wireless Station Modes'):
             - *station* - Basic station mode. Find and connect to acceptable AP.
             - *station-wds* - Same as *station*, but create WDS link with AP, using
               proprietary extension. AP configuration has to allow WDS links with this device.
               Note that this mode does not use entries in
-              L(wds,/index.php?title=Wds&action=edit&redlink=1).
+              [wds](/index.php?title=Wds&action=edit&redlink=1 'Wds (page does not exist)').
             - *station-pseudobridge* - Same as *station*, but additionally perform MAC
               address translation of all traffic. Allows interface to be bridged.
             - *station-pseudobridge-clone* - Same as *station-pseudobridge*, but use
@@ -676,7 +679,8 @@ options:
           default: "default"
           description: |
             When set to **full**, multicast packets will be sent with a unicast destination
-            MAC address, resolving L(multicast problem,https://wiki.mikrotik.com/wiki/Manual:Multicast_detailed_example#Multicast_and_Wireless) on the wireless link. This
+            MAC address, resolving [ multicast
+            problem](https://wiki.mikrotik.com/wiki/Manual:Multicast_detailed_example#Multicast_and_Wireless 'Manual:Multicast detailed example') on the wireless link. This
             option should be enabled only on the access point, clients should be configured
             in **station-bridge** mode. Available starting from v5.15.
             - disabled - disables the helper and sends multicast packets with multicast
@@ -709,7 +713,7 @@ options:
             Setting affects the size of contention time slot that AP allocates for clients
             to initiate connection and also size of time slots used for estimating distance
             to client. When setting is too small, clients that are farther away may have
-            trouble connecting and/or disconnect with "ranging timeout" error. Although
+            trouble connecting and/or disconnect with 'ranging timeout' error. Although
             during normal operation the effect of this setting should be negligible, in
             order to maintain maximum performance, it is advised to not increase this
             setting if not necessary, so AP is not reserving time that is actually never
@@ -896,7 +900,7 @@ options:
 
           description: |
             Specifies secondary channel, required to enable 80+80MHz transmission. To
-            disable 80+80MHz functionality, set secondary-channel to "" or unset the value
+            disable 80+80MHz functionality, set secondary-channel to '' or unset the value
             via CLI/GUI.
 
         security_profile:
@@ -1114,9 +1118,9 @@ options:
             mode) are established.
             - *disabled* does not allow WDS links.
             - *static* only allows WDS links that are manually configured in
-              L(wds,/index.php?title=Wds&action=edit&redlink=1)
+              [wds](/index.php?title=Wds&action=edit&redlink=1 'Wds (page does not exist)')
             - *dynamic* also allows WDS links with devices that are not configured in
-              L(wds,/index.php?title=Wds&action=edit&redlink=1),
+              [wds](/index.php?title=Wds&action=edit&redlink=1 'Wds (page does not exist)'),
               by creating required entries dynamically. Such dynamic WDS entries are removed
               automatically after the connection with the other AP is lost.
             *-mesh* modes use different (better) method for establishing link between AP,
@@ -1162,7 +1166,8 @@ options:
             - 'required'
           default: "disabled"
           description: |
-            Specifies whether to enable L(WMM,https://wiki.mikrotik.com/wiki/Manual:WMM).
+            Specifies whether to enable [ WMM](https://wiki.mikrotik.com/wiki/Manual:WMM
+            'Manual:WMM').
 
         wps_mode:
           type: str

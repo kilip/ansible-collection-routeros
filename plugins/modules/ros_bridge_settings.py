@@ -50,7 +50,8 @@ options:
             - 'yes'
           default: "yes"
           description: |
-            Whether to enable a bridge L(FastPath,https://wiki.mikrotik.com/wiki/Manual:Fast_Path)
+            Whether to enable a bridge [
+            FastPath](https://wiki.mikrotik.com/wiki/Manual:Fast_Path 'Manual:Fast Path')
             globally.
 
         use_ip_firewall:
@@ -62,9 +63,12 @@ options:
           description: |
             Force bridged traffic to also be processed by prerouting, forward and
             postrouting sections of IP routing ([ Packet
-            Flow](https://wiki.mikrotik.com/wiki/Manual:Packet_Flow_v6 "Manual:Packet Flow
-            v6")). This does not apply to routed traffic. This property is required in case
-            you want to assign L(Simple Queues,https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree,https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to
+            Flow](https://wiki.mikrotik.com/wiki/Manual:Packet_Flow_v6 'Manual:Packet Flow
+            v6')). This does not apply to routed traffic. This property is required in case
+            you want to assign [ Simple
+            Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues
+            'Manual:Queue') or global [ Queue
+            Tree](https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree 'Manual:Queue') to
             traffic in a bridge. Property use-ip-firewall-for-vlan is required in case
             bridge vlan-filtering is used.
 
@@ -75,7 +79,13 @@ options:
             - 'yes'
           default: "no"
           description: |
-            Send bridged un-encrypted PPPoE traffic to also be processed by L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall). This property only has effect when use-ip-firewall is set to C(yes). This property is required in case you want to assign L(Simple Queues,https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree,https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to
+            Send bridged un-encrypted PPPoE traffic to also be processed by [
+            IP/Firewall](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall
+            'Manual:IP/Firewall'). This property only has effect when use-ip-firewall is set
+            to C(yes). This property is required in case you want to assign [ Simple
+            Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues
+            'Manual:Queue') or global [ Queue
+            Tree](https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree 'Manual:Queue') to
             PPPoE traffic in a bridge.
 
         use_ip_firewall_for_vlan:
@@ -85,7 +95,13 @@ options:
             - 'yes'
           default: "no"
           description: |
-            Send bridged VLAN traffic to also be processed by L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall). This property only has effect when use-ip-firewall is set to C(yes). This property is required in case you want to assign L(Simple Queues,https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree,https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to
+            Send bridged VLAN traffic to also be processed by [
+            IP/Firewall](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall
+            'Manual:IP/Firewall'). This property only has effect when use-ip-firewall is set
+            to C(yes). This property is required in case you want to assign [ Simple
+            Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues
+            'Manual:Queue') or global [ Queue
+            Tree](https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree 'Manual:Queue') to
             VLAN traffic in a bridge.
 
 """

@@ -1,0 +1,20 @@
+module: ros_wireless_access_list
+fixtures:
+  interface_wireless_access-list_export: |
+    #
+    #
+    #
+    /interface wireless access-list
+    add action accept signal-range=-79..120
+    
+tests:
+  -
+    commands:
+      - '/interface wireless access-list add comment=test signal-range=-50..120 interface=wlan1'
+    argument_spec:
+      config:
+        -
+          comment: test
+          signal_range: '-50..120'
+          interface: wlan1
+      state: merged

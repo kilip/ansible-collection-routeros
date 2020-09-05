@@ -84,7 +84,9 @@ options:
             - C(proxy-arp) - the interface will use the ARP proxy feature
             - C(reply-only) - the interface will only reply to requests originated from
               matching IP address/MAC address combinations which are entered as static entries
-              in the L(IP/ARP,https://wiki.mikrotik.com/wiki/Manual:IP/ARP) table. No dynamic entries will be automatically stored in the L(IP/ARP,https://wiki.mikrotik.com/wiki/Manual:IP/ARP) table.
+              in the [ IP/ARP](https://wiki.mikrotik.com/wiki/Manual:IP/ARP 'Manual:IP/ARP')
+              table. No dynamic entries will be automatically stored in the [
+              IP/ARP](https://wiki.mikrotik.com/wiki/Manual:IP/ARP 'Manual:IP/ARP') table.
               Therefore for communications to be successful, a valid static entry must already
               exist.
 
@@ -93,7 +95,9 @@ options:
           default: "auto"
           description: |
             ARP timeout is time how long ARP record is kept in ARP table after no packets
-            are received from IP. Value C(auto) equals to the value of arp-timeout in L(IP/Settings,https://wiki.mikrotik.com/wiki/Manual:IP/Settings), default is 30s.
+            are received from IP. Value C(auto) equals to the value of arp-timeout in [
+            IP/Settings](https://wiki.mikrotik.com/wiki/Manual:IP/Settings
+            'Manual:IP/Settings'), default is 30s.
 
         auto_mac:
           type: str
@@ -149,9 +153,12 @@ options:
             - 'yes'
           default: "yes"
           description: |
-            Special and faster case of L(FastPath,https://wiki.mikrotik.com/wiki/Manual:Fast_Path)
+            Special and faster case of [
+            FastPath](https://wiki.mikrotik.com/wiki/Manual:Fast_Path 'Manual:Fast Path')
             which works only on bridges with 2 interfaces (enabled by default only for new
-            bridges). More details can be found in the L(Fast Forward,https://wiki.mikrotik.com/wiki/Manual:Interface/Bridge#Fast_Forward) section.
+            bridges). More details can be found in the [ Fast
+            Forward](https://wiki.mikrotik.com/wiki/Manual:Interface/Bridge#Fast_Forward
+            'Manual:Interface/Bridge') section.
 
         forward_delay:
           type: str

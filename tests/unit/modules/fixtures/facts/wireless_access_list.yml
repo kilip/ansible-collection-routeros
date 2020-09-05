@@ -1,0 +1,11 @@
+asserts:
+  - 'self.assertEqual(result[0]["signal_range"], "-79..120")'
+resource: wireless_access_list
+fixtures:
+  interface_wireless_access-list_export: |
+    #
+    #
+    #
+    /interface wireless access-list
+    add action accept signal-range=-79..120
+    
