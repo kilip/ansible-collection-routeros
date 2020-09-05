@@ -1,10 +1,10 @@
-[routeros]
+[ros]
 localhost
 
-[routeros:vars]
+[ros:vars]
 ansible_host=127.0.0.1
 ansible_port=10022
 ansible_connection=network_cli
 ansible_network_os=routeros
 ansible_user=admin
-ansible_password=""
+ansible_password="admin"

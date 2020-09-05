@@ -1,0 +1,20 @@
+namespace: kilip
+name: routeros
+version: 1.0.0
+readme: README.md
+authors: Anthonius Munthi <https://itstoni.com>
+description: Managing Mikrotik RouterOS
+license: MIT
+license_file: 'LICENSE'
+tags:
+- routoros
+- mikrotik
+- network
+dependencies:
+    ansible.netcommon: ""
+repository: https://github.com/kilip/ansible-collection-ros
+documentation: https://github.com/kilip/ansible-collection-ros
+homepage: https://github.com/kilip/ansible-collection-ros
+issues: https://github.com/kilip/ansible-collection-ros/issues
+build_ignore:
+- tests

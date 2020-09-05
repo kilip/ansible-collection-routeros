@@ -1,0 +1,27 @@
+---
+- debug: msg="START ros_interfaces tests"
+
+- kilip.routeros.ros_interface:
+    config:
+      - name: ether1
+        comment: default
+
+- kilip.routeros.ros_interface:
+    config:
+      - name: ether1
+        comment: ether1 updated
+  register: result
+- assert:
+    that:
+      - result["changed"] == True
+
+- name: testing idempotence
+  kilip.routeros.ros_interface:
+    config:
+      - name: ether1
+        comment: ether1 updated
+  register: result
+- name: assert idempotence
+  assert:
+    that:
+      - result["changed"] == False

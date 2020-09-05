@@ -5,11 +5,7 @@ __metaclass__ = type
 import os
 import json
 
-from ansible_collections.kilip.routeros.tests.unit.modules.utils import (
-    AnsibleExitJson,
-    AnsibleFailJson,
-    ModuleTestCase,
-)
+from .utils import AnsibleExitJson, AnsibleFailJson, ModuleTestCase
 
 
 fixture_path = os.path.join(os.path.dirname(__file__), "fixtures")

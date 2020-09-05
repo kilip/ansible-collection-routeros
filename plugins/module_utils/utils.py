@@ -9,6 +9,9 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common i
     utils as net_utils,
 )
 
+ANSIBLE_REMOVE_INVALID_SCRIPT_NAME = "ansible-remove-invalid"
+
+
 def get_interface_type(interface):
     """Gets the type of interface from config
     """
@@ -27,19 +30,28 @@ def normalize_interface(name):
         return None
 
 
-def parse_config(spec, conf):
+def parse_config(spec, conf, argspec, key_prefixes):
     """
     Parse routeros configuration and extract values
     :param spec: Configuration specification
     :param conf: routeros configuration values
+    :param argspec: replace configuration with the default value
     :return: an array of routeros config
     """
     config = deepcopy(spec)
     for key in config:
         mt_key = key.replace("_", "-")
-        value = parse_conf_arg(conf, mt_key)
-        if value == 'yes' or value == 'no':
-            value = True if value == 'yes' else False
+        if key_prefixes:
+            for prefix in key_prefixes:
+                if -1 != key.find(prefix):
+                    mt_key = key.replace(prefix + "_", prefix + ".")
+
+        value = parse_conf_arg(conf, mt_key, argspec[key])
+
+        if argspec is not None:
+            vtype = argspec[key]["type"]
+            if vtype == "list" and value is not None:
+                value = value.split(",")
 
         if value is not None:
             config[key] = value
@@ -47,7 +59,7 @@ def parse_config(spec, conf):
     return net_utils.remove_empties(config)
 
 
-def parse_conf_arg(cfg, arg):
+def parse_conf_arg(cfg, arg, argspec):
     """
     Parse config based on argument
 
@@ -62,6 +74,14 @@ def parse_conf_arg(cfg, arg):
         result = result.replace('"', "")
     else:
         result = None
+
+    vtype = argspec["type"]
+    if result is not None:
+        if vtype == "int":
+            result = int(result)
+        if vtype == "str":
+            result = str(result)
+
     return result
 
 
@@ -96,20 +116,29 @@ def dict_to_set(sample_dict):
     return return_set
 
 
-def key_to_routeros(key):
-    return key.replace('_', '-').strip()
+def key_to_routeros(key, prefixes=None):
+    if prefixes is None:
+        prefixes = list()
+
+    if prefixes:
+        for prefix in prefixes:
+            if -1 != key.find(prefix):
+                key = key.replace(prefix + "_", prefix + ".")
+                break
+
+    return key.replace("_", "-").strip()
 
 
 def value_to_routeros(value):
     if type(value) is bool:
         value = "yes" if value else "no"
 
-    if " " in value:
+    if type(value) == str and " " in value:
         value = '"' + value + '"'
     return value
 
 
-def generate_command_values(want, have, filters = []):
+def generate_command_values(want, have, filters, key_prefixes):
     cmd = []
     want_dict = dict_to_set(want)
     have_dict = dict_to_set(have)
@@ -119,16 +148,22 @@ def generate_command_values(want, have, filters = []):
         if key in filters:
             continue
         if diff.get(key) is not None:
-            ros_key = key_to_routeros(key)
+            ros_key = key_to_routeros(key, key_prefixes)
             value = want.get(key)
-            if type(value) is not dict:
-                value = value_to_routeros(value)
-                cmd.append(ros_key + "=" + value)
-            else:
+            if type(value) is dict:
                 have_section = dict()
                 if have.get(key) is not None:
                     have_section = have.get(key)
-                cmd.extend(generate_command_values(want[key], have_section))
+                cmd.extend(
+                    generate_command_values(
+                        want[key], have_section, key_prefixes
+                    )
+                )
+            elif type(value) is list:
+                cmd.append(ros_key + "=" + ",".join(value))
+            else:
+                value = value_to_routeros(value)
+                cmd.append(ros_key + "=" + str(value))
     return cmd
 
 
@@ -231,3 +266,9 @@ def remove_duplicate_interface(commands):
             set_cmd.append(each)
 
     return set_cmd
+
+
+def gen_remove_invalid_resource():
+    script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
+    command = "/system script run {0}".format(script_name)
+    return command

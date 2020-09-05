@@ -1,0 +1,65 @@
+module: ros_vlan
+fixtures:
+  interface_vlan_export: |
+    # sep/05/2020 07:24:11 by RouterOS 6.47.2
+    # software id = 
+    #
+    #
+    #
+    /interface vlan
+    add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
+    
+tests:
+  -
+    commands:
+      - '/interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled'
+      - '/interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"'
+    argument_spec:
+      config:
+        -
+          name: vlan-100
+          interface: br-trunk
+          vlan_id: 100
+          comment: 'new comment'
+        -
+          name: vlan-200
+          interface: br-trunk
+          vlan_id: 200
+          comment: 'new comment'
+      state: merged
+  -
+    commands:
+      - '/interface vlan set [ find name=vlan-100 ] arp=enabled'
+      - '/interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"'
+    argument_spec:
+      config:
+        -
+          name: vlan-100
+          interface: br-trunk
+          vlan_id: 100
+          comment: 'new comment'
+      state: replaced
+  -
+    commands:
+      - '/interface vlan remove [ find name=vlan-100 ]'
+      - '/interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"'
+      - '/system script run ansible-remove-invalid'
+    argument_spec:
+      config:
+        -
+          name: vlan-new
+          interface: br-trunk
+          vlan_id: 100
+          comment: 'new comment'
+      state: overridden
+  -
+    commands:
+      - '/interface vlan remove [ find name=vlan-100 ]'
+      - '/system script run ansible-remove-invalid'
+    argument_spec:
+      config:
+        -
+          name: vlan-100
+          interface: br-trunk
+          vlan_id: 100
+      state: deleted
