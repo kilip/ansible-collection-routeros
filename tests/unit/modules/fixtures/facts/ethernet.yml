@@ -1,0 +1,14 @@
+asserts:
+  - 'self.assertEqual(result[0]["name"], "ether1")'
+  - 'self.assertEqual(result[0]["comment"], "ether1 comment")'
+resource: ethernet
+fixtures:
+  interface_ethernet_export: |
+    # sep/05/2020 13:10:43 by RouterOS 6.47.2
+    # software id =
+    #
+    #
+    #
+    /interface ethernet
+    set [ find default-name=ether1 ] comment="ether1 comment"
+    
