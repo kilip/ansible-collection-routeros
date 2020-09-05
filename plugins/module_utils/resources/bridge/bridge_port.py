@@ -39,11 +39,6 @@ class BridgePortResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
-                "disabled": {
-                    "type": "str",
-                    "choices": ["yes", "no"],
-                    "default": "no",
-                },
                 "auto_isolate": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -59,6 +54,12 @@ class BridgePortResource(ResourceBase):
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "yes",
+                },
+                "comment": {"type": "str"},
+                "disabled": {
+                    "type": "str",
+                    "choices": ["yes", "no"],
+                    "default": "no",
                 },
                 "edge": {
                     "type": "str",
@@ -90,11 +91,14 @@ class BridgePortResource(ResourceBase):
                     ],
                     "default": "admit-all",
                 },
+                "horizon": {"type": "int", "default": 0},
                 "ingress_filtering": {
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "no",
                 },
+                "interface": {"type": "str", "required": True},
+                "internal_path_cost": {"type": "int", "default": 10},
                 "learn": {
                     "type": "str",
                     "choices": ["auto", "no", "yes"],
@@ -105,9 +109,6 @@ class BridgePortResource(ResourceBase):
                     "choices": ["disabled", "permanent", "temporary-query"],
                     "default": "temporary-query",
                 },
-                "horizon": {"type": "int", "default": 0},
-                "internal_path_cost": {"type": "int", "default": 10},
-                "interface": {"type": "str", "required": True},
                 "path_cost": {"type": "int", "default": 10},
                 "point_to_point": {
                     "type": "str",
@@ -146,7 +147,6 @@ class BridgePortResource(ResourceBase):
                     "choices": ["no", "yes"],
                     "default": "yes",
                 },
-                "comment": {"type": "str"},
             },
         },
     }

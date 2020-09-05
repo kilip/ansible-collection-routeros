@@ -32,6 +32,7 @@ author: Anthonius Munthi (@kilip)
 short_description: Bridge Resource Module
 description:
 - This modules manages configuration in submenu `/interface bridge`.
+version_added: 1.0.0
 options:
   state:
     type: str
@@ -43,15 +44,6 @@ options:
     type: list
     elements: dict
     suboptions:
-        disabled:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-            Changes whether the bridge is disabled.
-
         add_dhcp_option82:
           type: str
           choices:
@@ -128,6 +120,15 @@ options:
           default: "no"
           description: |
             Enables or disables DHCP Snooping on the bridge.
+
+        disabled:
+          type: str
+          choices:
+            - 'no'
+            - 'yes'
+          default: "no"
+          description: |
+            Changes whether the bridge is disabled.
 
         ether_type:
           type: str

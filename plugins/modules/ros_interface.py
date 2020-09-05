@@ -32,6 +32,7 @@ author: Anthonius Munthi (@kilip)
 short_description: Interface Resource Module
 description:
 - This module manages the interface configuration of Mikrotik RouterOS network devices.
+version_added: 1.0.0
 options:
   state:
     type: str
@@ -43,6 +44,12 @@ options:
     type: list
     elements: dict
     suboptions:
+        comment:
+          type: str
+
+          description: |
+            Give notes for this resource
+
         disabled:
           type: str
           choices:
@@ -71,12 +78,6 @@ options:
 
           description: |
             Name of an interface
-
-        comment:
-          type: str
-
-          description: |
-            Give notes for this resource
 
 """
 

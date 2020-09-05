@@ -10,13 +10,12 @@ resources:
 	TARGET_DIR=${ROOT_DIR} ${GENERATOR_CMD} app:generate
 	tox
 	$(MAKE) test-unit
-	$(MAKE) sanity
 
 sanity:
-	ansible-test sanity --python ${PYTHON}
+	ansible-test sanity --docker -v --color
 
 test-unit:
 	ansible-test units --python ${PYTHON} --color
 
 build-doc:
-	ansible-doc-extractor ./docs ./plugins/modules/ros_*.py
+	ansible-doc-extractor ./docs plugins/modules/*.py

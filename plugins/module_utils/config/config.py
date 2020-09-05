@@ -77,7 +77,7 @@ class Config(ConfigBase):
         resource = self.resource
         commands = []
         command_prefix = self.get_command_prefix(want)
-        prefix = '{0} add '.format(command_prefix)
+        prefix = "{0} add ".format(command_prefix)
 
         # always remove default values for new resource
         defaults = resource.generate_dict()
@@ -134,7 +134,9 @@ class Config(ConfigBase):
             "/ip dhcp-server remove [find invalid];",
         ]
         scripts = "".join(lines)
-        commands = '/system script add name={0} policy=read,write source="{1}"'.format(script_name, scripts)
+        commands = '/system script add name={0} policy=read,write source="{1}"'.format(
+            script_name, scripts
+        )
         match = re.search(r"name\=" + script_name, existing, re.M)
         if not match:
             load_config(self._module, commands)

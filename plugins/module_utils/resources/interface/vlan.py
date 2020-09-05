@@ -39,8 +39,6 @@ class VlanResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
-                "vlan_id": {"type": "int", "required": True},
-                "interface": {"type": "str", "required": True},
                 "arp": {
                     "type": "str",
                     "choices": [
@@ -51,11 +49,13 @@ class VlanResource(ResourceBase):
                     ],
                     "default": "enabled",
                 },
+                "comment": {"type": "str"},
+                "interface": {"type": "str", "required": True},
                 "l2mtu": {"type": "int"},
                 "mtu": {"type": "int", "default": 1500},
                 "name": {"type": "str", "required": True},
                 "use_service_tag": {"type": "str", "choices": ["no", "yes"]},
-                "comment": {"type": "str"},
+                "vlan_id": {"type": "int", "required": True},
             },
         },
     }

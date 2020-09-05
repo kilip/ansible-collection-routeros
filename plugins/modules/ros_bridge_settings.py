@@ -32,6 +32,7 @@ author: Anthonius Munthi (@kilip)
 short_description: Bridge Setting Module
 description:
 - This modules manages configuration in submenu `/interface bridge settings`.
+version_added: 1.0.0
 options:
   state:
     type: str
@@ -42,6 +43,16 @@ options:
     description: A dictionary of `/interface bridge settings` parameters
     type: dict
     suboptions:
+        allow_fast_path:
+          type: str
+          choices:
+            - 'no'
+            - 'yes'
+          default: "yes"
+          description: |
+            Whether to enable a bridge L(FastPath,https://wiki.mikrotik.com/wiki/Manual:Fast_Path)
+            globally.
+
         use_ip_firewall:
           type: str
           choices:
@@ -76,16 +87,6 @@ options:
           description: |
             Send bridged VLAN traffic to also be processed by L(IP/Firewall,https://wiki.mikrotik.com/wiki/Manual:IP/Firewall). This property only has effect when use-ip-firewall is set to C(yes). This property is required in case you want to assign L(Simple Queues,https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree,https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to
             VLAN traffic in a bridge.
-
-        allow_fast_path:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "yes"
-          description: |
-            Whether to enable a bridge L(FastPath,https://wiki.mikrotik.com/wiki/Manual:Fast_Path)
-            globally.
 
 """
 

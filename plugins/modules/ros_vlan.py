@@ -32,6 +32,7 @@ author: Anthonius Munthi (@kilip)
 short_description: VLAN Resource Module
 description:
 - This module manages the vlan configuration of Mikrotik RouterOS network devices.
+version_added: 1.0.0
 options:
   state:
     type: str
@@ -43,21 +44,6 @@ options:
     type: list
     elements: dict
     suboptions:
-        vlan_id:
-          type: int
-          required: True
-
-          description: |
-            Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal
-            for all computers that belong to the same VLAN.
-
-        interface:
-          type: str
-          required: True
-
-          description: |
-            Name of physical interface on top of which VLAN will work
-
         arp:
           type: str
           choices:
@@ -68,6 +54,19 @@ options:
           default: "enabled"
           description: |
             Address Resolution Protocol mode
+
+        comment:
+          type: str
+
+          description: |
+            Give notes for this resource
+
+        interface:
+          type: str
+          required: True
+
+          description: |
+            Name of physical interface on top of which VLAN will work
 
         l2mtu:
           type: int
@@ -97,11 +96,13 @@ options:
           description: |
             802.1ad compatible Service Tag
 
-        comment:
-          type: str
+        vlan_id:
+          type: int
+          required: True
 
           description: |
-            Give notes for this resource
+            Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal
+            for all computers that belong to the same VLAN.
 
 """
 

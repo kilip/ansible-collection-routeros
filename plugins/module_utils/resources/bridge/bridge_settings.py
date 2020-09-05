@@ -39,6 +39,11 @@ class BridgeSettingsResource(ResourceBase):
         "config": {
             "type": "dict",
             "options": {
+                "allow_fast_path": {
+                    "type": "str",
+                    "choices": ["no", "yes"],
+                    "default": "yes",
+                },
                 "use_ip_firewall": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -53,11 +58,6 @@ class BridgeSettingsResource(ResourceBase):
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "no",
-                },
-                "allow_fast_path": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "yes",
                 },
             },
         },

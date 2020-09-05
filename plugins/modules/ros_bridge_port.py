@@ -32,6 +32,7 @@ author: Anthonius Munthi (@kilip)
 short_description: Bridge Port Module
 description:
 - This module manages RouterOS sub menu `/interface bridge port`
+version_added: 1.0.0
 options:
   state:
     type: str
@@ -43,15 +44,6 @@ options:
     type: list
     elements: dict
     suboptions:
-        disabled:
-          type: str
-          choices:
-            - 'yes'
-            - 'no'
-          default: "no"
-          description: |
-            Set bridge port disability
-
         auto_isolate:
           type: str
           choices:
@@ -97,6 +89,21 @@ options:
             that uses **FF:FF:FF:FF:FF:FF** as destination MAC address, such traffic is
             crucial for many protocols such as DHCP, ARP, NDP, BOOTP (Netinstall) and
             others. This option does not limit traffic flood to the CPU.
+
+        comment:
+          type: str
+
+          description: |
+            Give notes for this resource
+
+        disabled:
+          type: str
+          choices:
+            - 'yes'
+            - 'no'
+          default: "no"
+          description: |
+            Set bridge port disability
 
         edge:
           type: str
@@ -164,6 +171,15 @@ options:
             Specifies allowed ingress frame types on a bridge port. This property only has
             effect when vlan-filtering is set to C(yes).
 
+        horizon:
+          type: int
+          default: 0
+          description: |
+            Use split horizon bridging to prevent bridging loops. Set the same value for
+            group of ports, to prevent them from sending data to ports with the same horizon
+            value. Split horizon is a software feature that disables hardware offloading.
+            Read more about L(Bridge split horizon,https://wiki.mikrotik.com/wiki/MPLSVPLS#Split_horizon_bridging).
+
         ingress_filtering:
           type: str
           choices:
@@ -175,6 +191,20 @@ options:
             a member of the received VLAN ID in the bridge VLAN table. Should be used with
             frame-types to specify if the ingress traffic should be tagged or untagged. This
             property only has effect when vlan-filtering is set to C(yes).
+
+        interface:
+          type: str
+          required: True
+
+          description: |
+            Name of the interface.
+
+        internal_path_cost:
+          type: int
+          default: 10
+          description: |
+            Path cost to the interface for MSTI0 inside a region. This property only has
+            effect when protocol-mode is set to C(mstp).
 
         learn:
           type: str
@@ -215,29 +245,6 @@ options:
             You can improve security by forcing ports that have IPTV boxes connected to
             never become ports marked as C(multicast-router). This property only has effect
             when igmp-snooping is set to C(yes).
-
-        horizon:
-          type: int
-          default: 0
-          description: |
-            Use split horizon bridging to prevent bridging loops. Set the same value for
-            group of ports, to prevent them from sending data to ports with the same horizon
-            value. Split horizon is a software feature that disables hardware offloading.
-            Read more about L(Bridge split horizon,https://wiki.mikrotik.com/wiki/MPLSVPLS#Split_horizon_bridging).
-
-        internal_path_cost:
-          type: int
-          default: 10
-          description: |
-            Path cost to the interface for MSTI0 inside a region. This property only has
-            effect when protocol-mode is set to C(mstp).
-
-        interface:
-          type: str
-          required: True
-
-          description: |
-            Name of the interface.
 
         path_cost:
           type: int
@@ -366,12 +373,6 @@ options:
             recommended to use static bridge host entries to avoid packets being dropped
             until the MAC address has been learnt. Has effect only on an egress port. This
             option does not limit traffic flood to the CPU.
-
-        comment:
-          type: str
-
-          description: |
-            Give notes for this resource
 
 """
 

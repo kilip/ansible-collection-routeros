@@ -39,11 +39,6 @@ class BridgeResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
-                "disabled": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "no",
-                },
                 "add_dhcp_option82": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -69,6 +64,11 @@ class BridgeResource(ResourceBase):
                 },
                 "comment": {"type": "str"},
                 "dhcp_snooping": {
+                    "type": "str",
+                    "choices": ["no", "yes"],
+                    "default": "no",
+                },
+                "disabled": {
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "no",

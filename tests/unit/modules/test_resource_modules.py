@@ -74,7 +74,9 @@ class TestResourceModules(TestRouterOSModule):
     @parameterized.expand(module_fixtures)
     def test_module(self, module, spec, commands):
         self.module = importlib.import_module(
-            "ansible_collections.kilip.routeros.plugins.modules.{0}".format(module)
+            "ansible_collections.kilip.routeros.plugins.modules.{0}".format(
+                module
+            )
         )
         self.do_set_up()
         set_module_args(spec)

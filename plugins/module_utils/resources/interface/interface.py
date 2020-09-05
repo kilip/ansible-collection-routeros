@@ -38,6 +38,7 @@ class InterfaceResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
+                "comment": {"type": "str"},
                 "disabled": {
                     "type": "str",
                     "choices": ["yes", "no"],
@@ -46,7 +47,6 @@ class InterfaceResource(ResourceBase):
                 "l2mtu": {"type": "int"},
                 "mtu": {"type": "int"},
                 "name": {"type": "str", "required": True},
-                "comment": {"type": "str"},
             },
         },
     }
