@@ -1,0 +1,16 @@
+asserts:
+  - 'self.assertEqual(result["bridge"], "none")'
+  - 'self.assertEqual(result["certificate"], "none")'
+resource: wireless_cap
+fixtures:
+  interface_wireless_cap_export_verbose: |
+    # sep/05/2020 13:37:38 by RouterOS 6.47.2
+    # software id =
+    #
+    #
+    #
+    /interface wireless cap
+    set bridge=none caps-man-addresses="" caps-man-certificate-common-names="" caps-man-names="" \
+        certificate=none discovery-interfaces="" \
+        enabled=no interfaces="" lock-to-caps-man=no static-virtual=no
+    
