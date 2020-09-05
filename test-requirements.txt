@@ -8,7 +8,7 @@ pytest-mock
 pylint
 yamllint
 junit-xml
-coverage
+coverage==4.5.4
 tox
 parameterized >= 0.7.4
 voluptuous

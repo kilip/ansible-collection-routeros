@@ -3,7 +3,7 @@ GENERATOR_CMD:=/home/toni/project/personal/routeros-generator/bin/console
 PYTHON:=3.8
 
 install:
-	pip install -r requirements.txt -r test-requirements
+	pip install -r requirements.txt -r test-requirements.txt
 
 resources:
 	export TARGET_DIR=${ROOT_DIR}
