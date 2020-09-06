@@ -1,22 +1,19 @@
 from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
 from ...compat.unittest import TestCase
 from ...compat.mock import patch
-from ...modules.utils import (
-    set_module_args,
-)
-from ...modules.routeros_module import (
-    load_fixture
-)
+from ...modules.utils import set_module_args
+from ...modules.routeros_module import load_fixture
 from .....plugins.module_utils.config.config import Config
 from .....plugins.module_utils.resources.bridge.bridge import BridgeResource
 
-fix_call = 0
-
 
 class TestConfig(TestCase):
+    fixture_prefix = "test"
+    fix_call = 0
 
     def setUp(self):
         TestCase.setUp(self)
@@ -32,16 +29,13 @@ class TestConfig(TestCase):
         self.load_config = self.mock_load_config.start()
 
     def load_fixture(*args, **kwargs):
-        global fix_call
-        cmds = [
-            "override.pre",
-            "override.post"
-        ]
+        me = args[0]
+        cmds = [me.fixture_prefix + ".pre", me.fixture_prefix + ".post"]
 
         key = 0
-        if fix_call > 2:
+        if me.fix_call > 2:
             key = 1
-        fix_call += 1
+        me.fix_call += 1
         ret = load_fixture("test-config/" + cmds[key])
         return [ret]
 
@@ -54,15 +48,34 @@ class TestConfig(TestCase):
         return self.config.execute_module()
 
     def test_overridden(self):
-        set_module_args(dict(
-            state="overridden",
-            config=[
-                dict(name="br-trunk", comment="override")
-            ]
-        ))
+        self.fix_call = 0
+        self.fixture_prefix = "override"
+        set_module_args(
+            dict(
+                state="overridden",
+                config=[dict(name="br-trunk", comment="new comment")],
+            )
+        )
         self.get_config.side_effect = self.load_fixture
         result = self._execute_module()
         self.assertTrue(result["changed"])
 
         result = self._execute_module()
+        self.assertFalse(result["changed"])
+
+    def test_replaced(self):
+        self.fix_call = 0
+        self.fixture_prefix = "replaced"
+        set_module_args(
+            dict(
+                state="replaced",
+                config=[dict(name="br-trunk", comment="new comment")],
+            )
+        )
+
+        self.get_config.side_effect = self.load_fixture
+        result = self._execute_module()
+        self.assertTrue(result["changed"])
+        result = self._execute_module()
+
         self.assertFalse(result["changed"])

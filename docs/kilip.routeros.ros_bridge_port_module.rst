@@ -207,8 +207,7 @@ Using replaced state
 .. code-block:: ssh
 
     /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
-    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] disabled=no
-    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment"
+    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
 
 
 **After State**

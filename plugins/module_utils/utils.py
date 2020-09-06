@@ -135,7 +135,8 @@ def filter_dict_having_none_value(want, have):
                     test_key_dict.update({key: dict_val})
                 if test_key_dict:
                     test_dict.update({k: test_key_dict})
-        if isinstance(v, list):
+        if isinstance(v, list) and (type(v[0]) == list or type(v[0]) == dict):
+
             for key, value in iteritems(v[0]):
                 test_key_dict = dict()
                 if value is None:

@@ -162,8 +162,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface vlan set [ find name=vlan-100 ] arp=enabled
-    /interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"
+    /interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
 
 
 **After State**

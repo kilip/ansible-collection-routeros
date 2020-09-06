@@ -26,8 +26,7 @@ tests:
       state: merged
   -
     commands:
-      - '/interface vlan set [ find name=vlan-100 ] arp=enabled'
-      - '/interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"'
+      - '/interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled'
     argument_spec:
       config:
         -

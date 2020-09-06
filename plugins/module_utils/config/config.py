@@ -8,7 +8,6 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.c
 )
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     to_list,
-    remove_empties
 )
 
 from ..facts.facts import Facts
@@ -21,7 +20,6 @@ from ..utils import (
 
 
 class Config(ConfigBase):
-
     def __init__(self, module, resource):
         ConfigBase.__init__(self, module)
         self.resource = resource()
@@ -239,10 +237,10 @@ class Config(ConfigBase):
             if existing is None:
                 commands.extend(resource.add(each))
             else:
-                commands.extend(self._clear_config(existing))
+                have_dict = filter_dict_having_none_value(each, existing)
+                commands.extend(resource.clear_config(each, have_dict))
                 # new = self._create_empty_resource(existing)
-                defaults = resource.generate_dict()
-                commands.extend(resource.update(each, defaults))
+                commands.extend(resource.update(each, existing))
 
         return commands
 

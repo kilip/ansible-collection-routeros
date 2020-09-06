@@ -69,7 +69,7 @@ class ResourceBase(object):
     def clear_config(self, want, have):
         commands = []
         t = dict()
-        spec = self.generate_dict()
+        self.generate_dict()
         argspec = self.facts_argument_spec
 
         for key in have:

@@ -539,7 +539,6 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface wireless set [ find name=wlan1 ] security-profile=default
     /interface wireless set [ find name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
 
 
