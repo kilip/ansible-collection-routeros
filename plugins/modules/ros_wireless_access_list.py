@@ -169,7 +169,7 @@ EXAMPLES = """
 # sep/06/2020 03:08:16 by RouterOS 6.47.2
 # software id =
 # /interface wireless access-list
-# add comment=existing action accept signal-range=-79..120
+# add comment=existing signal-range=-79..120
 #
 # configuration:
 - name: Merge with device configuration

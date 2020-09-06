@@ -124,7 +124,9 @@ EXAMPLES = """
 # sep/06/2020 03:08:16 by RouterOS 6.47.2
 # software id =
 # /interface wireless cap
-# set interface=wlan1,wlan2
+# set bridge=none caps-man-addresses="" caps-man-certificate-common-names="" caps-man-names="" \
+#     certificate=none discovery-interfaces="" \
+#     enabled=no interfaces="" lock-to-caps-man=no static-virtual=no
 #
 # configuration:
 - name: Configure Wireless CAP

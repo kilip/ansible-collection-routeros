@@ -39,7 +39,6 @@ class WirelessConnectListResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
-                "3gpp": {"type": "str"},
                 "area_prefix": {"type": "str"},
                 "comment": {"type": "str", "required": True},
                 "connect": {

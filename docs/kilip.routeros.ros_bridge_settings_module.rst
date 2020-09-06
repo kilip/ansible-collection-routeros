@@ -129,7 +129,7 @@ Change Bridge Setting Configuration
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     /interface bridge settings
-    set allow-fast-path=no use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes use-ip-firewall=yes
+    set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
 
 
 

@@ -287,6 +287,6 @@ Using deleted state
     [admin@MikroTik] > /interface vlan export
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
-
+    # empty interface
 
 

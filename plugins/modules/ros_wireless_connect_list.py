@@ -44,11 +44,6 @@ options:
     type: list
     elements: dict
     suboptions:
-        3gpp:
-          type: str
-
-          description: |
-
         area_prefix:
           type: str
 
