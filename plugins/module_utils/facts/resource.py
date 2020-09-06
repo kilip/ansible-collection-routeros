@@ -15,7 +15,6 @@ class ResourceFacts(object):
         resource = self._resource
         if not data:
             data = self._get_resources_data()
-
         configs = data.split(resource.command)
 
         # remove export header

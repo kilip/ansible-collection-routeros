@@ -75,6 +75,9 @@ def value_to_routeros(value):
 
     if type(value) == str and " " in value:
         value = '"' + value + '"'
+
+    if value == "":
+        value = '""'
     return value
 
 

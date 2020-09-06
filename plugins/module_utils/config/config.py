@@ -8,6 +8,7 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.c
 )
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     to_list,
+    remove_empties
 )
 
 from ..facts.facts import Facts
@@ -15,12 +16,11 @@ from ..routeros import load_config, get_config
 from ..utils import (
     gen_remove_invalid_resource,
     ANSIBLE_REMOVE_INVALID_SCRIPT_NAME,
+    filter_dict_having_none_value,
 )
 
 
 class Config(ConfigBase):
-
-    has_delete_command = False
 
     def __init__(self, module, resource):
         ConfigBase.__init__(self, module)
@@ -105,6 +105,7 @@ class Config(ConfigBase):
             for each in config:
                 want.append(each)
         have = existing
+
         resp = self._set_state(want, have)
         return to_list(resp)
 
@@ -142,9 +143,8 @@ class Config(ConfigBase):
 
     def _state_overridden(self, want, have):
         """ The command generator when state is overridden
-
         :param want: the desired configuration as a dictionary
-        :param have: the current configuration as a dictionary
+        :param obj_in_have: the current configuration as a dictionary
         :rtype: A list
         :returns: the commands necessary to migrate the current configuration
                   to the desired configuration
@@ -152,11 +152,21 @@ class Config(ConfigBase):
         commands = []
         resource = self.resource
 
-        for existing in have:
-            commands.extend(resource.delete(existing))
+        # remove non related first
+        for each in have:
+            exists = self._find_resource(each, want)
+            if exists is None:
+                commands.extend(resource.delete(each))
+            else:
+                have_dict = filter_dict_having_none_value(exists, each)
+                commands.extend(resource.clear_config(exists, have_dict))
 
         for each in want:
-            commands.extend(resource.add(each))
+            exists = self._find_resource(each, have)
+            if exists is None:
+                commands.extend(resource.add(each))
+            else:
+                commands.extend(resource.update(each, exists))
 
         if resource.has_delete_command:
             cmd = gen_remove_invalid_resource()

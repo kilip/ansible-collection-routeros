@@ -66,6 +66,26 @@ class ResourceBase(object):
         else:
             return configs[0]
 
+    def clear_config(self, want, have):
+        commands = []
+        t = dict()
+        spec = self.generate_dict()
+        argspec = self.facts_argument_spec
+
+        for key in have:
+            if have.get(key) != want.get(key):
+                ctype = argspec[key]["type"]
+                if ctype == "int":
+                    t[key] = 0
+                else:
+                    t[key] = ""
+
+        for key in self.keys:
+            t[key] = want[key]
+
+        commands.extend(self.update(t, have))
+        return commands
+
     def get_command_prefix(self, want, have=None):
         prefix = self.command
         return prefix

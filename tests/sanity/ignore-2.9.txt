@@ -3,3 +3,4 @@ plugins/modules/ros_wireless.py pep8:E501
 plugins/modules/ros_capsman_configuration.py pep8:E501
 tests/unit/modules/test_resource_modules.py pylint:no-method-argument
 tests/unit/modules/test_ros_facts.py pylint:no-method-argument
+tests/unit/module_utils/config/test_config.py pylint:no-method-argument
