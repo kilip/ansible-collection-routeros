@@ -1,0 +1,10 @@
+asserts:
+  - 'self.assertEqual(result[0]["name"], "test")'
+resource: capsman_datapath
+fixtures:
+  caps-man_datapath_export: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /caps-man datapath
+    add name=test
+    

@@ -1,0 +1,23 @@
+module: ros_capsman_configuration
+fixtures:
+  caps-man_configuration_export: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /caps-man configuration
+    add name=test
+    
+tests:
+  -
+    commands:
+      - '/caps-man configuration set [ find name=test ] datapath.bridge=br-trunk rx-chains=0,1,2'
+      - '/caps-man configuration add name=new datapath.bridge=br-trunk'
+    argument_spec:
+      state: merged
+      config:
+        -
+          name: test
+          datapath_bridge: br-trunk
+          rx_chains: [0, 1, 2]
+        -
+          name: new
+          datapath_bridge: br-trunk

@@ -1,0 +1,15 @@
+asserts:
+  - 'self.assertEqual(result["ca_certificate"], "none")'
+resource: capsman_manager
+fixtures:
+  caps-man_manager_export_verbose: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /caps-man manager
+    set ca-certificate=none \
+        certificate=none \
+        enabled=no \
+        package-path="" \
+        require-peer-certificate=no \
+        upgrade-policy=none
+    
