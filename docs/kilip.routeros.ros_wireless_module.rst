@@ -472,6 +472,9 @@ Using merged state
               - 0
               - 1
               - 2
+            supported_rates_ag:
+              - 6Mbps
+              - 24Mbps
         state: merged
         
       
@@ -481,7 +484,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 security-profile=default
+    /interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 supported-rates-a/g=6Mbps,24Mbps security-profile=default
 
 
 **After State**
@@ -493,7 +496,7 @@ Using merged state
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     /interface wireless
-    set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2
+    set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 supported-rates-a/g=6Mbps,24Mbps security-profile=default
 
 
 

@@ -121,6 +121,11 @@ options:
             This property has effect only when station mode interface **ssid** is empty, or
             when access point mode interface has **wds-ignore-ssid**=*yes*
 
+        three_gpp:
+          type: str
+
+          description: |
+
         wireless_protocol:
           type: str
           choices:

@@ -9,13 +9,14 @@ fixtures:
 tests:
   -
     commands:
-      - '/interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 security-profile=default'
+      - '/interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 supported-rates-a/g=6Mbps,24Mbps security-profile=default'
     argument_spec:
       config:
         -
           name: wlan1
           comment: 'updated comment'
           ampdu_priorities: [0, 1, 2]
+          supported_rates_ag: [6Mbps, 24Mbps]
       state: merged
   -
     commands:

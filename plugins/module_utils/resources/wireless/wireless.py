@@ -29,6 +29,10 @@ class WirelessResource(ResourceBase):
     gather_network_resources = ["wireless"]
     keys = ["name"]
     config_type = "config"
+    custom_props = {
+        "basic_rates_ag": {"ros_key": "basic-rates-a/g"},
+        "supported_rates_ag": {"ros_key": "supported-rates-a/g"},
+    }
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced"],

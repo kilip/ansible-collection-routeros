@@ -29,6 +29,7 @@ class WirelessConnectListResource(ResourceBase):
     gather_network_resources = ["wireless_connect_list"]
     keys = ["comment"]
     config_type = "config"
+    custom_props = {"three_gpp": {"ros_key": "3gpp"}}
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],
@@ -56,6 +57,7 @@ class WirelessConnectListResource(ResourceBase):
                 "security_profile": {"type": "str", "default": "none"},
                 "signal_range": {"type": "str", "default": "-120..120"},
                 "ssid": {"type": "str"},
+                "three_gpp": {"type": "str"},
                 "wireless_protocol": {
                     "type": "str",
                     "choices": ["802.11", "any", "nstreme", "tdma"],

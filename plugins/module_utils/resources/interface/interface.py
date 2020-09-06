@@ -21,7 +21,6 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 
 from ..base import ResourceBase
-from ...utils import parse_config
 import re
 
 
@@ -62,9 +61,7 @@ class InterfaceResource(ResourceBase):
 
         configs = []
         for conf in sp:
-            config = parse_config(
-                spec, conf, self.facts_argument_spec, self.prefixes
-            )
+            config = self.parse_config(spec, conf, self.facts_argument_spec)
             config["type"] = intype
             if config:
                 configs.append(config)
