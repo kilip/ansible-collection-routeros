@@ -13,10 +13,9 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -449,9 +448,11 @@ EXAMPLES = """
     config:
       - name: br-wan
         comment: 'updated comment'
+        arp: enabled
       - name: br-trunk
         comment: 'updated comment'
-        vlan_filtering: true
+        arp: enabled
+        vlan_filtering: 'yes'
     state: merged
 
 #
@@ -506,8 +507,8 @@ EXAMPLES = """
 - name: Override bridge configuration
   kilip.routeros.ros_bridge:
     config:
-      - name: br-new
-        comment: 'new bridge'
+      - comment: 'new bridge'
+        name: br-new
     state: overridden
 
 #

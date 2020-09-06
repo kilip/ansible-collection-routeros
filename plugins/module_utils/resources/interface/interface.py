@@ -12,10 +12,9 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -43,8 +42,8 @@ class InterfaceResource(ResourceBase):
                     "choices": ["yes", "no"],
                     "default": "no",
                 },
-                "l2mtu": {"type": "int"},
-                "mtu": {"type": "int"},
+                "l2mtu": {"type": "str"},
+                "mtu": {"type": "str"},
                 "name": {"type": "str", "required": True},
             },
         },

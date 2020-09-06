@@ -15,21 +15,15 @@
 #     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 ---
-- name: collect all cli test cases
-  find:
-    paths: '{{ role_path }}/tests/cli'
-    patterns: '{{ testcase }}.yaml'
-  register: test_cases
-  delegate_to: localhost
-
-- name: set test_items
-  set_fact: test_items="{{ test_cases.files | map(attribute='path') | list }}"
-
-- name: run test cases (connection=ansible.netcommon.network_cli)
-  include: '{{ test_case_to_run }}'
-  with_items: '{{ test_items }}'
-  loop_control:
-    loop_var: test_case_to_run
-  tags: network_cli
+- name: reset interface configuration
+  kilip.routeros.ros_interface:
+    state: merged
+    config:
+      - name: ether2
+        comment: 'ether2 comment'
+        mtu: '1500'
+      - name: ether3
+        comment: 'ether3 comment'
+        mtu: '1500'
+        disabled: 'yes'

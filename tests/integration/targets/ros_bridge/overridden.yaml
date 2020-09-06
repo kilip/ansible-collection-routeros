@@ -15,21 +15,33 @@
 #     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 ---
-- name: collect all cli test cases
-  find:
-    paths: '{{ role_path }}/tests/cli'
-    patterns: '{{ testcase }}.yaml'
-  register: test_cases
-  delegate_to: localhost
+- debug: msg="kilip.routeros.ros_bridge tests"
 
-- name: set test_items
-  set_fact: test_items="{{ test_cases.files | map(attribute='path') | list }}"
+- include_tasks: "_pre_tasks.yml"
 
-- name: run test cases (connection=ansible.netcommon.network_cli)
-  include: '{{ test_case_to_run }}'
-  with_items: '{{ test_items }}'
-  loop_control:
-    loop_var: test_case_to_run
-  tags: network_cli
+- name: set result commands facts
+  set_fact:
+    commands: [
+      '/interface bridge remove [ find name=br-trunk ]',
+      '/interface bridge remove [ find name=br-wan ]',
+      '/interface bridge add name=br-new comment="new bridge"',
+      '/system script run ansible-remove-invalid',
+    ]
+
+- name: Override bridge configuration
+  register: result
+  kilip.routeros.ros_bridge:
+    config:
+      - name: br-new
+        comment: 'new bridge'
+    state: overridden
+
+- name: set diff commands
+  set_fact:
+    diff_commands: "{{ result.commands | difference(commands) }}"
+
+- assert:
+    that:
+      - result.changed == True
+      - diff_commands == []

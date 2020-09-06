@@ -13,10 +13,9 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -60,7 +59,7 @@ options:
             Set interface disability.
 
         l2mtu:
-          type: int
+          type: str
 
           description: |
             Layer2 Maximum transmission unit. Note that this property can not be configured
@@ -69,7 +68,7 @@ options:
             'Maximum Transmission Unit on RouterBoards')
 
         mtu:
-          type: int
+          type: str
 
           description: |
             Layer3 Maximum transmission unit
@@ -92,26 +91,20 @@ EXAMPLES = """
 # sep/06/2020 03:08:16 by RouterOS 6.47.2
 # software id =
 # /interface ethernet
-# set [ find default-name=ether1 ] comment="ether1 comment" mtu=1500
-# set [ find default-name=ether2 ] comment="ether2 comment" disabled=yes
-# /interface bridge
-# add name=br-wan comment="wan bridge"
+# set [ find default-name=ether2 ] comment="ether2 comment" mtu=1500
+# set [ find default-name=ether3 ] comment="ether3 comment" mtu=1500 disabled=yes
 #
 # configuration:
 - name: Merge configuration with device configuration
   kilip.routeros.ros_interface:
     config:
-      - name: ether1
-        comment: 'ether1 updated'
-        mtu: 1000
       - name: ether2
         comment: 'ether2 updated'
-        mtu: 2000
-        disabled: false
-      - name: br-wan
-        disabled: true
-        mtu: 3000
-        comment: 'br-wan updated'
+        mtu: '2000'
+      - name: ether3
+        comment: 'ether3 updated'
+        disabled: 'no'
+        mtu: '3000'
     state: merged
 
 #
@@ -120,10 +113,8 @@ EXAMPLES = """
 # sep/06/2020 03:08:16 by RouterOS 6.47.2
 # software id =
 # /interface ethernet
-# set [ find default-name=ether1 ] comment="ether1 updated" mtu=1000
 # set [ find default-name=ether2 ] comment="ether2 updated" mtu=2000
-# /interface bridge
-# add name=br-wan comment="br-wan updated" mtu=3000 disabled=yes
+# set [ find default-name=ether3 ] comment="ether3 updated" mtu=3000
 """
 
 RETURN = """

@@ -40,11 +40,11 @@ def reset_config(command):
 
 def get_config(module, command):
     key = generate_config_key(command)
-    try:
-        return DEVICE_CONFIGS[key]
-    except KeyError:
-        cfg = run_commands(module, commands=[command])
-
+    # try:
+    #    return DEVICE_CONFIGS[key]
+    # except KeyError:
+    #    cfg = run_commands(module, commands=[command])
+    cfg = run_commands(module, commands=[command])
     cfg = "\n".join(cfg)
     cfg = to_text(cfg)
     cfg = normalize_config(cfg)

@@ -19,3 +19,6 @@ test-unit:
 
 build-doc:
 	ansible-doc-extractor ./docs plugins/modules/*.py
+
+integration:
+	ansible-test network-integration --python ${PYTHON} -v --color

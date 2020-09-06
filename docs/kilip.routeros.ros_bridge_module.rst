@@ -127,9 +127,11 @@ Using Merged
         config:
           - name: br-wan
             comment: 'updated comment'
+            arp: enabled
           - name: br-trunk
             comment: 'updated comment'
-            vlan_filtering: true
+            arp: enabled
+            vlan_filtering: 'yes'
         state: merged
         
       
@@ -140,7 +142,7 @@ Using Merged
 .. code-block:: ssh
 
     /interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
-    /interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
+    /interface bridge set [ find name=br-trunk ] comment="updated comment" arp=enabled vlan-filtering=yes
 
 
 **After State**
@@ -244,8 +246,8 @@ Using Overridden
     - name: Override bridge configuration
       kilip.routeros.ros_bridge:
         config:
-          - name: br-new
-            comment: 'new bridge'
+          - comment: 'new bridge'
+            name: br-new
         state: overridden
         
       
@@ -257,7 +259,7 @@ Using Overridden
 
     /interface bridge remove [ find name=br-trunk ]
     /interface bridge remove [ find name=br-wan ]
-    /interface bridge add name=br-new comment="new bridge"
+    /interface bridge add comment="new bridge" name=br-new
     /system script run ansible-remove-invalid
 
 
