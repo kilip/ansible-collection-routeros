@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
+from .capsman.capsman_aaa import CapsmanAaaResource
 from .interface.vlan import VlanResource
 from .interface.interface import InterfaceResource
 from .interface.ethernet import EthernetResource
@@ -18,6 +19,7 @@ from .bridge.bridge_port import BridgePortResource
 
 
 RESOURCE_SUBSETS = dict(
+    capsman_aaa=CapsmanAaaResource,
     vlan=VlanResource,
     interface=InterfaceResource,
     ethernet=EthernetResource,

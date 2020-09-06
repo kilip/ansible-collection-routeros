@@ -1,0 +1,25 @@
+module: ros_capsman_aaa
+fixtures:
+  caps-man_aaa_export_verbose: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /caps-man aaa
+    set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX.XX.XX.XX.XX.XX mac-mode=as-username
+    
+tests:
+  -
+    commands:
+      - '/caps-man aaa set called-format=mac interim-update=10s mac-caching=10m mac-format=XX-XX-XX-XX-XX-XX mac-mode=as-username-and-password'
+    argument_spec:
+      config:
+        called_format: mac
+        interim_update: 10s
+        mac_caching: 10m
+        mac_format: XX-XX-XX-XX-XX-XX
+        mac_mode: as-username-and-password
+      state: present
+  -
+    commands:
+      - '/caps-man aaa set mac-format=XX:XX:XX:XX:XX:XX'
+    argument_spec:
+      state: reset
