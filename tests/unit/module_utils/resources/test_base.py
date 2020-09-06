@@ -1,3 +1,6 @@
+from __future__ import absolute_import, division, print_function
+__metaclass__ = type
+
 from ...compat.unittest import TestCase
 from .....plugins.module_utils.resources.base import ResourceBase
 
