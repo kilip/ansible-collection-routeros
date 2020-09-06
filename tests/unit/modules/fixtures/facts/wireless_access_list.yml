@@ -7,5 +7,5 @@ fixtures:
     #
     #
     /interface wireless access-list
-    add action accept signal-range=-79..120
+    add comment=existing signal-range=-79..120
     

@@ -5,16 +5,20 @@ fixtures:
     #
     #
     /interface wireless access-list
-    add action accept signal-range=-79..120
+    add comment=existing signal-range=-79..120
     
 tests:
   -
     commands:
-      - '/interface wireless access-list add comment=test signal-range=-50..120 interface=wlan1'
+      - '/interface wireless access-list set [ find comment=existing ] signal-range=-80..120'
+      - '/interface wireless access-list add comment=new signal-range=-50..120 interface=wlan1'
     argument_spec:
       config:
         -
-          comment: test
+          comment: existing
+          signal_range: '-80..120'
+        -
+          comment: new
           signal_range: '-50..120'
           interface: wlan1
       state: merged

@@ -10,16 +10,23 @@ RouterOS Submenu: **/interface bridge**
 
 .. contents::
    :local:
-   :depth: 1
+   :depth: 2
 
 
+
+========
 Synopsis
---------
+========
+
+
 -  This modules manages configuration in submenu `/interface bridge`.
 
 
+
+==========
 Parameters
-----------
+==========
+
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -84,171 +91,235 @@ config
                             </li></ul></td><td><p>Globally enables or disables VLAN functionality for bridge.</p></td></tr></table>
 
 
+
+========
 Examples
---------
+========
 
+
+
+
+------------
 Using Merged
-  | **Before State**
+------------
 
-  ```ssh
-[admin@MikroTik] > /interface bridge export
-/interface bridge
-add comment="trunk bridge" name=br-trunk arp=reply-only
-add comment="wan bridge" name=br-wan arp=reply-only
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Merge configuration with device configuration
-  kilip.routeros.ros_bridge:
-    config:
-      - name: br-wan
-        comment: 'updated comment'
-      - name: br-trunk
-        comment: 'updated comment'
-        vlan_filtering: true
-    state: merged
+    [admin@MikroTik] > /interface bridge export
+    /interface bridge
+    add comment="trunk bridge" name=br-trunk arp=reply-only
+    add comment="wan bridge" name=br-wan arp=reply-only
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
-  /interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
-  
-  ```
 
-  | **After State**
-  ```ssh
-[admin@MikroTik] > /interface bridge export
-/interface bridge
-add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
-add comment="wan bridge" name=br-wan arp=enabled
 
-  ```
+**Configuration**
 
+
+.. code-block:: yaml+jinja
+
+    - name: Merge configuration with device configuration
+      kilip.routeros.ros_bridge:
+        config:
+          - name: br-wan
+            comment: 'updated comment'
+          - name: br-trunk
+            comment: 'updated comment'
+            vlan_filtering: true
+        state: merged
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
+    /interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    [admin@MikroTik] > /interface bridge export
+    /interface bridge
+    add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
+    add comment="wan bridge" name=br-wan arp=enabled
+    
+
+
+
+
+--------------
 Using Replaced
-  | **Before State**
+--------------
 
-  ```ssh
-[admin@MikroTik] > /interface bridge export
-/interface bridge
-add comment="trunk bridge" name=br-trunk arp=reply-only
-add comment="wan bridge" name=br-wan arp=reply-only
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Replace device configuration
-  kilip.routeros.ros_bridge:
-    config:
-      - name: br-wan
-        comment: 'replaced comment'
-      - name: br-trunk
-        comment: 'replaced comment'
-    state: replaced
+    [admin@MikroTik] > /interface bridge export
+    /interface bridge
+    add comment="trunk bridge" name=br-trunk arp=reply-only
+    add comment="wan bridge" name=br-wan arp=reply-only
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface bridge set [ find name=br-wan ] arp=enabled
-  /interface bridge set [ find name=br-wan ] comment="replaced comment"
-  /interface bridge set [ find name=br-trunk ] arp=enabled
-  /interface bridge set [ find name=br-trunk ] comment="replaced comment"
-  
-  ```
 
-  | **After State**
-  ```ssh
-[admin@MikroTik] > /interface bridge export
-/interface bridge
-add comment="replaced comment" name=br-trunk arp=enabled
-add comment="replaced comment" name=br-wan arp=enabled
 
-  ```
+**Configuration**
 
+
+.. code-block:: yaml+jinja
+
+    - name: Replace device configuration
+      kilip.routeros.ros_bridge:
+        config:
+          - name: br-wan
+            comment: 'replaced comment'
+          - name: br-trunk
+            comment: 'replaced comment'
+        state: replaced
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface bridge set [ find name=br-wan ] arp=enabled
+    /interface bridge set [ find name=br-wan ] comment="replaced comment"
+    /interface bridge set [ find name=br-trunk ] arp=enabled
+    /interface bridge set [ find name=br-trunk ] comment="replaced comment"
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    [admin@MikroTik] > /interface bridge export
+    /interface bridge
+    add comment="replaced comment" name=br-trunk arp=enabled
+    add comment="replaced comment" name=br-wan arp=enabled
+    
+
+
+
+
+----------------
 Using Overridden
-  | **Before State**
+----------------
 
-  ```ssh
-[admin@MikroTik] > /interface bridge export
-/interface bridge
-add comment="trunk bridge" name=br-trunk
-add comment="wan bridge" name=br-wan
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Override bridge configuration
-  kilip.routeros.ros_bridge:
-    config:
-      - name: br-new
-        comment: 'new bridge'
-    state: overridden
+    [admin@MikroTik] > /interface bridge export
+    /interface bridge
+    add comment="trunk bridge" name=br-trunk
+    add comment="wan bridge" name=br-wan
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface bridge remove [ find name=br-trunk ]
-  /interface bridge remove [ find name=br-wan ]
-  /interface bridge add name=br-new comment="new bridge"
-  /system script run ansible-remove-invalid
-  
-  ```
 
-  | **After State**
-  ```ssh
-All existing bridge will be removed and replaced with the new configuration.
-[admin@MikroTik] > /interface bridge export
-/interface bridge
-add comment="new bridge" name=br-new
 
-  ```
+**Configuration**
 
+
+.. code-block:: yaml+jinja
+
+    - name: Override bridge configuration
+      kilip.routeros.ros_bridge:
+        config:
+          - name: br-new
+            comment: 'new bridge'
+        state: overridden
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface bridge remove [ find name=br-trunk ]
+    /interface bridge remove [ find name=br-wan ]
+    /interface bridge add name=br-new comment="new bridge"
+    /system script run ansible-remove-invalid
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    All existing bridge will be removed and replaced with the new configuration.
+    [admin@MikroTik] > /interface bridge export
+    /interface bridge
+    add comment="new bridge" name=br-new
+    
+
+
+
+
+-------------------
 Using deleted state
-  | **Before State**
+-------------------
 
-  ```ssh
-[admin@MikroTik] > /interface bridge export
-# sep/04/2020 04:56:00 by RouterOS 6.47.2
-# software id =
-/interface bridge
-add comment="trunk bridge" name=br-trunk
-add comment="wan bridge" name=br-wan
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Delete bridge
-  kilip.routeros.ros_bridge:
-    config:
-      - name: br-trunk
-      - name: br-wan
-    state: deleted
+    [admin@MikroTik] > /interface bridge export
+    # sep/04/2020 04:56:00 by RouterOS 6.47.2
+    # software id =
+    /interface bridge
+    add comment="trunk bridge" name=br-trunk
+    add comment="wan bridge" name=br-wan
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface bridge remove [ find name=br-trunk ]
-  /interface bridge remove [ find name=br-wan ]
-  /system script run ansible-remove-invalid
-  
-  ```
 
-  | **After State**
-  ```ssh
-All existing bridge will be removed and replaced with the new configuration.
-[admin@MikroTik] > /interface bridge export
-# empty bridge config
-  ```
+
+**Configuration**
+
+
+.. code-block:: yaml+jinja
+
+    - name: Delete bridge
+      kilip.routeros.ros_bridge:
+        config:
+          - name: br-trunk
+          - name: br-wan
+        state: deleted
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface bridge remove [ find name=br-trunk ]
+    /interface bridge remove [ find name=br-wan ]
+    /system script run ansible-remove-invalid
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    All existing bridge will be removed and replaced with the new configuration.
+    [admin@MikroTik] > /interface bridge export
+    # empty bridge config
+
+

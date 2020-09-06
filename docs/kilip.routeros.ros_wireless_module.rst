@@ -10,16 +10,23 @@ RouterOS Submenu: **/interface wireless**
 
 .. contents::
    :local:
-   :depth: 1
+   :depth: 2
 
 
+
+========
 Synopsis
---------
+========
+
+
 -  This module manages the Wireless configuration of Mikrotik RouterOS network devices.
 
 
+
+==========
 Parameters
-----------
+==========
+
 
 state
   | **choices**: merged, replaced
@@ -426,79 +433,113 @@ config
                             </li></ul></td><td><p><a href="#WPS_Server"><code>Read more &gt;&gt;</code></a></p></td></tr></table>
 
 
+
+========
 Examples
---------
+========
 
+
+
+
+------------------
 Using merged state
-  | **Before State**
+------------------
 
-  ```ssh
-/interface wireless
-set [ find default-name=wlan1 ] comment=wlan1
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Merge device configuration
-  kilip.routeros.ros_wireless:
-    config:
-      - name: wlan1
-        comment: 'updated comment'
-        ampdu_priorities:
-          - 0
-          - 1
-          - 2
-    state: merged
+    /interface wireless
+    set [ find default-name=wlan1 ] comment=wlan1
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 security-profile=default
-  
-  ```
 
-  | **After State**
-  ```ssh
-/interface wireless
-set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2
 
-  ```
+**Configuration**
 
+
+.. code-block:: yaml+jinja
+
+    - name: Merge device configuration
+      kilip.routeros.ros_wireless:
+        config:
+          - name: wlan1
+            comment: 'updated comment'
+            ampdu_priorities:
+              - 0
+              - 1
+              - 2
+        state: merged
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 security-profile=default
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    /interface wireless
+    set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2
+    
+
+
+
+
+--------------------
 Using replaced state
-  | **Before State**
+--------------------
 
-  ```ssh
-/interface wireless
-set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Replace device wireless configuration
-  kilip.routeros.ros_wireless:
-    config:
-      - name: wlan1
-        comment: 'new olympus'
-        ssid: Olympus
-        security_profile: new-olympus
-    state: replaced
+    /interface wireless
+    set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface wireless set [ find name=wlan1 ] security-profile=default
-  /interface wireless set [ find name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
-  
-  ```
 
-  | **After State**
-  ```ssh
-/interface wireless
-set [ find default-name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
-  ```
+
+**Configuration**
+
+
+.. code-block:: yaml+jinja
+
+    - name: Replace device wireless configuration
+      kilip.routeros.ros_wireless:
+        config:
+          - name: wlan1
+            comment: 'new olympus'
+            ssid: Olympus
+            security_profile: new-olympus
+        state: replaced
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface wireless set [ find name=wlan1 ] security-profile=default
+    /interface wireless set [ find name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    /interface wireless
+    set [ find default-name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
+
+

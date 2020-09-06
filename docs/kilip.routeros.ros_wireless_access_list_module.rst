@@ -10,16 +10,23 @@ RouterOS Submenu: **/interface wireless access-list**
 
 .. contents::
    :local:
-   :depth: 1
+   :depth: 2
 
 
+
+========
 Synopsis
---------
+========
+
+
 -  This module manages the Wireless Access List configuration of Mikrotik RouterOS network devices.
 
 
+
+==========
 Parameters
-----------
+==========
+
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -52,38 +59,63 @@ config
                             </li></ul></td><td><p>Only for WEP modes.</p></td></tr><tr><td><b>private_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Only for WEP modes.</p></td></tr><tr><td><b>private_pre_shared_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Used in WPA PSK mode.</p></td></tr><tr><td><b>signal_range</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Rule matches if signal strength of the station is within the range.</p><p>If signal strength of the station will go out of the range that is specified in the rule, access point will disconnect that station.</p></td></tr><tr><td><b>time</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Rule will match only during specified time.</p><p>Station will be disconnected after specified time ends. Both start and end time is expressed as time since midnight, 00:00.</p><p>Rule will match only during specified days of the week.</p></td></tr></table>
 
 
+
+========
 Examples
---------
+========
 
+
+
+
+-----------------
 Using merge state
-  | **Before State**
+-----------------
 
-  ```ssh
-#
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Merge with device configuration
-  kilip.routeros.ros_wireless_access_list:
-    config:
-      - comment: test
-        signal_range: '-50..120'
-        interface: wlan1
-    state: merged
+    /interface wireless access-list
+    add comment=existing action accept signal-range=-79..120
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface wireless access-list add comment=test signal-range=-50..120 interface=wlan1
-  
-  ```
 
-  | **After State**
-  ```ssh
-#
 
-  ```
+**Configuration**
+
+
+.. code-block:: yaml+jinja
+
+    - name: Merge with device configuration
+      kilip.routeros.ros_wireless_access_list:
+        config:
+          - comment: existing
+            signal_range: '-80..120'
+          - comment: new
+            signal_range: '-50..120'
+            interface: wlan1
+        state: merged
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface wireless access-list set [ find comment=existing ] signal-range=-80..120
+    /interface wireless access-list add comment=new signal-range=-50..120 interface=wlan1
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    /interface wireless access-list
+    add comment=existing action=accept signal-range=-80..120
+    add comment=new action=accept signal-range=-50..120
+    
+
+

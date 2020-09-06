@@ -165,18 +165,23 @@ EXAMPLES = """
 # Using merge state
 # ----
 # before:
-#  #
+#  /interface wireless access-list
+#  add comment=existing action accept signal-range=-79..120
 #
 - name: Merge with device configuration
   kilip.routeros.ros_wireless_access_list:
     config:
-      - comment: test
+      - comment: existing
+        signal_range: '-80..120'
+      - comment: new
         signal_range: '-50..120'
         interface: wlan1
     state: merged
 
 # after:
-#  #
+#  /interface wireless access-list
+#  add comment=existing action=accept signal-range=-80..120
+#  add comment=new action=accept signal-range=-50..120
 #
 """
 

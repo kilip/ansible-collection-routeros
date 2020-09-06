@@ -10,16 +10,23 @@ RouterOS Submenu: **/interface wireless cap**
 
 .. contents::
    :local:
-   :depth: 1
+   :depth: 2
 
 
+
+========
 Synopsis
---------
+========
+
+
 -  This module manages the Wireless CAP setting of Mikrotik RouterOS network devices.
 
 
+
+==========
 Parameters
-----------
+==========
+
 
 state
   | **choices**: present, reset
@@ -42,39 +49,58 @@ config
                             </li><li><div style="color: blue"><b>no</b>&nbsp;&larr;</div></li></ul></td><td><p>CAP will create Static Virtual Interfaces instead of Dynamic and will try to reuse the same interface on reconnect to CAPsMAN if the MAC address will be the same. Note if two or more interfaces will have the same MAC address the assignment from the CAPsMAN could be random between those interfaces.</p></td></tr></table>
 
 
+
+========
 Examples
---------
+========
 
+
+
+
+---------------------------
 Change Wireless CAP Setting
-  | **Before State**
+---------------------------
 
-  ```ssh
-/interface wireless cap
-set interface=wlan1,wlan2
 
-  ```
+**Before State**
 
-  | **Configuration**
+.. code-block:: ssh
 
-  ```yaml
-- name: Configure Wireless CAP
-  kilip.routeros.ros_wireless_cap:
-    config:
-      interfaces:
-        - wlan1
-        - wlan2
-    state: present
+    /interface wireless cap
+    set interface=wlan1,wlan2
     
-  ```
 
-  | **Executed Command**
-  ```ssh
-  /interface wireless cap set interfaces=wlan1,wlan2
-  
-  ```
 
-  | **After State**
-  ```ssh
-/interface wireless cap
-set interface=wlan-new
-  ```
+
+**Configuration**
+
+
+.. code-block:: yaml+jinja
+
+    - name: Configure Wireless CAP
+      kilip.routeros.ros_wireless_cap:
+        config:
+          interfaces:
+            - wlan1
+            - wlan2
+        state: present
+        
+      
+
+**Executed Command**
+
+
+.. code-block:: ssh
+
+    /interface wireless cap set interfaces=wlan1,wlan2
+
+
+**After State**
+
+
+.. code-block:: ssh
+
+    /interface wireless cap
+    set interface=wlan-new
+
+
