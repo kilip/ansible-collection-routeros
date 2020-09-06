@@ -9,6 +9,9 @@ from .wireless.wireless import WirelessResource
 from .wireless.wireless_cap import WirelessCapResource
 from .wireless.wireless_access_list import WirelessAccessListResource
 from .wireless.wireless_connect_list import WirelessConnectListResource
+from .wireless.wireless_security_profiles import (
+    WirelessSecurityProfilesResource,
+)
 from .bridge.bridge import BridgeResource
 from .bridge.bridge_settings import BridgeSettingsResource
 from .bridge.bridge_port import BridgePortResource
@@ -22,6 +25,7 @@ RESOURCE_SUBSETS = dict(
     wireless_cap=WirelessCapResource,
     wireless_access_list=WirelessAccessListResource,
     wireless_connect_list=WirelessConnectListResource,
+    wireless_security_profiles=WirelessSecurityProfilesResource,
     bridge=BridgeResource,
     bridge_settings=BridgeSettingsResource,
     bridge_port=BridgePortResource,
