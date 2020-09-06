@@ -108,7 +108,6 @@ Using Merged
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge export
     /interface bridge
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
@@ -147,7 +146,6 @@ Using Merged
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge export
     /interface bridge
     add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
     add comment="wan bridge" name=br-wan arp=enabled
@@ -165,7 +163,6 @@ Using Replaced
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge export
     /interface bridge
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
@@ -205,7 +202,6 @@ Using Replaced
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge export
     /interface bridge
     add comment="replaced comment" name=br-trunk arp=enabled
     add comment="replaced comment" name=br-wan arp=enabled
@@ -223,7 +219,6 @@ Using Overridden
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge export
     /interface bridge
     add comment="trunk bridge" name=br-trunk
     add comment="wan bridge" name=br-wan
@@ -261,8 +256,7 @@ Using Overridden
 
 .. code-block:: ssh
 
-    All existing bridge will be removed and replaced with the new configuration.
-    [admin@MikroTik] > /interface bridge export
+    # All existing bridge will be removed and replaced with the new configuration.
     /interface bridge
     add comment="new bridge" name=br-new
     
@@ -279,9 +273,6 @@ Using deleted state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge export
-    # sep/04/2020 04:56:00 by RouterOS 6.47.2
-    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk
     add comment="wan bridge" name=br-wan
@@ -318,8 +309,7 @@ Using deleted state
 
 .. code-block:: ssh
 
-    All existing bridge will be removed and replaced with the new configuration.
-    [admin@MikroTik] > /interface bridge export
+    # All existing bridge will be removed and replaced with the new configuration.
     # empty bridge config
 
 

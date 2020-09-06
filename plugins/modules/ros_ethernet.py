@@ -284,10 +284,13 @@ EXAMPLES = """
 # Using merged state
 # ----
 # before:
-#  [admin@MikroTik] > /interface ethernet export
-#  /interface ethernet
-#  set [ find default-name=ether1 ] comment="ether1 comment"
+# [admin@MikroTik] > /interface ethernet export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface ethernet
+# set [ find default-name=ether1 ] comment="ether1 comment"
 #
+# configuration:
 - name: Merge configuration with device configuration
   kilip.routeros.ros_ethernet:
     config:
@@ -299,11 +302,13 @@ EXAMPLES = """
         comment: 'updated comment'
     state: merged
 
-# after:
-#  [admin@MikroTik] > /interface ethernet export
-#  /interface ethernet
-#  set [ find default-name=ether1 ] comment="updated comment"
 #
+# after:
+# [admin@MikroTik] > /interface ethernet export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface ethernet
+# set [ find default-name=ether1 ] comment="updated comment"
 """
 
 RETURN = """

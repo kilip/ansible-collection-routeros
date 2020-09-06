@@ -114,7 +114,7 @@ Merged Configuration
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
@@ -154,7 +154,7 @@ Merged Configuration
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interface bridge port
     add bridge=br-wan interface=ether1 comment="new comment"
     add bridge=br-trunk interface=ether2 comment="new comment"
@@ -172,7 +172,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
@@ -213,7 +213,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interfce bridge port
     add bridge=br-wan interface=ether1 comment="new comment"
     add bridge=br-trunk interface=ether2 comment="new comment"
@@ -231,7 +231,7 @@ Using overridden state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
@@ -270,7 +270,7 @@ Using overridden state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interfce bridge port
     add bridge=br-new interface=ether2 comment="new comment"
     
@@ -287,7 +287,7 @@ Using deleted state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
@@ -323,7 +323,7 @@ Using deleted state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge port export
+    
     /interfce bridge port
     add bridge=br-wan interface=ether1
     

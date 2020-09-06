@@ -1186,9 +1186,13 @@ EXAMPLES = """
 # Using merged state
 # ----
 # before:
-#  /interface wireless
-#  set [ find default-name=wlan1 ] comment=wlan1
+# [admin@MikroTik] > /interface wireless export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless
+# set [ find default-name=wlan1 ] comment=wlan1
 #
+# configuration:
 - name: Merge device configuration
   kilip.routeros.ros_wireless:
     config:
@@ -1200,17 +1204,24 @@ EXAMPLES = """
           - 2
     state: merged
 
-# after:
-#  /interface wireless
-#  set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2
 #
+# after:
+# [admin@MikroTik] > /interface wireless export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless
+# set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2
 # ----
 # Using replaced state
 # ----
 # before:
-#  /interface wireless
-#  set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
+# [admin@MikroTik] > /interface wireless export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless
+# set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
 #
+# configuration:
 - name: Replace device wireless configuration
   kilip.routeros.ros_wireless:
     config:
@@ -1220,9 +1231,13 @@ EXAMPLES = """
         security_profile: new-olympus
     state: replaced
 
+#
 # after:
-#  /interface wireless
-#  set [ find default-name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
+# [admin@MikroTik] > /interface wireless export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless
+# set [ find default-name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
 """
 
 RETURN = """

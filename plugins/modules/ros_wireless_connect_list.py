@@ -58,6 +58,7 @@ options:
 
         comment:
           type: str
+          required: True
 
           description: |
             Short description of an entry
@@ -96,10 +97,6 @@ options:
             Rule matches only AP with the specified MAC address. Value *00:00:00:00:00:00*
             matches always.
 
-        name:
-          type:
-          required: True
-
         security_profile:
           type: str
           default: "none"
@@ -123,7 +120,7 @@ options:
 
         ssid:
           type: str
-          default: "&quot;&quot;"
+
           description: |
             Rule matches access points that have this SSID. Empty value matches any SSID.
             This property has effect only when station mode interface **ssid** is empty, or
@@ -142,6 +139,33 @@ options:
 """
 
 EXAMPLES = """
+# ----
+# Using merged state
+# ----
+# before:
+# [admin@MikroTik] > /interface wireless connect-list export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless connect-list
+# add comment=existing interfce=wlan1 signal-range=-79..120
+#
+# configuration:
+- name: Merge device configuration
+  kilip.routeros.ros_wireless_connect_list:
+    config:
+      - comment: existing
+        interface: wlan1
+        signal_range: '-50..120'
+        wireless_protocol: 802.11
+    state: merged
+
+#
+# after:
+# [admin@MikroTik] > /interface wireless connect-list export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless connect-list
+# add comment=existing interfce=wlan1 signal-range=-50..120
 """
 
 RETURN = """

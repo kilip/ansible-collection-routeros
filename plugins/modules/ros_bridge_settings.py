@@ -111,10 +111,13 @@ EXAMPLES = """
 # Change Bridge Setting Configuration
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge settings export verbose
-#  /interface bridge settings
-#  set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
+# [admin@MikroTik] > /interface bridge settings export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge settings
+# set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
 #
+# configuration:
 - name: Configure Bridge Settings
   kilip.routeros.ros_bridge_settings:
     config:
@@ -124,27 +127,35 @@ EXAMPLES = """
       use_ip_firewall_for_vlan: 'no'
     state: present
 
-# after:
-#  [admin@MikroTik] > /interface bridge settings export verbose
-#  /interface bridge settings
-#  set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
 #
+# after:
+# [admin@MikroTik] > /interface bridge settings export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge settings
+# set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
 # ----
 # Change Bridge Setting Configuration
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge settings export verbose
-#  /interface bridge settings
-#  set allow-fast-path=no use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes use-ip-firewall=yes
+# [admin@MikroTik] > /interface bridge settings export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge settings
+# set allow-fast-path=no use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes use-ip-firewall=yes
 #
+# configuration:
 - name: Configure Bridge Settings
   kilip.routeros.ros_bridge_settings:
     state: reset
 
+#
 # after:
-#  [admin@MikroTik] > /interface bridge settings export verbose
-#  /interface bridge settings
-#  set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
+# [admin@MikroTik] > /interface bridge settings export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge settings
+# set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
 """
 
 RETURN = """

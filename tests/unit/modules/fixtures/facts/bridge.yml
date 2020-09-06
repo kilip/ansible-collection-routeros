@@ -6,11 +6,8 @@ asserts:
 resource: bridge
 fixtures:
   interface_bridge_export: |
-    # sep/04/2020 10:10:14 by RouterOS 6.47.2
-    # software id = 
-    #
-    #
-    #
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only

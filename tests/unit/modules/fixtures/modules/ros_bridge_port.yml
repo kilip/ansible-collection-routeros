@@ -1,11 +1,8 @@
 module: ros_bridge_port
 fixtures:
   interface_bridge_port_export: |
-    # sep/04/2020 10:10:14 by RouterOS 6.47.2
-    # software id = 
-    #
-    #
-    #
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes

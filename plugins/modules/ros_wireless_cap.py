@@ -120,9 +120,13 @@ EXAMPLES = """
 # Change Wireless CAP Setting
 # ----
 # before:
-#  /interface wireless cap
-#  set interface=wlan1,wlan2
+# [admin@MikroTik] > /interface wireless cap export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless cap
+# set interface=wlan1,wlan2
 #
+# configuration:
 - name: Configure Wireless CAP
   kilip.routeros.ros_wireless_cap:
     config:
@@ -131,9 +135,13 @@ EXAMPLES = """
         - wlan2
     state: present
 
+#
 # after:
-#  /interface wireless cap
-#  set interface=wlan-new
+# [admin@MikroTik] > /interface wireless cap export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless cap
+# set interface=wlan-new
 """
 
 RETURN = """

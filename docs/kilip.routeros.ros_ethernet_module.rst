@@ -126,7 +126,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface ethernet export
+    
     /interface ethernet
     set [ find default-name=ether1 ] comment="ether1 comment"
     
@@ -164,7 +164,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface ethernet export
+    
     /interface ethernet
     set [ find default-name=ether1 ] comment="updated comment"
     

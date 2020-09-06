@@ -27,7 +27,7 @@ class WirelessConnectListResource(ResourceBase):
     resource_name = "wireless_connect_list"
     command = "/interface wireless connect-list"
     gather_network_resources = ["wireless_connect_list"]
-    keys = ["name"]
+    keys = ["comment"]
     type = "config"
     argument_spec = {
         "state": {
@@ -41,7 +41,7 @@ class WirelessConnectListResource(ResourceBase):
             "options": {
                 "3gpp": {"type": "str"},
                 "area_prefix": {"type": "str"},
-                "comment": {"type": "str"},
+                "comment": {"type": "str", "required": True},
                 "connect": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -54,10 +54,9 @@ class WirelessConnectListResource(ResourceBase):
                 },
                 "interface": {"type": "str", "required": True},
                 "mac_address": {"type": "str", "default": "00:00:00:00:00:00"},
-                "name": {"type": "", "required": True},
                 "security_profile": {"type": "str", "default": "none"},
                 "signal_range": {"type": "str", "default": "-120..120"},
-                "ssid": {"type": "str", "default": ""},
+                "ssid": {"type": "str"},
                 "wireless_protocol": {
                     "type": "str",
                     "choices": ["802.11", "any", "nstreme", "tdma"],

@@ -165,9 +165,13 @@ EXAMPLES = """
 # Using merge state
 # ----
 # before:
-#  /interface wireless access-list
-#  add comment=existing action accept signal-range=-79..120
+# [admin@MikroTik] > /interface wireless access-list export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless access-list
+# add comment=existing action accept signal-range=-79..120
 #
+# configuration:
 - name: Merge with device configuration
   kilip.routeros.ros_wireless_access_list:
     config:
@@ -178,11 +182,14 @@ EXAMPLES = """
         interface: wlan1
     state: merged
 
-# after:
-#  /interface wireless access-list
-#  add comment=existing action=accept signal-range=-80..120
-#  add comment=new action=accept signal-range=-50..120
 #
+# after:
+# [admin@MikroTik] > /interface wireless access-list export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface wireless access-list
+# add comment=existing action=accept signal-range=-80..120
+# add comment=new action=accept signal-range=-50..120
 """
 
 RETURN = """

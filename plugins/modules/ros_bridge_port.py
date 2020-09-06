@@ -387,11 +387,14 @@ EXAMPLES = """
 # Merged Configuration
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interface bridge port
-#  add bridge=br-wan interface=ether1
-#  add bridge=br-trunk interface=ether2 disabled=yes
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge port
+# add bridge=br-wan interface=ether1
+# add bridge=br-trunk interface=ether2 disabled=yes
 #
+# configuration:
 - name: Merge configuration with device configuration
   kilip.routeros.ros_bridge_port:
     config:
@@ -403,21 +406,26 @@ EXAMPLES = """
         comment: 'new comment'
     state: merged
 
-# after:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interface bridge port
-#  add bridge=br-wan interface=ether1 comment="new comment"
-#  add bridge=br-trunk interface=ether2 comment="new comment"
 #
+# after:
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge port
+# add bridge=br-wan interface=ether1 comment="new comment"
+# add bridge=br-trunk interface=ether2 comment="new comment"
 # ----
 # Using replaced state
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interface bridge port
-#  add bridge=br-wan interface=ether1
-#  add bridge=br-trunk interface=ether2 disabled=yes
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge port
+# add bridge=br-wan interface=ether1
+# add bridge=br-trunk interface=ether2 disabled=yes
 #
+# configuration:
 - name: Replace device configuration
   kilip.routeros.ros_bridge_port:
     config:
@@ -429,21 +437,26 @@ EXAMPLES = """
         comment: 'new comment'
     state: replaced
 
-# after:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interfce bridge port
-#  add bridge=br-wan interface=ether1 comment="new comment"
-#  add bridge=br-trunk interface=ether2 comment="new comment"
 #
+# after:
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interfce bridge port
+# add bridge=br-wan interface=ether1 comment="new comment"
+# add bridge=br-trunk interface=ether2 comment="new comment"
 # ----
 # Using overridden state
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interface bridge port
-#  add bridge=br-wan interface=ether1
-#  add bridge=br-trunk interface=ether2 disabled=yes
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge port
+# add bridge=br-wan interface=ether1
+# add bridge=br-trunk interface=ether2 disabled=yes
 #
+# configuration:
 - name: Override device configuration
   kilip.routeros.ros_bridge_port:
     config:
@@ -452,20 +465,25 @@ EXAMPLES = """
         comment: 'new comment'
     state: overridden
 
-# after:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interfce bridge port
-#  add bridge=br-new interface=ether2 comment="new comment"
 #
+# after:
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interfce bridge port
+# add bridge=br-new interface=ether2 comment="new comment"
 # ----
 # Using deleted state
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interface bridge port
-#  add bridge=br-wan interface=ether1
-#  add bridge=br-trunk interface=ether2 disabled=yes
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge port
+# add bridge=br-wan interface=ether1
+# add bridge=br-trunk interface=ether2 disabled=yes
 #
+# configuration:
 - name: Delete bridge port
   kilip.routeros.ros_bridge_port:
     config:
@@ -473,11 +491,13 @@ EXAMPLES = """
         interface: ether2
     state: deleted
 
-# after:
-#  [admin@MikroTik] > /interface bridge port export
-#  /interfce bridge port
-#  add bridge=br-wan interface=ether1
 #
+# after:
+# [admin@MikroTik] > /interface bridge port export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interfce bridge port
+# add bridge=br-wan interface=ether1
 """
 
 RETURN = """

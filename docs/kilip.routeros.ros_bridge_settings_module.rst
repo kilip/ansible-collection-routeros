@@ -70,7 +70,7 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge settings export verbose
+    
     /interface bridge settings
     set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
     
@@ -106,7 +106,7 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge settings export verbose
+    
     /interface bridge settings
     set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
     
@@ -123,7 +123,7 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge settings export verbose
+    
     /interface bridge settings
     set allow-fast-path=no use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes use-ip-firewall=yes
     
@@ -154,7 +154,7 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface bridge settings export verbose
+    
     /interface bridge settings
     set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
 

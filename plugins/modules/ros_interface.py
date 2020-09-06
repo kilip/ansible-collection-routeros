@@ -88,18 +88,16 @@ EXAMPLES = """
 # Using Merged
 # ----
 # before:
-#  [admin@MikroTik] > /interface export
-#  # sep/04/2020 07:20:39 by RouterOS 6.47.2
-#  # software id =
-#  #
-#  #
-#  #
-#  /interface ethernet
-#  set [ find default-name=ether1 ] comment="ether1 comment" mtu=1500
-#  set [ find default-name=ether2 ] comment="ether2 comment" disabled=yes
-#  /interface bridge
-#  add name=br-wan comment="wan bridge"
+# [admin@MikroTik] > /interface export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface ethernet
+# set [ find default-name=ether1 ] comment="ether1 comment" mtu=1500
+# set [ find default-name=ether2 ] comment="ether2 comment" disabled=yes
+# /interface bridge
+# add name=br-wan comment="wan bridge"
 #
+# configuration:
 - name: Merge configuration with device configuration
   kilip.routeros.ros_interface:
     config:
@@ -116,14 +114,16 @@ EXAMPLES = """
         comment: 'br-wan updated'
     state: merged
 
-# after:
-#  [admin@MikroTik] > /interface export
-#  /interface ethernet
-#  set [ find default-name=ether1 ] comment="ether1 updated" mtu=1000
-#  set [ find default-name=ether2 ] comment="ether2 updated" mtu=2000
-#  /interface bridge
-#  add name=br-wan comment="br-wan updated" mtu=3000 disabled=yes
 #
+# after:
+# [admin@MikroTik] > /interface export verbose
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface ethernet
+# set [ find default-name=ether1 ] comment="ether1 updated" mtu=1000
+# set [ find default-name=ether2 ] comment="ether2 updated" mtu=2000
+# /interface bridge
+# add name=br-wan comment="br-wan updated" mtu=3000 disabled=yes
 """
 
 RETURN = """

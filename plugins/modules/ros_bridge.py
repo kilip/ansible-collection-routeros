@@ -436,11 +436,14 @@ EXAMPLES = """
 # Using Merged
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge export
-#  /interface bridge
-#  add comment="trunk bridge" name=br-trunk arp=reply-only
-#  add comment="wan bridge" name=br-wan arp=reply-only
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge
+# add comment="trunk bridge" name=br-trunk arp=reply-only
+# add comment="wan bridge" name=br-wan arp=reply-only
 #
+# configuration:
 - name: Merge configuration with device configuration
   kilip.routeros.ros_bridge:
     config:
@@ -451,21 +454,26 @@ EXAMPLES = """
         vlan_filtering: true
     state: merged
 
-# after:
-#  [admin@MikroTik] > /interface bridge export
-#  /interface bridge
-#  add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
-#  add comment="wan bridge" name=br-wan arp=enabled
 #
+# after:
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge
+# add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
+# add comment="wan bridge" name=br-wan arp=enabled
 # ----
 # Using Replaced
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge export
-#  /interface bridge
-#  add comment="trunk bridge" name=br-trunk arp=reply-only
-#  add comment="wan bridge" name=br-wan arp=reply-only
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge
+# add comment="trunk bridge" name=br-trunk arp=reply-only
+# add comment="wan bridge" name=br-wan arp=reply-only
 #
+# configuration:
 - name: Replace device configuration
   kilip.routeros.ros_bridge:
     config:
@@ -475,21 +483,26 @@ EXAMPLES = """
         comment: 'replaced comment'
     state: replaced
 
-# after:
-#  [admin@MikroTik] > /interface bridge export
-#  /interface bridge
-#  add comment="replaced comment" name=br-trunk arp=enabled
-#  add comment="replaced comment" name=br-wan arp=enabled
 #
+# after:
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge
+# add comment="replaced comment" name=br-trunk arp=enabled
+# add comment="replaced comment" name=br-wan arp=enabled
 # ----
 # Using Overridden
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge export
-#  /interface bridge
-#  add comment="trunk bridge" name=br-trunk
-#  add comment="wan bridge" name=br-wan
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge
+# add comment="trunk bridge" name=br-trunk
+# add comment="wan bridge" name=br-wan
 #
+# configuration:
 - name: Override bridge configuration
   kilip.routeros.ros_bridge:
     config:
@@ -497,23 +510,26 @@ EXAMPLES = """
         comment: 'new bridge'
     state: overridden
 
-# after:
-#  All existing bridge will be removed and replaced with the new configuration.
-#  [admin@MikroTik] > /interface bridge export
-#  /interface bridge
-#  add comment="new bridge" name=br-new
 #
+# after:
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# # All existing bridge will be removed and replaced with the new configuration.
+# /interface bridge
+# add comment="new bridge" name=br-new
 # ----
 # Using deleted state
 # ----
 # before:
-#  [admin@MikroTik] > /interface bridge export
-#  # sep/04/2020 04:56:00 by RouterOS 6.47.2
-#  # software id =
-#  /interface bridge
-#  add comment="trunk bridge" name=br-trunk
-#  add comment="wan bridge" name=br-wan
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface bridge
+# add comment="trunk bridge" name=br-trunk
+# add comment="wan bridge" name=br-wan
 #
+# configuration:
 - name: Delete bridge
   kilip.routeros.ros_bridge:
     config:
@@ -521,10 +537,13 @@ EXAMPLES = """
       - name: br-wan
     state: deleted
 
+#
 # after:
-#  All existing bridge will be removed and replaced with the new configuration.
-#  [admin@MikroTik] > /interface bridge export
-#  # empty bridge config
+# [admin@MikroTik] > /interface bridge export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# # All existing bridge will be removed and replaced with the new configuration.
+# # empty bridge config
 """
 
 RETURN = """

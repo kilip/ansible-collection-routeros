@@ -112,10 +112,13 @@ EXAMPLES = """
 # Using merged state
 # ----
 # before:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 #
+# configuration:
 - name: Merge configuration with device configuration
   kilip.routeros.ros_vlan:
     config:
@@ -129,20 +132,25 @@ EXAMPLES = """
         comment: 'new comment'
     state: merged
 
-# after:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
-#  add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
 #
+# after:
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
+# add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
 # ----
 # Using replaced state
 # ----
 # before:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 #
+# configuration:
 - name: Replace device configuration
   kilip.routeros.ros_vlan:
     config:
@@ -152,20 +160,25 @@ EXAMPLES = """
         comment: 'new comment'
     state: replaced
 
-# after:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
-#  add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
 #
+# after:
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
+# add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
 # ----
 # Using overridden state
 # ----
 # before:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 #
+# configuration:
 - name: Override device configuration
   kilip.routeros.ros_vlan:
     config:
@@ -175,19 +188,24 @@ EXAMPLES = """
         comment: 'new comment'
     state: overridden
 
-# after:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
 #
+# after:
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
 # ----
 # Using deleted state
 # ----
 # before:
-#  [admin@MikroTik] > /interface vlan export
-#  /interface vlan
-#  add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+# /interface vlan
+# add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 #
+# configuration:
 - name: Delete VLAN Interface
   kilip.routeros.ros_vlan:
     config:
@@ -196,9 +214,12 @@ EXAMPLES = """
         vlan_id: 100
     state: deleted
 
-# after:
-#  [admin@MikroTik] > /interface vlan export
 #
+# after:
+# [admin@MikroTik] > /interface vlan export
+# sep/06/2020 03:08:16 by RouterOS 6.47.2
+# software id =
+
 """
 
 RETURN = """

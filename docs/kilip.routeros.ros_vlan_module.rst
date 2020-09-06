@@ -72,7 +72,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
     
@@ -113,7 +113,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
     add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
@@ -131,7 +131,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
     
@@ -168,7 +168,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
     add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
@@ -186,7 +186,7 @@ Using overridden state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
     
@@ -224,7 +224,7 @@ Using overridden state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
     
@@ -241,7 +241,7 @@ Using deleted state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
+    
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
     
@@ -277,7 +277,6 @@ Using deleted state
 
 .. code-block:: ssh
 
-    [admin@MikroTik] > /interface vlan export
     
 
 
