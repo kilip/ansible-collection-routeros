@@ -94,7 +94,7 @@ Change Wireless CAP Setting
 
 .. code-block:: ssh
 
-/interface wireless cap set interfaces=wlan1,wlan2
+    /interface wireless cap set interfaces=wlan1,wlan2
 
 
 **After State**

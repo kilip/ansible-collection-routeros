@@ -106,8 +106,8 @@ Using merge state
 
 .. code-block:: ssh
 
-/interface wireless access-list set [ find comment=existing ] signal-range=-80..120
-/interface wireless access-list add comment=new signal-range=-50..120 interface=wlan1
+    /interface wireless access-list set [ find comment=existing ] signal-range=-80..120
+    /interface wireless access-list add comment=new signal-range=-50..120 interface=wlan1
 
 
 **After State**

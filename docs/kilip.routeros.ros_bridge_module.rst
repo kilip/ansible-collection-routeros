@@ -139,8 +139,8 @@ Using Merged
 
 .. code-block:: ssh
 
-/interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
-/interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
+    /interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
+    /interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
 
 
 **After State**
@@ -197,10 +197,10 @@ Using Replaced
 
 .. code-block:: ssh
 
-/interface bridge set [ find name=br-wan ] arp=enabled
-/interface bridge set [ find name=br-wan ] comment="replaced comment"
-/interface bridge set [ find name=br-trunk ] arp=enabled
-/interface bridge set [ find name=br-trunk ] comment="replaced comment"
+    /interface bridge set [ find name=br-wan ] arp=enabled
+    /interface bridge set [ find name=br-wan ] comment="replaced comment"
+    /interface bridge set [ find name=br-trunk ] arp=enabled
+    /interface bridge set [ find name=br-trunk ] comment="replaced comment"
 
 
 **After State**
@@ -255,10 +255,10 @@ Using Overridden
 
 .. code-block:: ssh
 
-/interface bridge remove [ find name=br-trunk ]
-/interface bridge remove [ find name=br-wan ]
-/interface bridge add name=br-new comment="new bridge"
-/system script run ansible-remove-invalid
+    /interface bridge remove [ find name=br-trunk ]
+    /interface bridge remove [ find name=br-wan ]
+    /interface bridge add name=br-new comment="new bridge"
+    /system script run ansible-remove-invalid
 
 
 **After State**
@@ -313,9 +313,9 @@ Using deleted state
 
 .. code-block:: ssh
 
-/interface bridge remove [ find name=br-trunk ]
-/interface bridge remove [ find name=br-wan ]
-/system script run ansible-remove-invalid
+    /interface bridge remove [ find name=br-trunk ]
+    /interface bridge remove [ find name=br-wan ]
+    /system script run ansible-remove-invalid
 
 
 **After State**

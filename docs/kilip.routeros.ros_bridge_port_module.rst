@@ -146,8 +146,8 @@ Merged Configuration
 
 .. code-block:: ssh
 
-/interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
-/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
+    /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
+    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
 
 
 **After State**
@@ -206,9 +206,9 @@ Using replaced state
 
 .. code-block:: ssh
 
-/interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
-/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] disabled=no
-/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment"
+    /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
+    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] disabled=no
+    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment"
 
 
 **After State**
@@ -264,10 +264,10 @@ Using overridden state
 
 .. code-block:: ssh
 
-/interface bridge port remove [ find bridge=br-wan and interface=ether1 ]
-/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
-/interface bridge port add bridge=br-new interface=ether2 comment="new comment"
-/system script run ansible-remove-invalid
+    /interface bridge port remove [ find bridge=br-wan and interface=ether1 ]
+    /interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
+    /interface bridge port add bridge=br-new interface=ether2 comment="new comment"
+    /system script run ansible-remove-invalid
 
 
 **After State**
@@ -321,8 +321,8 @@ Using deleted state
 
 .. code-block:: ssh
 
-/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
-/system script run ansible-remove-invalid
+    /interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
+    /system script run ansible-remove-invalid
 
 
 **After State**

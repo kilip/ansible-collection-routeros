@@ -103,9 +103,9 @@ Using Merged
 
 .. code-block:: ssh
 
-/interface set [ find name=ether1 ] comment="ether1 updated" mtu=1000
-/interface set [ find name=ether2 ] comment="ether2 updated" mtu=2000 disabled=no
-/interface set [ find name=br-wan ] disabled=yes mtu=3000 comment="br-wan updated"
+    /interface set [ find name=ether1 ] comment="ether1 updated" mtu=1000
+    /interface set [ find name=ether2 ] comment="ether2 updated" mtu=2000 disabled=no
+    /interface set [ find name=br-wan ] disabled=yes mtu=3000 comment="br-wan updated"
 
 
 **After State**

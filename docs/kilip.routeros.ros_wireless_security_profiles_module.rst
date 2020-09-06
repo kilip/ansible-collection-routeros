@@ -150,8 +150,8 @@ Using merged state
 
 .. code-block:: ssh
 
-/interface wireless security-profiles set [ find name=test ] supplicant-identity=test
-/interface wireless security-profiles add name=new supplicant-identity=new
+    /interface wireless security-profiles set [ find name=test ] supplicant-identity=test
+    /interface wireless security-profiles add name=new supplicant-identity=new
 
 
 **After State**

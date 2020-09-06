@@ -157,7 +157,7 @@ Using merged state
 
 .. code-block:: ssh
 
-/interface ethernet set [ find name=ether1 ] advertise=10M-full,100M-full,1000M-full comment="updated comment"
+    /interface ethernet set [ find name=ether1 ] advertise=10M-full,100M-full,1000M-full comment="updated comment"
 
 
 **After State**

@@ -105,8 +105,8 @@ Using merged state
 
 .. code-block:: ssh
 
-/interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
-/interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"
+    /interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
+    /interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"
 
 
 **After State**
@@ -162,8 +162,8 @@ Using replaced state
 
 .. code-block:: ssh
 
-/interface vlan set [ find name=vlan-100 ] arp=enabled
-/interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"
+    /interface vlan set [ find name=vlan-100 ] arp=enabled
+    /interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"
 
 
 **After State**
@@ -219,9 +219,9 @@ Using overridden state
 
 .. code-block:: ssh
 
-/interface vlan remove [ find name=vlan-100 ]
-/interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
-/system script run ansible-remove-invalid
+    /interface vlan remove [ find name=vlan-100 ]
+    /interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
+    /system script run ansible-remove-invalid
 
 
 **After State**
@@ -275,8 +275,8 @@ Using deleted state
 
 .. code-block:: ssh
 
-/interface vlan remove [ find name=vlan-100 ]
-/system script run ansible-remove-invalid
+    /interface vlan remove [ find name=vlan-100 ]
+    /system script run ansible-remove-invalid
 
 
 **After State**

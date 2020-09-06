@@ -101,7 +101,7 @@ Using merged state
 
 .. code-block:: ssh
 
-/interface wireless connect-list set [ find comment=existing ] interface=wlan1 signal-range=-50..120 wireless-protocol=802.11
+    /interface wireless connect-list set [ find comment=existing ] interface=wlan1 signal-range=-50..120 wireless-protocol=802.11
 
 
 **After State**
