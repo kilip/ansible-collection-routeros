@@ -48,3 +48,21 @@
     that:
       - result.changed == True
       - diff_commands == []
+
+- name: "idempotence: Merge configuration with device configuration"
+  register: result
+  kilip.routeros.ros_bridge:
+    config:
+      - name: br-wan
+        comment: 'updated comment'
+        arp: enabled
+      - name: br-trunk
+        comment: 'updated comment'
+        arp: enabled
+        vlan_filtering: 'yes'
+    state: merged
+
+- assert:
+    that:
+      - result.changed == False
+      - result.commands == []

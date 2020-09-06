@@ -44,3 +44,16 @@
     that:
       - result.changed == True
       - diff_commands == []
+
+- name: "idempotence: Delete bridge"
+  register: result
+  kilip.routeros.ros_bridge:
+    config:
+      - name: br-trunk
+      - name: br-wan
+    state: deleted
+
+- assert:
+    that:
+      - result.changed == False
+      - result.commands == []
