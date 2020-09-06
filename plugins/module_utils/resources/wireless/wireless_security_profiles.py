@@ -28,7 +28,7 @@ class WirelessSecurityProfilesResource(ResourceBase):
     command = "/interface wireless security-profiles"
     gather_network_resources = ["wireless_security_profiles"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],

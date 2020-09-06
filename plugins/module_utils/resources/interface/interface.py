@@ -30,7 +30,7 @@ class InterfaceResource(ResourceBase):
     command = "/interface"
     gather_network_resources = ["interface"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     supports = ["facts_verbose_mode"]
     argument_spec = {
         "state": {"choices": ["merged"], "default": "merged", "type": "str"},

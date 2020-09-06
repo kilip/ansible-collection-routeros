@@ -28,7 +28,7 @@ class EthernetResource(ResourceBase):
     command = "/interface ethernet"
     gather_network_resources = ["ethernet"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],

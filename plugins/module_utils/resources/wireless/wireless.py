@@ -28,7 +28,7 @@ class WirelessResource(ResourceBase):
     command = "/interface wireless"
     gather_network_resources = ["wireless"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced"],

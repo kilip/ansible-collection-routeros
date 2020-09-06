@@ -21,7 +21,7 @@ class ResourceFacts(object):
         # remove export header
         del configs[0]
 
-        if resource.type == "config":
+        if resource.config_type == "config":
             resources = []
             for config in configs:
                 objs = resource.render_config(self.generated_spec, config)

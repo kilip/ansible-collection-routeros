@@ -28,7 +28,7 @@ class BridgePortResource(ResourceBase):
     command = "/interface bridge port"
     gather_network_resources = ["bridge_port"]
     keys = ["bridge", "interface"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],

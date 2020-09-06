@@ -28,7 +28,7 @@ class VlanResource(ResourceBase):
     command = "/interface vlan"
     gather_network_resources = ["vlan"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],

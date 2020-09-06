@@ -28,7 +28,7 @@ class WirelessConnectListResource(ResourceBase):
     command = "/interface wireless connect-list"
     gather_network_resources = ["wireless_connect_list"]
     keys = ["comment"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],

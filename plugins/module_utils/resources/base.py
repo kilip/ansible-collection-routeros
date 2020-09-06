@@ -15,7 +15,7 @@ class ResourceBase(object):
         pass
 
     name = ""
-    type = "config"
+    config_type = "config"
     argument_spec = {}
     command = ""
     gather_subset = ["!all", "!min"]
@@ -27,6 +27,7 @@ class ResourceBase(object):
     prefixes = []
     facts_argument_spec = dict()
     supports = []
+    properties = dict()
 
     def support(self, feature):
         return feature in self.supports
@@ -55,7 +56,7 @@ class ResourceBase(object):
             config = parse_config(spec, sp, argspec, self.prefixes)
             configs.append(config)
 
-        if self.type == "config":
+        if self.config_type == "config":
             return configs
         else:
             return configs[0]

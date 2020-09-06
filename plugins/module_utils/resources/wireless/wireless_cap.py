@@ -28,7 +28,7 @@ class WirelessCapResource(ResourceBase):
     command = "/interface wireless cap"
     gather_network_resources = ["wireless_cap"]
     keys = []
-    type = "setting"
+    config_type = "setting"
     supports = ["facts_verbose_mode"]
     argument_spec = {
         "state": {
