@@ -72,10 +72,11 @@ Using merged state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
-    
 
 
 
@@ -104,8 +105,8 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
-    /interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"
+/interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
+/interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"
 
 
 **After State**
@@ -113,11 +114,12 @@ Using merged state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
     add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
-    
 
 
 
@@ -131,10 +133,11 @@ Using replaced state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
-    
 
 
 
@@ -159,8 +162,8 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface vlan set [ find name=vlan-100 ] arp=enabled
-    /interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"
+/interface vlan set [ find name=vlan-100 ] arp=enabled
+/interface vlan set [ find name=vlan-100 ] interface=br-trunk vlan-id=100 comment="new comment"
 
 
 **After State**
@@ -168,11 +171,12 @@ Using replaced state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
     add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
-    
 
 
 
@@ -186,10 +190,11 @@ Using overridden state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
-    
 
 
 
@@ -214,9 +219,9 @@ Using overridden state
 
 .. code-block:: ssh
 
-    /interface vlan remove [ find name=vlan-100 ]
-    /interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
-    /system script run ansible-remove-invalid
+/interface vlan remove [ find name=vlan-100 ]
+/interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
+/system script run ansible-remove-invalid
 
 
 **After State**
@@ -224,10 +229,11 @@ Using overridden state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
-    
 
 
 
@@ -241,10 +247,11 @@ Using deleted state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
-    
 
 
 
@@ -268,8 +275,8 @@ Using deleted state
 
 .. code-block:: ssh
 
-    /interface vlan remove [ find name=vlan-100 ]
-    /system script run ansible-remove-invalid
+/interface vlan remove [ find name=vlan-100 ]
+/system script run ansible-remove-invalid
 
 
 **After State**
@@ -277,6 +284,9 @@ Using deleted state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface vlan export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+
 
 

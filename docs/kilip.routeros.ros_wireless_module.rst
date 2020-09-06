@@ -450,9 +450,11 @@ Using merged state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless
     set [ find default-name=wlan1 ] comment=wlan1
-    
 
 
 
@@ -479,7 +481,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 security-profile=default
+/interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 security-profile=default
 
 
 **After State**
@@ -487,9 +489,11 @@ Using merged state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless
     set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2
-    
 
 
 
@@ -503,9 +507,11 @@ Using replaced state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless
     set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
-    
 
 
 
@@ -530,8 +536,8 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface wireless set [ find name=wlan1 ] security-profile=default
-    /interface wireless set [ find name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
+/interface wireless set [ find name=wlan1 ] security-profile=default
+/interface wireless set [ find name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
 
 
 **After State**
@@ -539,6 +545,9 @@ Using replaced state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless
     set [ find default-name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
 

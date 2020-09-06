@@ -76,9 +76,11 @@ Using merge state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless access-list export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless access-list
     add comment=existing action accept signal-range=-79..120
-    
 
 
 
@@ -104,8 +106,8 @@ Using merge state
 
 .. code-block:: ssh
 
-    /interface wireless access-list set [ find comment=existing ] signal-range=-80..120
-    /interface wireless access-list add comment=new signal-range=-50..120 interface=wlan1
+/interface wireless access-list set [ find comment=existing ] signal-range=-80..120
+/interface wireless access-list add comment=new signal-range=-50..120 interface=wlan1
 
 
 **After State**
@@ -113,9 +115,11 @@ Using merge state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless access-list export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless access-list
     add comment=existing action=accept signal-range=-80..120
     add comment=new action=accept signal-range=-50..120
-    
 
 

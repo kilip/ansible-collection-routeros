@@ -122,9 +122,11 @@ Using merged state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless security-profiles export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless security-profiles
     add name=test supplicant-identity=MikroTik
-    
 
 
 
@@ -148,8 +150,8 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface wireless security-profiles set [ find name=test ] supplicant-identity=test
-    /interface wireless security-profiles add name=new supplicant-identity=new
+/interface wireless security-profiles set [ find name=test ] supplicant-identity=test
+/interface wireless security-profiles add name=new supplicant-identity=new
 
 
 **After State**
@@ -157,9 +159,11 @@ Using merged state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless security-profiles export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless security-profiles
     add name=test supplicant-identity=test
     add name=foo supplicant-identity=foo
-    
 
 

@@ -70,10 +70,11 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge settings export verbose
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge settings
     set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
-    
 
 
 
@@ -98,7 +99,7 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    /interface bridge settings set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
+/interface bridge settings set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
 
 
 **After State**
@@ -106,10 +107,11 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge settings export verbose
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge settings
     set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
-    
 
 
 
@@ -123,10 +125,11 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge settings export verbose
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge settings
     set allow-fast-path=no use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes use-ip-firewall=yes
-    
 
 
 
@@ -146,7 +149,7 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    /interface bridge settings set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
+/interface bridge settings set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
 
 
 **After State**
@@ -154,7 +157,9 @@ Change Bridge Setting Configuration
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge settings export verbose
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge settings
     set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
 

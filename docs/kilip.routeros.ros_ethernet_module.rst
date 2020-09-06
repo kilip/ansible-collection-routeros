@@ -126,10 +126,11 @@ Using merged state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface ethernet export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface ethernet
     set [ find default-name=ether1 ] comment="ether1 comment"
-    
 
 
 
@@ -156,7 +157,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface ethernet set [ find name=ether1 ] advertise=10M-full,100M-full,1000M-full comment="updated comment"
+/interface ethernet set [ find name=ether1 ] advertise=10M-full,100M-full,1000M-full comment="updated comment"
 
 
 **After State**
@@ -164,9 +165,10 @@ Using merged state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface ethernet export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface ethernet
     set [ find default-name=ether1 ] comment="updated comment"
-    
 
 

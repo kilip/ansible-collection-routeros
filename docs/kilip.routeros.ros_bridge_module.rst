@@ -108,10 +108,12 @@ Using Merged
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
-    
 
 
 
@@ -137,8 +139,8 @@ Using Merged
 
 .. code-block:: ssh
 
-    /interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
-    /interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
+/interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
+/interface bridge set [ find name=br-trunk ] comment="updated comment" vlan-filtering=yes arp=enabled
 
 
 **After State**
@@ -146,10 +148,12 @@ Using Merged
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
     add comment="wan bridge" name=br-wan arp=enabled
-    
 
 
 
@@ -163,10 +167,12 @@ Using Replaced
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
-    
 
 
 
@@ -191,10 +197,10 @@ Using Replaced
 
 .. code-block:: ssh
 
-    /interface bridge set [ find name=br-wan ] arp=enabled
-    /interface bridge set [ find name=br-wan ] comment="replaced comment"
-    /interface bridge set [ find name=br-trunk ] arp=enabled
-    /interface bridge set [ find name=br-trunk ] comment="replaced comment"
+/interface bridge set [ find name=br-wan ] arp=enabled
+/interface bridge set [ find name=br-wan ] comment="replaced comment"
+/interface bridge set [ find name=br-trunk ] arp=enabled
+/interface bridge set [ find name=br-trunk ] comment="replaced comment"
 
 
 **After State**
@@ -202,10 +208,12 @@ Using Replaced
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="replaced comment" name=br-trunk arp=enabled
     add comment="replaced comment" name=br-wan arp=enabled
-    
 
 
 
@@ -219,10 +227,12 @@ Using Overridden
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk
     add comment="wan bridge" name=br-wan
-    
 
 
 
@@ -245,10 +255,10 @@ Using Overridden
 
 .. code-block:: ssh
 
-    /interface bridge remove [ find name=br-trunk ]
-    /interface bridge remove [ find name=br-wan ]
-    /interface bridge add name=br-new comment="new bridge"
-    /system script run ansible-remove-invalid
+/interface bridge remove [ find name=br-trunk ]
+/interface bridge remove [ find name=br-wan ]
+/interface bridge add name=br-new comment="new bridge"
+/system script run ansible-remove-invalid
 
 
 **After State**
@@ -256,10 +266,12 @@ Using Overridden
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     # All existing bridge will be removed and replaced with the new configuration.
     /interface bridge
     add comment="new bridge" name=br-new
-    
 
 
 
@@ -273,10 +285,12 @@ Using deleted state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge
     add comment="trunk bridge" name=br-trunk
     add comment="wan bridge" name=br-wan
-    
 
 
 
@@ -299,9 +313,9 @@ Using deleted state
 
 .. code-block:: ssh
 
-    /interface bridge remove [ find name=br-trunk ]
-    /interface bridge remove [ find name=br-wan ]
-    /system script run ansible-remove-invalid
+/interface bridge remove [ find name=br-trunk ]
+/interface bridge remove [ find name=br-wan ]
+/system script run ansible-remove-invalid
 
 
 **After State**
@@ -309,6 +323,9 @@ Using deleted state
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface bridge export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     # All existing bridge will be removed and replaced with the new configuration.
     # empty bridge config
 

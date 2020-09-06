@@ -114,11 +114,12 @@ Merged Configuration
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
-    
 
 
 
@@ -145,8 +146,8 @@ Merged Configuration
 
 .. code-block:: ssh
 
-    /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
-    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
+/interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
+/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
 
 
 **After State**
@@ -154,11 +155,12 @@ Merged Configuration
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge port
     add bridge=br-wan interface=ether1 comment="new comment"
     add bridge=br-trunk interface=ether2 comment="new comment"
-    
 
 
 
@@ -172,11 +174,12 @@ Using replaced state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
-    
 
 
 
@@ -203,9 +206,9 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
-    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] disabled=no
-    /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment"
+/interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
+/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] disabled=no
+/interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment"
 
 
 **After State**
@@ -213,11 +216,12 @@ Using replaced state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interfce bridge port
     add bridge=br-wan interface=ether1 comment="new comment"
     add bridge=br-trunk interface=ether2 comment="new comment"
-    
 
 
 
@@ -231,11 +235,12 @@ Using overridden state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
-    
 
 
 
@@ -259,10 +264,10 @@ Using overridden state
 
 .. code-block:: ssh
 
-    /interface bridge port remove [ find bridge=br-wan and interface=ether1 ]
-    /interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
-    /interface bridge port add bridge=br-new interface=ether2 comment="new comment"
-    /system script run ansible-remove-invalid
+/interface bridge port remove [ find bridge=br-wan and interface=ether1 ]
+/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
+/interface bridge port add bridge=br-new interface=ether2 comment="new comment"
+/system script run ansible-remove-invalid
 
 
 **After State**
@@ -270,10 +275,11 @@ Using overridden state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interfce bridge port
     add bridge=br-new interface=ether2 comment="new comment"
-    
 
 
 
@@ -287,11 +293,12 @@ Using deleted state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface bridge port
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
-    
 
 
 
@@ -314,8 +321,8 @@ Using deleted state
 
 .. code-block:: ssh
 
-    /interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
-    /system script run ansible-remove-invalid
+/interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
+/system script run ansible-remove-invalid
 
 
 **After State**
@@ -323,9 +330,10 @@ Using deleted state
 
 .. code-block:: ssh
 
-    
+    [admin@MikroTik] > /interface bridge port export
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interfce bridge port
     add bridge=br-wan interface=ether1
-    
 
 

@@ -66,9 +66,11 @@ Change Wireless CAP Setting
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless cap export verbose
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless cap
     set interface=wlan1,wlan2
-    
 
 
 
@@ -92,7 +94,7 @@ Change Wireless CAP Setting
 
 .. code-block:: ssh
 
-    /interface wireless cap set interfaces=wlan1,wlan2
+/interface wireless cap set interfaces=wlan1,wlan2
 
 
 **After State**
@@ -100,6 +102,9 @@ Change Wireless CAP Setting
 
 .. code-block:: ssh
 
+    [admin@MikroTik] > /interface wireless cap export verbose
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
     /interface wireless cap
     set interface=wlan-new
 
