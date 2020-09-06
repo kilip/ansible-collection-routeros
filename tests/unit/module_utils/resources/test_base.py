@@ -62,7 +62,7 @@ set 3gpp=value channel.band=value some-property=value
         result = resource.add(want)
         cmd = result[0]
         self.assertEqual(
-            '/test add name="spaced name" some-property=value channel.band=value 3gpp=value',
+            '/test add 3gpp=value channel.band=value name="spaced name" some-property=value',
             cmd,
         )
 
@@ -83,7 +83,7 @@ set 3gpp=value channel.band=value some-property=value
         result = resource.update(want, have)
         cmd = result[0]
         self.assertEqual(
-            '/test set [ find name="spaced name" ] some-property=value channel.band=value 3gpp=value',
+            '/test set [ find name="spaced name" ] 3gpp=value channel.band=value some-property=value',
             cmd,
         )
 

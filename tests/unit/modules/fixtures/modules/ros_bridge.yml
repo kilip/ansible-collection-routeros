@@ -10,8 +10,8 @@ fixtures:
 tests:
   -
     commands:
-      - '/interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled'
-      - '/interface bridge set [ find name=br-trunk ] comment="updated comment" arp=enabled vlan-filtering=yes'
+      - '/interface bridge set [ find name=br-wan ] arp=enabled comment="updated comment"'
+      - '/interface bridge set [ find name=br-trunk ] arp=enabled comment="updated comment" vlan-filtering=yes'
     argument_spec:
       config:
         -
@@ -26,8 +26,8 @@ tests:
       state: merged
   -
     commands:
-      - '/interface bridge set [ find name=br-wan ] comment="replaced comment" arp=enabled'
-      - '/interface bridge set [ find name=br-trunk ] comment="replaced comment" arp=enabled'
+      - '/interface bridge set [ find name=br-wan ] arp=enabled comment="replaced comment"'
+      - '/interface bridge set [ find name=br-trunk ] arp=enabled comment="replaced comment"'
     argument_spec:
       config:
         -

@@ -9,8 +9,8 @@ fixtures:
 tests:
   -
     commands:
-      - '/interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled'
-      - '/interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"'
+      - '/interface vlan set [ find name=vlan-100 ] arp=enabled comment="new comment"'
+      - '/interface vlan add comment="new comment" interface=br-trunk name=vlan-200 vlan-id=200'
     argument_spec:
       config:
         -
@@ -26,7 +26,7 @@ tests:
       state: merged
   -
     commands:
-      - '/interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled'
+      - '/interface vlan set [ find name=vlan-100 ] arp=enabled comment="new comment"'
     argument_spec:
       config:
         -
@@ -38,7 +38,7 @@ tests:
   -
     commands:
       - '/interface vlan remove [ find name=vlan-100 ]'
-      - '/interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"'
+      - '/interface vlan add comment="new comment" interface=br-trunk name=vlan-new vlan-id=100'
       - '/system script run ansible-remove-invalid'
     argument_spec:
       config:

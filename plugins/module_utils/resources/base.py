@@ -215,6 +215,7 @@ class ResourceBase(object):
                 else:
                     value = value_to_routeros(value)
                     cmd.append(ros_key + "=" + str(value))
+        cmd = sorted(cmd)
         return cmd
 
     def _custom_config(self, spec, conf):

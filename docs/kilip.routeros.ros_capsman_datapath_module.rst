@@ -108,8 +108,8 @@ Using Merged
 
 .. code-block:: ssh
 
-    /caps-man datapath set [ find name=test ] bridge=br-trunk arp=reply-only
-    /caps-man datapath add name=new bridge=br-trunk arp=reply-only
+    /caps-man datapath set [ find name=test ] arp=reply-only bridge=br-trunk
+    /caps-man datapath add arp=reply-only bridge=br-trunk name=new
 
 
 **After State**

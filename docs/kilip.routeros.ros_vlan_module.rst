@@ -105,8 +105,8 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
-    /interface vlan add name=vlan-200 interface=br-trunk vlan-id=200 comment="new comment"
+    /interface vlan set [ find name=vlan-100 ] arp=enabled comment="new comment"
+    /interface vlan add comment="new comment" interface=br-trunk name=vlan-200 vlan-id=200
 
 
 **After State**
@@ -162,7 +162,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface vlan set [ find name=vlan-100 ] comment="new comment" arp=enabled
+    /interface vlan set [ find name=vlan-100 ] arp=enabled comment="new comment"
 
 
 **After State**
@@ -174,8 +174,8 @@ Using replaced state
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     /interface vlan
-    add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
-    add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
+    add interface=br-trunk comment="new comment" name=vlan-100 vlan-id=100
+    add interface=br-trunk comment="new comment" name=vlan-200 vlan-id=200
 
 
 
@@ -219,7 +219,7 @@ Using overridden state
 .. code-block:: ssh
 
     /interface vlan remove [ find name=vlan-100 ]
-    /interface vlan add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
+    /interface vlan add comment="new comment" interface=br-trunk name=vlan-new vlan-id=100
     /system script run ansible-remove-invalid
 
 

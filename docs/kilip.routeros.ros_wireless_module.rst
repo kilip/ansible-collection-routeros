@@ -484,7 +484,7 @@ Using merged state
 
 .. code-block:: ssh
 
-    /interface wireless set [ find name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 supported-rates-a/g=6Mbps,24Mbps security-profile=default
+    /interface wireless set [ find name=wlan1 ] ampdu-priorities=0,1,2 comment="updated comment" security-profile=default supported-rates-a/g=6Mbps,24Mbps
 
 
 **After State**
@@ -496,7 +496,7 @@ Using merged state
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     /interface wireless
-    set [ find default-name=wlan1 ] comment="updated comment" ampdu-priorities=0,1,2 supported-rates-a/g=6Mbps,24Mbps security-profile=default
+    set [ find default-name=wlan1 ] ampdu-priorities=0,1,2 comment="updated comment" security-profile=default supported-rates-a/g=6Mbps,24Mbps
 
 
 
@@ -539,7 +539,7 @@ Using replaced state
 
 .. code-block:: ssh
 
-    /interface wireless set [ find name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
+    /interface wireless set [ find name=wlan1 ] comment="new olympus" security-profile=new-olympus ssid=Olympus
 
 
 **After State**

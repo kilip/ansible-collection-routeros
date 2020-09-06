@@ -265,7 +265,7 @@ Using overridden state
 
     /interface bridge port remove [ find bridge=br-wan and interface=ether1 ]
     /interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
-    /interface bridge port add bridge=br-new interface=ether2 comment="new comment"
+    /interface bridge port add bridge=br-new comment="new comment" interface=ether2
     /system script run ansible-remove-invalid
 
 

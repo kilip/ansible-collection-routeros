@@ -124,7 +124,7 @@ Using merged
 .. code-block:: ssh
 
     /caps-man channel set [ find name=test ] save-selected=no
-    /caps-man channel add name=new extension-channel=Ce
+    /caps-man channel add extension-channel=Ce name=new
 
 
 **After State**

@@ -141,8 +141,8 @@ Using Merged
 
 .. code-block:: ssh
 
-    /interface bridge set [ find name=br-wan ] comment="updated comment" arp=enabled
-    /interface bridge set [ find name=br-trunk ] comment="updated comment" arp=enabled vlan-filtering=yes
+    /interface bridge set [ find name=br-wan ] arp=enabled comment="updated comment"
+    /interface bridge set [ find name=br-trunk ] arp=enabled comment="updated comment" vlan-filtering=yes
 
 
 **After State**
@@ -199,8 +199,8 @@ Using Replaced
 
 .. code-block:: ssh
 
-    /interface bridge set [ find name=br-wan ] comment="replaced comment" arp=enabled
-    /interface bridge set [ find name=br-trunk ] comment="replaced comment" arp=enabled
+    /interface bridge set [ find name=br-wan ] arp=enabled comment="replaced comment"
+    /interface bridge set [ find name=br-trunk ] arp=enabled comment="replaced comment"
 
 
 **After State**

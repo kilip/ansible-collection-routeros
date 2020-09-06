@@ -23,8 +23,8 @@
 - name: set result commands facts
   set_fact:
     commands: [
-      '/interface bridge set [ find name=br-wan ] comment="replaced comment" arp=enabled',
-      '/interface bridge set [ find name=br-trunk ] comment="replaced comment" arp=enabled',
+      '/interface bridge set [ find name=br-wan ] arp=enabled comment="replaced comment"',
+      '/interface bridge set [ find name=br-trunk ] arp=enabled comment="replaced comment"',
     ]
 
 - name: Replace device configuration

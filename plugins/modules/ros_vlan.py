@@ -165,8 +165,8 @@ EXAMPLES = """
 # sep/06/2020 03:08:16 by RouterOS 6.47.2
 # software id =
 # /interface vlan
-# add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
-# add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
+# add interface=br-trunk comment="new comment" name=vlan-100 vlan-id=100
+# add interface=br-trunk comment="new comment" name=vlan-200 vlan-id=200
 # ----
 # Using overridden state
 # ----

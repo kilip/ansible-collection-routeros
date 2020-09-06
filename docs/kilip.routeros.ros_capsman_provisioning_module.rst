@@ -126,7 +126,7 @@ Using merged state
 .. code-block:: ssh
 
     /caps-man provisioning set [ find comment=test ] action=create-disabled
-    /caps-man provisioning add comment="Olympus Wireless Network" identity-regexp=olympus- master-configuration=olympus-network name-format=identity slave-configurations=troy-network,gaia-network action=create-enabled
+    /caps-man provisioning add action=create-enabled comment="Olympus Wireless Network" identity-regexp=olympus- master-configuration=olympus-network name-format=identity slave-configurations=troy-network,gaia-network
 
 
 **After State**

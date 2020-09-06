@@ -372,7 +372,7 @@ Using merged
 .. code-block:: ssh
 
     /caps-man configuration set [ find name=test ] datapath.bridge=br-trunk rx-chains=0,1,2
-    /caps-man configuration add name=new datapath.bridge=br-trunk
+    /caps-man configuration add datapath.bridge=br-trunk name=new
 
 
 **After State**
