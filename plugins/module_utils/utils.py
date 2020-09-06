@@ -2,12 +2,7 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-import re
-from copy import deepcopy
 from ansible.module_utils.six import iteritems
-from ansible_collections.ansible.netcommon.plugins.module_utils.network.common import (
-    utils as net_utils,
-)
 
 ANSIBLE_REMOVE_INVALID_SCRIPT_NAME = "ansible-remove-invalid"
 
@@ -28,61 +23,6 @@ def get_interface_type(interface):
 def normalize_interface(name):
     if not name:
         return None
-
-
-def parse_config(spec, conf, argspec, key_prefixes):
-    """
-    Parse routeros configuration and extract values
-    :param spec: Configuration specification
-    :param conf: routeros configuration values
-    :param argspec: replace configuration with the default value
-    :return: an array of routeros config
-    """
-    config = deepcopy(spec)
-    for key in config:
-        mt_key = key.replace("_", "-")
-        if key_prefixes:
-            for prefix in key_prefixes:
-                if -1 != key.find(prefix):
-                    mt_key = key.replace(prefix + "_", prefix + ".")
-
-        value = parse_conf_arg(conf, mt_key, argspec[key])
-
-        if argspec is not None:
-            vtype = argspec[key]["type"]
-            if vtype == "list" and value is not None:
-                value = value.split(",")
-
-        if value is not None:
-            config[key] = value
-
-    return net_utils.remove_empties(config)
-
-
-def parse_conf_arg(cfg, arg, argspec):
-    """
-    Parse config based on argument
-
-    :param cfg: A text string which is a line of configuration.
-    :param arg: A text string which is to be matched.
-    :rtype: A text string
-    :returns: A text string if match is found
-    """
-    match = re.search(r'%s=(".*?"|\S+)' % arg, cfg, re.M)
-    if match:
-        result = match.group(1).strip("\n")
-        result = result.replace('"', "")
-    else:
-        result = None
-
-    vtype = argspec["type"]
-    if result is not None:
-        if vtype == "int":
-            result = int(result)
-        if vtype == "str":
-            result = str(result)
-
-    return result
 
 
 def dict_to_set(sample_dict):
@@ -136,35 +76,6 @@ def value_to_routeros(value):
     if type(value) == str and " " in value:
         value = '"' + value + '"'
     return value
-
-
-def generate_command_values(want, have, filters, key_prefixes):
-    cmd = []
-    want_dict = dict_to_set(want)
-    have_dict = dict_to_set(have)
-    diff = want_dict - have_dict
-    diff = dict(diff)
-    for key in want:
-        if key in filters:
-            continue
-        if diff.get(key) is not None:
-            ros_key = key_to_routeros(key, key_prefixes)
-            value = want.get(key)
-            if type(value) is dict:
-                have_section = dict()
-                if have.get(key) is not None:
-                    have_section = have.get(key)
-                cmd.extend(
-                    generate_command_values(
-                        want[key], have_section, key_prefixes
-                    )
-                )
-            elif type(value) is list:
-                cmd.append(ros_key + "=" + list_to_routeros(value))
-            else:
-                value = value_to_routeros(value)
-                cmd.append(ros_key + "=" + str(value))
-    return cmd
 
 
 def list_to_routeros(value):

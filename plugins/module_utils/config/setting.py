@@ -4,7 +4,6 @@ __metaclass__ = type
 
 from ..facts.facts import Facts
 from ..routeros import load_config
-from ..utils import generate_command_values
 
 
 class Setting(object):
@@ -74,9 +73,7 @@ class Setting(object):
         prefix = resource.get_command_prefix(want, have)
         prefix = "{0} set ".format(prefix)
 
-        values = generate_command_values(
-            want, have, [], self._resource.prefixes
-        )
+        values = resource.generate_command_values(want, have, [])
         values.sort()
 
         cmd = prefix + " ".join(values)
@@ -85,13 +82,12 @@ class Setting(object):
 
     def _state_reset(self, have):
         commands = []
+        resource = self._resource
         want = self._resource.generate_dict()
         prefix = self._resource.get_command_prefix(want, have)
         prefix = "{0} set ".format(prefix)
 
-        values = generate_command_values(
-            want, have, [], self._resource.prefixes
-        )
+        values = resource.generate_command_values(want, have, [])
         values.sort()
 
         cmd = prefix + " ".join(values)

@@ -13,7 +13,6 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.u
 from ..facts.facts import Facts
 from ..routeros import load_config, get_config
 from ..utils import (
-    generate_command_values,
     gen_remove_invalid_resource,
     ANSIBLE_REMOVE_INVALID_SCRIPT_NAME,
 )
@@ -72,54 +71,6 @@ class Config(ConfigBase):
 
         result["warnings"] = warnings
         return result
-
-    def add(self, want):
-        resource = self.resource
-        commands = []
-        command_prefix = self.get_command_prefix(want)
-        prefix = "{0} add ".format(command_prefix)
-
-        # always remove default values for new resource
-        defaults = resource.generate_dict()
-        values = generate_command_values(want, defaults, [], resource.prefixes)
-        if values:
-            cmd = prefix + " ".join(values)
-            commands.append(cmd)
-        return commands
-
-    def update(self, want, have):
-        resource = self.resource
-        find_command = self._create_find_command(want)
-        command_prefix = self.get_command_prefix(want, have)
-        prefix = "{0} set {1} ".format(command_prefix, find_command)
-        commands = []
-        filters = resource.keys
-        for filter in resource.filters:
-            filters.append(filter)
-
-        # start generating values
-        values = generate_command_values(
-            want, have, filters, resource.prefixes
-        )
-        if values:
-            cmd = prefix + " ".join(values)
-            commands.append(cmd)
-        return commands
-
-    def delete(self, want):
-        commands = []
-        prefix = self.get_command_prefix(want)
-        find_command = self._create_find_command(want)
-        cmd = "{0} remove {1}".format(prefix, find_command)
-        commands.append(cmd)
-
-        self.has_delete_command = True
-
-        return commands
-
-    def get_command_prefix(self, want, have=None):
-        prefix = self.resource.get_command_prefix(want, have)
-        return prefix
 
     def _inject_script(self):
         """
@@ -199,14 +150,15 @@ class Config(ConfigBase):
                   to the desired configuration
         """
         commands = []
+        resource = self.resource
 
         for existing in have:
-            commands.extend(self.delete(existing))
+            commands.extend(resource.delete(existing))
 
-        for resource in want:
-            commands.extend(self.add(resource))
+        for each in want:
+            commands.extend(resource.add(each))
 
-        if self.has_delete_command:
+        if resource.has_delete_command:
             cmd = gen_remove_invalid_resource()
             commands.append(cmd)
 
@@ -222,17 +174,18 @@ class Config(ConfigBase):
                   of the provided objects
         """
         commands = []
+        resource = self.resource
 
         if want:
-            for resource in want:
-                existing = self._find_resource(resource, have)
+            for each in want:
+                existing = self._find_resource(each, have)
                 if existing is not None:
-                    commands.extend(self.delete(existing))
+                    commands.extend(resource.delete(existing))
         else:
             for each in have:
-                commands.extend(self.delete(each))
+                commands.extend(resource.delete(each))
 
-        if self.has_delete_command:
+        if resource.has_delete_command:
             cmd = gen_remove_invalid_resource()
             commands.append(cmd)
         return commands
@@ -247,13 +200,14 @@ class Config(ConfigBase):
                   the current configuration
         """
         commands = []
+        resource = self.resource
 
-        for resource in want:
-            existing = self._find_resource(resource, have)
+        for each in want:
+            existing = self._find_resource(each, have)
             if existing is None:
-                commands.extend(self.add(resource))
+                commands.extend(resource.add(each))
             else:
-                commands.extend(self.update(resource, existing))
+                commands.extend(resource.update(each, existing))
 
         return commands
 
@@ -273,12 +227,12 @@ class Config(ConfigBase):
         for each in want:
             existing = self._find_resource(each, have)
             if existing is None:
-                commands.extend(self.add(each))
+                commands.extend(resource.add(each))
             else:
                 commands.extend(self._clear_config(existing))
                 # new = self._create_empty_resource(existing)
                 defaults = resource.generate_dict()
-                commands.extend(self.update(each, defaults))
+                commands.extend(resource.update(each, defaults))
 
         return commands
 
@@ -318,7 +272,7 @@ class Config(ConfigBase):
                 del want[key]
                 del existing[key]
 
-        cmd = self.update(want, existing)
+        cmd = resource.update(want, existing)
         return cmd
 
     def _find_resource(self, want, have):
@@ -341,12 +295,3 @@ class Config(ConfigBase):
             if exist:
                 resource = each
         return resource
-
-    def _create_find_command(self, want):
-        keys = self.resource.keys
-        finds = []
-        for key in keys:
-            if want.get(key) is None:
-                continue
-            finds.append(key.replace("_", "-") + "=" + want[key])
-        return "[ find %s ]" % (" and ".join(finds))
