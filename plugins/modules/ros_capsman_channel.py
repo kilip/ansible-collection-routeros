@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_capsman_channel
+The module file for kilip.routeros.ros_capsman_channel
 """
 
 DOCUMENTATION = """
@@ -133,7 +132,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge with device configuration
-  kilip.routeros.ros_capsman_channel:
+  kilip.routeros.kilip.routeros.ros_capsman_channel:
     config:
       - name: test
         save_selected: 'no'

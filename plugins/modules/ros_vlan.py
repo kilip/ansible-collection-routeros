@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_vlan
+The module file for kilip.routeros.ros_vlan
 """
 
 DOCUMENTATION = """
@@ -119,7 +118,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge configuration with device configuration
-  kilip.routeros.ros_vlan:
+  kilip.routeros.kilip.routeros.ros_vlan:
     config:
       - name: vlan-100
         interface: br-trunk
@@ -151,7 +150,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Replace device configuration
-  kilip.routeros.ros_vlan:
+  kilip.routeros.kilip.routeros.ros_vlan:
     config:
       - name: vlan-100
         interface: br-trunk
@@ -179,7 +178,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Override device configuration
-  kilip.routeros.ros_vlan:
+  kilip.routeros.kilip.routeros.ros_vlan:
     config:
       - name: vlan-new
         interface: br-trunk
@@ -206,7 +205,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Delete VLAN Interface
-  kilip.routeros.ros_vlan:
+  kilip.routeros.kilip.routeros.ros_vlan:
     config:
       - name: vlan-100
         interface: br-trunk

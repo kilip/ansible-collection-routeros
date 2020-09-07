@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_ethernet
+The module file for kilip.routeros.ros_ethernet
 """
 
 DOCUMENTATION = """
@@ -291,7 +290,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge configuration with device configuration
-  kilip.routeros.ros_ethernet:
+  kilip.routeros.kilip.routeros.ros_ethernet:
     config:
       - name: ether1
         advertise:

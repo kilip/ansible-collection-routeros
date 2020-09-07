@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_capsman_provisioning_module
+.. _kilip.routeros.kilip.routeros.ros_capsman_provisioning_module
 
 ********************************
-kilip.routeros.ros_capsman_provisioning
+kilip.routeros.kilip.routeros.ros_capsman_provisioning
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/caps-man provisioning**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages CAPsMan Provisioning on Mikrotik RouterOS network devices
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -72,19 +66,13 @@ config
                               prefix-identity
                             </li></ul></td><td><p>specify the syntax of the CAP interface name creation</p><ul><li>cap - default name</li><li>identity - CAP boards system identity name</li><li>prefix - name from the name-prefix value</li><li>prefix-identity - name from the name-prefix value and the CAP boards system identity name</li></ul></td></tr><tr><td><b>name_prefix</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>name prefix which can be used in the name-format for creating the CAP interface names</p></td></tr><tr><td><b>radio_mac</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>MAC address of radio to be matched, empty MAC (00:00:00:00:00:00) means match all MAC addresses</p></td></tr><tr><td><b>slave_configurations</b><div style="font-size: small"><span style="color: purple">list</span></div></td><td></td><td><p>If <strong>action</strong> specifies to create interfaces, then a new slave interface for each configuration profile in this list is created.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------------
 Using merged state
 ------------------
-
 
 **Before State**
 
@@ -96,15 +84,12 @@ Using merged state
     /caps-man provisioning
     add comment=test
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge with device configuration
-      kilip.routeros.ros_capsman_provisioning:
+      kilip.routeros.kilip.routeros.ros_capsman_provisioning:
         state: merged
         config:
           - comment: test
@@ -117,20 +102,15 @@ Using merged state
               - troy-network
               - gaia-network
             action: create-enabled
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man provisioning set [ find comment=test ] action=create-disabled
     /caps-man provisioning add action=create-enabled comment="Olympus Wireless Network" identity-regexp=olympus- master-configuration=olympus-network name-format=identity slave-configurations=troy-network,gaia-network
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -145,13 +125,9 @@ Using merged state
         name-format=identity \
         slave-configurations=troy-network,gaia-network
 
-
-
-
 -------------------
 Using deleted state
 -------------------
-
 
 **Before State**
 
@@ -163,32 +139,24 @@ Using deleted state
     /caps-man provisioning
     add comment=test
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Delete provisioning config
-      kilip.routeros.ros_capsman_provisioning:
+      kilip.routeros.kilip.routeros.ros_capsman_provisioning:
         state: deleted
         config:
           - comment: test
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man provisioning remove [ find comment=test ]
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -196,5 +164,3 @@ Using deleted state
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     # empty caps-man provisioning config
-
-

@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_capsman_manager_module
+.. _kilip.routeros.kilip.routeros.ros_capsman_manager_module
 
 ********************************
-kilip.routeros.ros_capsman_manager
+kilip.routeros.kilip.routeros.ros_capsman_manager
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/caps-man manager**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages CAPsMan Maanager Setting on Mikrotik RouterOS network devices
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: present, reset
@@ -56,19 +50,13 @@ config
                               suggest-same-upgrade
                             </li></ul></td><td><p>Upgrade policy options</p><ul><li>none - do not perform upgrade</li><li>require-same-version - CAPsMAN suggest to upgrade the CAP RouterOS version and if it fails it will not provision the CAP. (Manual provision is still possible)</li><li>suggest-same-version - CAPsMAN suggests to upgrade the CAP RouterOS version and if it fails it will still be provisioned</li></ul></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 -------------------
 Using Present State
 -------------------
-
 
 **Before State**
 
@@ -85,32 +73,24 @@ Using Present State
         require-peer-certificate=no \
         upgrade-policy=none
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Update Settings
-      kilip.routeros.ros_capsman_manager:
+      kilip.routeros.kilip.routeros.ros_capsman_manager:
         state: present
         config:
           ca_certificate: auto
           enabled: 'yes'
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man manager set ca-certificate=auto enabled=yes
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -124,5 +104,3 @@ Using Present State
         package-path="" \
         require-peer-certificate=no \
         upgrade-policy=none
-
-

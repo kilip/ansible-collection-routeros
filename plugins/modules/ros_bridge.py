@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_bridge
+The module file for kilip.routeros.ros_bridge
 """
 
 DOCUMENTATION = """
@@ -444,7 +443,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge configuration with device configuration
-  kilip.routeros.ros_bridge:
+  kilip.routeros.kilip.routeros.ros_bridge:
     config:
       - name: br-wan
         comment: 'updated comment'
@@ -476,7 +475,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Replace device configuration
-  kilip.routeros.ros_bridge:
+  kilip.routeros.kilip.routeros.ros_bridge:
     config:
       - name: br-wan
         comment: 'replaced comment'
@@ -505,7 +504,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Override bridge configuration
-  kilip.routeros.ros_bridge:
+  kilip.routeros.kilip.routeros.ros_bridge:
     config:
       - comment: 'new bridge'
         name: br-new
@@ -532,7 +531,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Delete bridge
-  kilip.routeros.ros_bridge:
+  kilip.routeros.kilip.routeros.ros_bridge:
     config:
       - name: br-trunk
       - name: br-wan

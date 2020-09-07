@@ -22,7 +22,6 @@ from .bridge.bridge import BridgeResource
 from .bridge.bridge_settings import BridgeSettingsResource
 from .bridge.bridge_port import BridgePortResource
 
-
 RESOURCE_SUBSETS = dict(
     capsman_aaa=CapsmanAaaResource,
     capsman_configuration=CapsmanConfigurationResource,

@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_capsman_configuration_module
+.. _kilip.routeros.kilip.routeros.ros_capsman_configuration_module
 
 ********************************
-kilip.routeros.ros_capsman_configuration
+kilip.routeros.kilip.routeros.ros_capsman_configuration
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/caps-man configuration**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages CAPsMan Configuration on Mikrotik RouterOS network devices
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -320,19 +314,13 @@ config
                               3
                             </li></ul></td><td><p>Which antennas to use for transmit.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------
 Using merged
 ------------
-
 
 **Before State**
 
@@ -344,15 +332,12 @@ Using merged
     /caps-man configuration
     add name=test
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge configuration with devie configuration
-      kilip.routeros.ros_capsman_configuration:
+      kilip.routeros.kilip.routeros.ros_capsman_configuration:
         state: merged
         config:
           - name: test
@@ -363,20 +348,15 @@ Using merged
               - 2
           - name: new
             datapath_bridge: br-trunk
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man configuration set [ find name=test ] datapath.bridge=br-trunk rx-chains=0,1,2
     /caps-man configuration add datapath.bridge=br-trunk name=new
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -386,5 +366,3 @@ Using merged
     /caps-man configuration
     add name=test datapath.bridge=br-trunk rx-chains=0,1,2
     add name=new datapath.bridge=br-trunk
-
-

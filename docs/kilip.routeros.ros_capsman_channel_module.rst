@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_capsman_channel_module
+.. _kilip.routeros.kilip.routeros.ros_capsman_channel_module
 
 ********************************
-kilip.routeros.ros_capsman_channel
+kilip.routeros.kilip.routeros.ros_capsman_channel
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/caps-man channel**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages CAPsMan Channels configuration on Mikrotik RouterOS network devices
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -76,19 +70,13 @@ config
                               no
                             </li></ul></td><td><p>Saves selected channel for the CAP Radio - will select this channel after the CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for this CAP.</p></td></tr><tr><td><b>tx_power</b><div style="font-size: small"><span style="color: purple">int</span></div></td><td></td><td><p>TX Power for CAP interface (for the whole interface not for individual chains) in dBm. It is not possible to set higher than allowed by country regulations or interface. By default max allowed by country or interface is used.</p></td></tr><tr><td><b>width</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>Sets Channel Width in MHz. (E.g. 20, 40)</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------
 Using merged
 ------------
-
 
 **Before State**
 
@@ -100,35 +88,27 @@ Using merged
     /caps-man channel
     add name=test
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge with device configuration
-      kilip.routeros.ros_capsman_channel:
+      kilip.routeros.kilip.routeros.ros_capsman_channel:
         config:
           - name: test
             save_selected: 'no'
           - name: new
             extension_channel: Ce
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man channel set [ find name=test ] save-selected=no
     /caps-man channel add extension-channel=Ce name=new
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -136,5 +116,3 @@ Using merged
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     /caps-man channel add name=test save-selected=no add name=new extension-channel=Ce
-
-

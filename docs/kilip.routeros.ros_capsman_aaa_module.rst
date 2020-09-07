@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_capsman_aaa_module
+.. _kilip.routeros.kilip.routeros.ros_capsman_aaa_module
 
 ********************************
-kilip.routeros.ros_capsman_aaa
+kilip.routeros.kilip.routeros.ros_capsman_aaa
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/caps-man aaa**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages CAPsMan AAA configuration on Mikrotik RouterOS network devices
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: present, reset
@@ -52,19 +46,13 @@ config
                               as-username-and-password
                             </li></ul></td><td><p>By default Access Point uses an empty password, when sending Access-Request during MAC authentication. When this property is set to as-username-and-password, Access Point will use the same value for User-Password attribute as for the User-Name attribute.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 -------------------
 Using present state
 -------------------
-
 
 **Before State**
 
@@ -76,15 +64,12 @@ Using present state
     /caps-man aaa
     set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX.XX.XX.XX.XX.XX mac-mode=as-username
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Change configuration
-      kilip.routeros.ros_capsman_aaa:
+      kilip.routeros.kilip.routeros.ros_capsman_aaa:
         config:
           called_format: mac
           interim_update: 10s
@@ -92,19 +77,14 @@ Using present state
           mac_format: XX-XX-XX-XX-XX-XX
           mac_mode: as-username-and-password
         state: present
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man aaa set called-format=mac interim-update=10s mac-caching=10m mac-format=XX-XX-XX-XX-XX-XX mac-mode=as-username-and-password
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -114,13 +94,9 @@ Using present state
     /caps-man aaa
     set called-format=mac interim-update=10s mac-caching=10m mac-format=XX-XX-XX-XX-XX-XX mac-mode=as-username-and-password
 
-
-
-
 -----------------
 Using reset state
 -----------------
-
 
 **Before State**
 
@@ -132,29 +108,21 @@ Using reset state
     /caps-man aaa
     set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX.XX.XX.XX.XX.XX mac-mode=as-username
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Reset to default value
-      kilip.routeros.ros_capsman_aaa:
+      kilip.routeros.kilip.routeros.ros_capsman_aaa:
         state: reset
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man aaa set mac-format=XX:XX:XX:XX:XX:XX
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -163,5 +131,3 @@ Using reset state
     # software id =
     /caps-man aaa
     set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX:XX:XX:XX:XX:XX mac-mode=as-username
-
-

@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_bridge_port
+The module file for kilip.routeros.ros_bridge_port
 """
 
 DOCUMENTATION = """
@@ -395,7 +394,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge configuration with device configuration
-  kilip.routeros.ros_bridge_port:
+  kilip.routeros.kilip.routeros.ros_bridge_port:
     config:
       - bridge: br-wan
         interface: ether1
@@ -426,7 +425,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Replace device configuration
-  kilip.routeros.ros_bridge_port:
+  kilip.routeros.kilip.routeros.ros_bridge_port:
     config:
       - bridge: br-wan
         interface: ether1
@@ -457,7 +456,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Override device configuration
-  kilip.routeros.ros_bridge_port:
+  kilip.routeros.kilip.routeros.ros_bridge_port:
     config:
       - bridge: br-new
         interface: ether2
@@ -484,7 +483,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Delete bridge port
-  kilip.routeros.ros_bridge_port:
+  kilip.routeros.kilip.routeros.ros_bridge_port:
     config:
       - bridge: br-trunk
         interface: ether2

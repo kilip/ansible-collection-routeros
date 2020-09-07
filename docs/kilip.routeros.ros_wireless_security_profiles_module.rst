@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_wireless_security_profiles_module
+.. _kilip.routeros.kilip.routeros.ros_wireless_security_profiles_module
 
 ********************************
-kilip.routeros.ros_wireless_security_profiles
+kilip.routeros.kilip.routeros.ros_wireless_security_profiles
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface wireless security-profiles**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages the Wireless Security Profiles of Mikrotik RouterOS network devices.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -104,19 +98,13 @@ config
                               tkip
                             </li></ul></td><td><p>Access Point advertises that it supports specified ciphers, multiple values can be selected. Client attempts connection only to Access Points that supports at least one of the specified ciphers. One of the ciphers will be used to encrypt unicast frames that are sent between Access Point and Station.</p></td></tr><tr><td><b>wpa2_pre_shared_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>WPA2 pre-shared key mode requires all devices in a BSS to have common secret key. Value of this key can be an arbitrary text. Commonly referred to as the network password for WPA2 mode. property only has effect when <em>wpa2-psk</em> is added to <strong>authentication-types</strong>.</p></td></tr><tr><td><b>wpa_pre_shared_key</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td></td><td><p>WPA pre-shared key mode requires all devices in a BSS to have common secret key. Value of this key can be an arbitrary text. Commonly referred to as the network password for WPA mode. property only has effect when <em>wpa-psk</em> is added to <strong>authentication-types</strong>.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------------
 Using merged state
 ------------------
-
 
 **Before State**
 
@@ -128,34 +116,26 @@ Using merged state
     /interface wireless security-profiles
     add name=test supplicant-identity=MikroTik
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge with device configuration
-      kilip.routeros.ros_wireless_security_profiles:
+      kilip.routeros.kilip.routeros.ros_wireless_security_profiles:
         config:
           - name: test
             supplicant_identity: test
           - name: new
             supplicant_identity: new
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface wireless security-profiles set [ find name=test ] supplicant-identity=test
     /interface wireless security-profiles add name=new supplicant-identity=new
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -165,5 +145,3 @@ Using merged state
     /interface wireless security-profiles
     add name=test supplicant-identity=test
     add name=foo supplicant-identity=foo
-
-

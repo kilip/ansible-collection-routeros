@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_wireless_access_list
+The module file for kilip.routeros.ros_wireless_access_list
 """
 
 DOCUMENTATION = """
@@ -172,7 +171,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge with device configuration
-  kilip.routeros.ros_wireless_access_list:
+  kilip.routeros.kilip.routeros.ros_wireless_access_list:
     config:
       - comment: existing
         signal_range: '-80..120'

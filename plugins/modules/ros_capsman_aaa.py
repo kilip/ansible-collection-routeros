@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_capsman_aaa
+The module file for kilip.routeros.ros_capsman_aaa
 """
 
 DOCUMENTATION = """
@@ -107,7 +106,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Change configuration
-  kilip.routeros.ros_capsman_aaa:
+  kilip.routeros.kilip.routeros.ros_capsman_aaa:
     config:
       called_format: mac
       interim_update: 10s
@@ -135,7 +134,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Reset to default value
-  kilip.routeros.ros_capsman_aaa:
+  kilip.routeros.kilip.routeros.ros_capsman_aaa:
     state: reset
 
 #

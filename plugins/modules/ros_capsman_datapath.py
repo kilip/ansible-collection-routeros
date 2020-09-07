@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_capsman_datapath
+The module file for kilip.routeros.ros_capsman_datapath
 """
 
 DOCUMENTATION = """
@@ -174,7 +173,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge with device configuration
-  kilip.routeros.ros_capsman_datapath:
+  kilip.routeros.kilip.routeros.ros_capsman_datapath:
     state: merged
     config:
       - name: test

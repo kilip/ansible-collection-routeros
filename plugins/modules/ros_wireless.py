@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_wireless
+The module file for kilip.routeros.ros_wireless
 """
 
 DOCUMENTATION = """
@@ -1193,7 +1192,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge device configuration
-  kilip.routeros.ros_wireless:
+  kilip.routeros.kilip.routeros.ros_wireless:
     config:
       - name: wlan1
         comment: 'updated comment'
@@ -1225,7 +1224,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Replace device wireless configuration
-  kilip.routeros.ros_wireless:
+  kilip.routeros.kilip.routeros.ros_wireless:
     config:
       - name: wlan1
         comment: 'new olympus'

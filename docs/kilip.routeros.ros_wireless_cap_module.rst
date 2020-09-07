@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_wireless_cap_module
+.. _kilip.routeros.kilip.routeros.ros_wireless_cap_module
 
 ********************************
-kilip.routeros.ros_wireless_cap
+kilip.routeros.kilip.routeros.ros_wireless_cap
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface wireless cap**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages the Wireless CAP setting of Mikrotik RouterOS network devices.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: present, reset
@@ -48,19 +42,13 @@ config
                               yes
                             </li><li><div style="color: blue"><b>no</b>&nbsp;&larr;</div></li></ul></td><td><p>CAP will create Static Virtual Interfaces instead of Dynamic and will try to reuse the same interface on reconnect to CAPsMAN if the MAC address will be the same. Note if two or more interfaces will have the same MAC address the assignment from the CAPsMAN could be random between those interfaces.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ---------------------------
 Change Wireless CAP Setting
 ---------------------------
-
 
 **Before State**
 
@@ -74,33 +62,25 @@ Change Wireless CAP Setting
         certificate=none discovery-interfaces="" \
         enabled=no interfaces="" lock-to-caps-man=no static-virtual=no
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Configure Wireless CAP
-      kilip.routeros.ros_wireless_cap:
+      kilip.routeros.kilip.routeros.ros_wireless_cap:
         config:
           interfaces:
             - wlan1
             - wlan2
         state: present
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface wireless cap set interfaces=wlan1,wlan2
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -109,5 +89,3 @@ Change Wireless CAP Setting
     # software id =
     /interface wireless cap
     set interface=wlan-new
-
-

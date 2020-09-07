@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_capsman_datapath_module
+.. _kilip.routeros.kilip.routeros.ros_capsman_datapath_module
 
 ********************************
-kilip.routeros.ros_capsman_datapath
+kilip.routeros.kilip.routeros.ros_capsman_datapath
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/caps-man datapath**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages CAPsMan DataPath Configuration on Mikrotik RouterOS network devices
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -59,19 +53,13 @@ Note, if disabled, make sure that each CAP interface MAC Address that participat
                               use-tag
                             </li></ul></td><td><p>Enables and specifies the type of VLAN tag to be assigned to the interface (causes all received data to get tagged with VLAN tag and allows the interface to only send out data tagged with given tag)</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------
 Using Merged
 ------------
-
 
 **Before State**
 
@@ -83,15 +71,12 @@ Using Merged
     /caps-man datapath
     add name=test
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge with device configuration
-      kilip.routeros.ros_capsman_datapath:
+      kilip.routeros.kilip.routeros.ros_capsman_datapath:
         state: merged
         config:
           - name: test
@@ -100,20 +85,15 @@ Using Merged
           - name: new
             bridge: br-trunk
             arp: reply-only
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /caps-man datapath set [ find name=test ] arp=reply-only bridge=br-trunk
     /caps-man datapath add arp=reply-only bridge=br-trunk name=new
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -123,5 +103,3 @@ Using Merged
     /caps-man datapath
     add name=test bridge=br-trunk arp=reply-only
     add name=new bridge=br-trunk arp=reply-only
-
-

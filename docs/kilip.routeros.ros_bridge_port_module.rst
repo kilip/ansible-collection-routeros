@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_bridge_port_module
+.. _kilip.routeros.kilip.routeros.ros_bridge_port_module
 
 ********************************
-kilip.routeros.ros_bridge_port
+kilip.routeros.kilip.routeros.ros_bridge_port
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface bridge port**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages RouterOS sub menu `/interface bridge port`
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -96,19 +90,13 @@ config
                               no
                             </li><li><div style="color: blue"><b>yes</b>&nbsp;&larr;</div></li></ul></td><td><p>When enabled, bridge floods unknown unicast traffic to all bridge egress ports. When disabled, drops unknown unicast traffic on egress ports. If a MAC address is not learned in <code>/interface bridge host</code>, then the traffic is considered as unknown unicast traffic and will be flooded to all ports. MAC address is learnt as soon as a packet on a bridge port is received, then the source MAC address is added to the bridge host table. Since it is required for the bridge to receive at least one packet on the bridge port to learn the MAC address, it is recommended to use static bridge host entries to avoid packets being dropped until the MAC address has been learnt. Has effect only on an egress port. This option does not limit traffic flood to the CPU.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 --------------------
 Merged Configuration
 --------------------
-
 
 **Before State**
 
@@ -121,15 +109,12 @@ Merged Configuration
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge configuration with device configuration
-      kilip.routeros.ros_bridge_port:
+      kilip.routeros.kilip.routeros.ros_bridge_port:
         config:
           - bridge: br-wan
             interface: ether1
@@ -138,20 +123,15 @@ Merged Configuration
             interface: ether2
             comment: 'new comment'
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
     /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -162,13 +142,9 @@ Merged Configuration
     add bridge=br-wan interface=ether1 comment="new comment"
     add bridge=br-trunk interface=ether2 comment="new comment"
 
-
-
-
 --------------------
 Using replaced state
 --------------------
-
 
 **Before State**
 
@@ -181,15 +157,12 @@ Using replaced state
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Replace device configuration
-      kilip.routeros.ros_bridge_port:
+      kilip.routeros.kilip.routeros.ros_bridge_port:
         config:
           - bridge: br-wan
             interface: ether1
@@ -198,20 +171,15 @@ Using replaced state
             interface: ether2
             comment: 'new comment'
         state: replaced
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface bridge port set [ find bridge=br-wan and interface=ether1 ] comment="new comment"
     /interface bridge port set [ find bridge=br-trunk and interface=ether2 ] comment="new comment" disabled=no
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -222,13 +190,9 @@ Using replaced state
     add bridge=br-wan interface=ether1 comment="new comment"
     add bridge=br-trunk interface=ether2 comment="new comment"
 
-
-
-
 ----------------------
 Using overridden state
 ----------------------
-
 
 **Before State**
 
@@ -241,25 +205,19 @@ Using overridden state
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Override device configuration
-      kilip.routeros.ros_bridge_port:
+      kilip.routeros.kilip.routeros.ros_bridge_port:
         config:
           - bridge: br-new
             interface: ether2
             comment: 'new comment'
         state: overridden
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
@@ -268,9 +226,7 @@ Using overridden state
     /interface bridge port add bridge=br-new comment="new comment" interface=ether2
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -280,13 +236,9 @@ Using overridden state
     /interfce bridge port
     add bridge=br-new interface=ether2 comment="new comment"
 
-
-
-
 -------------------
 Using deleted state
 -------------------
-
 
 **Before State**
 
@@ -299,33 +251,25 @@ Using deleted state
     add bridge=br-wan interface=ether1
     add bridge=br-trunk interface=ether2 disabled=yes
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Delete bridge port
-      kilip.routeros.ros_bridge_port:
+      kilip.routeros.kilip.routeros.ros_bridge_port:
         config:
           - bridge: br-trunk
             interface: ether2
         state: deleted
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface bridge port remove [ find bridge=br-trunk and interface=ether2 ]
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -334,5 +278,3 @@ Using deleted state
     # software id =
     /interfce bridge port
     add bridge=br-wan interface=ether1
-
-

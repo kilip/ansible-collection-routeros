@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_wireless_cap
+The module file for kilip.routeros.ros_wireless_cap
 """
 
 DOCUMENTATION = """
@@ -129,7 +128,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Configure Wireless CAP
-  kilip.routeros.ros_wireless_cap:
+  kilip.routeros.kilip.routeros.ros_wireless_cap:
     config:
       interfaces:
         - wlan1

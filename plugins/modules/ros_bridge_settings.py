@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_bridge_settings
+The module file for kilip.routeros.ros_bridge_settings
 """
 
 DOCUMENTATION = """
@@ -118,7 +117,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Configure Bridge Settings
-  kilip.routeros.ros_bridge_settings:
+  kilip.routeros.kilip.routeros.ros_bridge_settings:
     config:
       allow_fast_path: 'yes'
       use_ip_firewall: 'no'
@@ -145,7 +144,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Configure Bridge Settings
-  kilip.routeros.ros_bridge_settings:
+  kilip.routeros.kilip.routeros.ros_bridge_settings:
     state: reset
 
 #

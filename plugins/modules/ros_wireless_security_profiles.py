@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_wireless_security_profiles
+The module file for kilip.routeros.ros_wireless_security_profiles
 """
 
 DOCUMENTATION = """
@@ -356,7 +355,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge with device configuration
-  kilip.routeros.ros_wireless_security_profiles:
+  kilip.routeros.kilip.routeros.ros_wireless_security_profiles:
     config:
       - name: test
         supplicant_identity: test

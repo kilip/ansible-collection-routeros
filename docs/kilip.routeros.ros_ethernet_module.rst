@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_ethernet_module
+.. _kilip.routeros.kilip.routeros.ros_ethernet_module
 
 ********************************
-kilip.routeros.ros_ethernet
+kilip.routeros.kilip.routeros.ros_ethernet
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface ethernet**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages the ethernet configuration of Mikrotik RouterOS network devices.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -108,19 +102,13 @@ config
                               on
                             </li></ul></td><td><p>When set to on, the port will generate pause frames to the upstream device to temporarily stop the packet transmission. Pause frames are only generated when some routers output interface is congested and packets cannot be transmitted anymore. <strong>auto</strong> is the same as <strong>on</strong> except when auto-negotiation=yes flow control status is resolved by taking into account what other end advertises.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------------
 Using merged state
 ------------------
-
 
 **Before State**
 
@@ -132,15 +120,12 @@ Using merged state
     /interface ethernet
     set [ find default-name=ether1 ] comment="ether1 comment"
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge configuration with device configuration
-      kilip.routeros.ros_ethernet:
+      kilip.routeros.kilip.routeros.ros_ethernet:
         config:
           - name: ether1
             advertise:
@@ -149,19 +134,14 @@ Using merged state
               - 1000M-full
             comment: 'updated comment'
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface ethernet set [ find name=ether1 ] advertise=10M-full,100M-full,1000M-full comment="updated comment"
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -170,5 +150,3 @@ Using merged state
     # software id =
     /interface ethernet
     set [ find default-name=ether1 ] comment="updated comment"
-
-

@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_wireless_connect_list_module
+.. _kilip.routeros.kilip.routeros.ros_wireless_connect_list_module
 
 ********************************
-kilip.routeros.ros_wireless_connect_list
+kilip.routeros.kilip.routeros.ros_wireless_connect_list
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface wireless connect-list**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages the Wireless Access List configuration of Mikrotik RouterOS network devices.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -54,19 +48,13 @@ config
                               tdma
                             </li></ul></td><td></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------------
 Using merged state
 ------------------
-
 
 **Before State**
 
@@ -78,34 +66,26 @@ Using merged state
     /interface wireless connect-list
     add comment=existing interfce=wlan1 signal-range=-79..120
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge device configuration
-      kilip.routeros.ros_wireless_connect_list:
+      kilip.routeros.kilip.routeros.ros_wireless_connect_list:
         config:
           - comment: existing
             interface: wlan1
             signal_range: '-50..120'
             wireless_protocol: 802.11
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface wireless connect-list set [ find comment=existing ] interface=wlan1 signal-range=-50..120 wireless-protocol=802.11
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -114,5 +94,3 @@ Using merged state
     # software id =
     /interface wireless connect-list
     add comment=existing interfce=wlan1 signal-range=-50..120
-
-

@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_capsman_provisioning
+The module file for kilip.routeros.ros_capsman_provisioning
 """
 
 DOCUMENTATION = """
@@ -163,7 +162,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge with device configuration
-  kilip.routeros.ros_capsman_provisioning:
+  kilip.routeros.kilip.routeros.ros_capsman_provisioning:
     state: merged
     config:
       - comment: test
@@ -201,7 +200,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Delete provisioning config
-  kilip.routeros.ros_capsman_provisioning:
+  kilip.routeros.kilip.routeros.ros_capsman_provisioning:
     state: deleted
     config:
       - comment: test

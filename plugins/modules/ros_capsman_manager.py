@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_capsman_manager
+The module file for kilip.routeros.ros_capsman_manager
 """
 
 DOCUMENTATION = """
@@ -120,7 +119,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Update Settings
-  kilip.routeros.ros_capsman_manager:
+  kilip.routeros.kilip.routeros.ros_capsman_manager:
     state: present
     config:
       ca_certificate: auto

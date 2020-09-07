@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_vlan_module
+.. _kilip.routeros.kilip.routeros.ros_vlan_module
 
 ********************************
-kilip.routeros.ros_vlan
+kilip.routeros.kilip.routeros.ros_vlan
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface vlan**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages the vlan configuration of Mikrotik RouterOS network devices.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -54,19 +48,13 @@ config
                               yes
                             </li></ul></td><td><p>802.1ad compatible Service Tag</p></td></tr><tr><td><b>vlan_id</b><div style="font-size: small"><span style="color: purple">int</span></div></td><td></td><td><p>Virtual LAN identifier or tag that is used to distinguish VLANs. Must be equal for all computers that belong to the same VLAN.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------------
 Using merged state
 ------------------
-
 
 **Before State**
 
@@ -78,15 +66,12 @@ Using merged state
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge configuration with device configuration
-      kilip.routeros.ros_vlan:
+      kilip.routeros.kilip.routeros.ros_vlan:
         config:
           - name: vlan-100
             interface: br-trunk
@@ -97,20 +82,15 @@ Using merged state
             vlan_id: 200
             comment: 'new comment'
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface vlan set [ find name=vlan-100 ] arp=enabled comment="new comment"
     /interface vlan add comment="new comment" interface=br-trunk name=vlan-200 vlan-id=200
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -121,13 +101,9 @@ Using merged state
     add interface=br-trunk name=vlan-100 vlan-id=100 comment="new comment"
     add interface=br-trunk name=vlan-200 vlan-id=200 comment="new comment"
 
-
-
-
 --------------------
 Using replaced state
 --------------------
-
 
 **Before State**
 
@@ -139,34 +115,26 @@ Using replaced state
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Replace device configuration
-      kilip.routeros.ros_vlan:
+      kilip.routeros.kilip.routeros.ros_vlan:
         config:
           - name: vlan-100
             interface: br-trunk
             vlan_id: 100
             comment: 'new comment'
         state: replaced
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface vlan set [ find name=vlan-100 ] arp=enabled comment="new comment"
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -177,13 +145,9 @@ Using replaced state
     add interface=br-trunk comment="new comment" name=vlan-100 vlan-id=100
     add interface=br-trunk comment="new comment" name=vlan-200 vlan-id=200
 
-
-
-
 ----------------------
 Using overridden state
 ----------------------
-
 
 **Before State**
 
@@ -195,26 +159,20 @@ Using overridden state
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Override device configuration
-      kilip.routeros.ros_vlan:
+      kilip.routeros.kilip.routeros.ros_vlan:
         config:
           - name: vlan-new
             interface: br-trunk
             vlan_id: 100
             comment: 'new comment'
         state: overridden
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
@@ -222,9 +180,7 @@ Using overridden state
     /interface vlan add comment="new comment" interface=br-trunk name=vlan-new vlan-id=100
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -234,13 +190,9 @@ Using overridden state
     /interface vlan
     add name=vlan-new interface=br-trunk vlan-id=100 comment="new comment"
 
-
-
-
 -------------------
 Using deleted state
 -------------------
-
 
 **Before State**
 
@@ -252,34 +204,26 @@ Using deleted state
     /interface vlan
     add interface=br-trunk name=vlan-100 vlan-id=100 arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Delete VLAN Interface
-      kilip.routeros.ros_vlan:
+      kilip.routeros.kilip.routeros.ros_vlan:
         config:
           - name: vlan-100
             interface: br-trunk
             vlan_id: 100
         state: deleted
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface vlan remove [ find name=vlan-100 ]
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -287,5 +231,3 @@ Using deleted state
     # sep/06/2020 03:08:16 by RouterOS 6.47.2
     # software id =
     # empty interface
-
-

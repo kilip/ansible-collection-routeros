@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_wireless_module
+.. _kilip.routeros.kilip.routeros.ros_wireless_module
 
 ********************************
-kilip.routeros.ros_wireless
+kilip.routeros.kilip.routeros.ros_wireless
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface wireless**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This module manages the Wireless configuration of Mikrotik RouterOS network devices.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced
@@ -324,8 +318,8 @@ config
                               long
                             </li><li>
                               short
-                            </li></ul></td><td><p>Short preamble mode is an option of 802.11b standard that reduces per-frame overhead.</p><ul><li>On AP: 
-<ul><li><em>long</em> - Do not use short preamble.</li><li><em>short</em> - Announce short preamble capability. Do not accept connections from clients that do not have this capability.</li><li><em>both</em> - Announce short preamble capability.</li></ul></li><li>On station: 
+                            </li></ul></td><td><p>Short preamble mode is an option of 802.11b standard that reduces per-frame overhead.</p><ul><li>On AP:
+<ul><li><em>long</em> - Do not use short preamble.</li><li><em>short</em> - Announce short preamble capability. Do not accept connections from clients that do not have this capability.</li><li><em>both</em> - Announce short preamble capability.</li></ul></li><li>On station:
 <ul><li><em>long</em> - do not use short preamble.</li><li><em>short</em> - do not connect to AP if it does not support short preamble.</li><li><em>both</em> - Use short preamble if AP supports it.</li></ul></li></ul></td></tr><tr><td><b>prism_cardtype</b><div style="font-size: small"><span style="color: purple">str</span></div></td><td><ul style="margin: 0; padding: 0;"><li>
                               100mW
                             </li><li>
@@ -432,19 +426,13 @@ config
                               push-button-virtual-only
                             </li></ul></td><td><p><a href="#WPS_Server"><code>Read more &gt;&gt;</code></a></p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------------
 Using merged state
 ------------------
-
 
 **Before State**
 
@@ -456,15 +444,12 @@ Using merged state
     /interface wireless
     set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge device configuration
-      kilip.routeros.ros_wireless:
+      kilip.routeros.kilip.routeros.ros_wireless:
         config:
           - name: wlan1
             comment: 'updated comment'
@@ -476,19 +461,14 @@ Using merged state
               - 6Mbps
               - 24Mbps
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface wireless set [ find name=wlan1 ] ampdu-priorities=0,1,2 comment="updated comment" security-profile=default supported-rates-a/g=6Mbps,24Mbps
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -498,13 +478,9 @@ Using merged state
     /interface wireless
     set [ find default-name=wlan1 ] ampdu-priorities=0,1,2 comment="updated comment" security-profile=default supported-rates-a/g=6Mbps,24Mbps
 
-
-
-
 --------------------
 Using replaced state
 --------------------
-
 
 **Before State**
 
@@ -516,34 +492,26 @@ Using replaced state
     /interface wireless
     set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Replace device wireless configuration
-      kilip.routeros.ros_wireless:
+      kilip.routeros.kilip.routeros.ros_wireless:
         config:
           - name: wlan1
             comment: 'new olympus'
             ssid: Olympus
             security_profile: new-olympus
         state: replaced
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface wireless set [ find name=wlan1 ] comment="new olympus" security-profile=new-olympus ssid=Olympus
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -552,5 +520,3 @@ Using replaced state
     # software id =
     /interface wireless
     set [ find default-name=wlan1 ] comment="new olympus" ssid=Olympus security-profile=new-olympus
-
-

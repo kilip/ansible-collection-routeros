@@ -1,7 +1,7 @@
-.. _kilip.routeros.ros_bridge_module
+.. _kilip.routeros.kilip.routeros.ros_bridge_module
 
 ********************************
-kilip.routeros.ros_bridge
+kilip.routeros.kilip.routeros.ros_bridge
 ********************************
 
 Version Added: **1.0.0**
@@ -12,21 +12,15 @@ RouterOS Submenu: **/interface bridge**
    :local:
    :depth: 2
 
-
-
 ========
 Synopsis
 ========
 
-
 -  This modules manages configuration in submenu `/interface bridge`.
-
-
 
 ==========
 Parameters
 ==========
-
 
 state
   | **choices**: merged, replaced, overridden, deleted
@@ -90,19 +84,13 @@ config
                               yes
                             </li></ul></td><td><p>Globally enables or disables VLAN functionality for bridge.</p></td></tr></table>
 
-
-
 ========
 Examples
 ========
 
-
-
-
 ------------
 Using Merged
 ------------
-
 
 **Before State**
 
@@ -115,15 +103,12 @@ Using Merged
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Merge configuration with device configuration
-      kilip.routeros.ros_bridge:
+      kilip.routeros.kilip.routeros.ros_bridge:
         config:
           - name: br-wan
             comment: 'updated comment'
@@ -133,20 +118,15 @@ Using Merged
             arp: enabled
             vlan_filtering: 'yes'
         state: merged
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface bridge set [ find name=br-wan ] arp=enabled comment="updated comment"
     /interface bridge set [ find name=br-trunk ] arp=enabled comment="updated comment" vlan-filtering=yes
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -157,13 +137,9 @@ Using Merged
     add comment="trunk bridge" name=br-trunk vlan-filtering=yes arp=enabled
     add comment="wan bridge" name=br-wan arp=enabled
 
-
-
-
 --------------
 Using Replaced
 --------------
-
 
 **Before State**
 
@@ -176,35 +152,27 @@ Using Replaced
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Replace device configuration
-      kilip.routeros.ros_bridge:
+      kilip.routeros.kilip.routeros.ros_bridge:
         config:
           - name: br-wan
             comment: 'replaced comment'
           - name: br-trunk
             comment: 'replaced comment'
         state: replaced
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
     /interface bridge set [ find name=br-wan ] arp=enabled comment="replaced comment"
     /interface bridge set [ find name=br-trunk ] arp=enabled comment="replaced comment"
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -215,13 +183,9 @@ Using Replaced
     add comment="replaced comment" name=br-trunk arp=enabled
     add comment="replaced comment" name=br-wan arp=enabled
 
-
-
-
 ----------------
 Using Overridden
 ----------------
-
 
 **Before State**
 
@@ -234,24 +198,18 @@ Using Overridden
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Override bridge configuration
-      kilip.routeros.ros_bridge:
+      kilip.routeros.kilip.routeros.ros_bridge:
         config:
           - comment: 'new bridge'
             name: br-new
         state: overridden
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
@@ -260,9 +218,7 @@ Using Overridden
     /interface bridge add comment="new bridge" name=br-new
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -273,13 +229,9 @@ Using Overridden
     /interface bridge
     add comment="new bridge" name=br-new
 
-
-
-
 -------------------
 Using deleted state
 -------------------
-
 
 **Before State**
 
@@ -292,24 +244,18 @@ Using deleted state
     add comment="trunk bridge" name=br-trunk arp=reply-only
     add comment="wan bridge" name=br-wan arp=reply-only
 
-
-
 **Configuration**
-
 
 .. code-block:: yaml+jinja
 
     - name: Delete bridge
-      kilip.routeros.ros_bridge:
+      kilip.routeros.kilip.routeros.ros_bridge:
         config:
           - name: br-trunk
           - name: br-wan
         state: deleted
-        
-      
 
 **Executed Command**
-
 
 .. code-block:: ssh
 
@@ -317,9 +263,7 @@ Using deleted state
     /interface bridge remove [ find name=br-wan ]
     /system script run ansible-remove-invalid
 
-
 **After State**
-
 
 .. code-block:: ssh
 
@@ -328,5 +272,3 @@ Using deleted state
     # software id =
     # All existing bridge will be removed and replaced with the new configuration.
     # empty bridge config
-
-

@@ -20,9 +20,8 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 """
-The module file for ros_capsman_configuration
+The module file for kilip.routeros.ros_capsman_configuration
 """
 
 DOCUMENTATION = """
@@ -673,7 +672,7 @@ EXAMPLES = """
 #
 # configuration:
 - name: Merge configuration with devie configuration
-  kilip.routeros.ros_capsman_configuration:
+  kilip.routeros.kilip.routeros.ros_capsman_configuration:
     state: merged
     config:
       - name: test
