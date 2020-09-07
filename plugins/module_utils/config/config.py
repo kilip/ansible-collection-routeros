@@ -53,7 +53,10 @@ class Config(ConfigBase):
         changed_resource_facts = []
         if commands and self.state in self.ACTION_STATES:
             if not self._module.check_mode:
-                load_config(self._module, commands)
+                response = load_config(self._module, commands)
+                result["response"] = response
+
+                self._module.debug(response)
             result["changed"] = True
 
         if self.state in self.ACTION_STATES:
@@ -78,7 +81,6 @@ class Config(ConfigBase):
         script_name = ANSIBLE_REMOVE_INVALID_SCRIPT_NAME
         existing = get_config(self._module, "/system script export terse")
         lines = [
-            ':log info \\"ansible: remove invalid config";',
             "/ip address remove [find invalid];",
             "/ip dhcp-server remove [find invalid];",
         ]
@@ -86,6 +88,8 @@ class Config(ConfigBase):
         commands = '/system script add name={0} policy=read,write source="{1}"'.format(
             script_name, scripts
         )
+        if isinstance(existing, list):
+            existing = "\n".join(existing)
         match = re.search(r"name\=" + script_name, existing, re.M)
         if not match:
             load_config(self._module, commands)

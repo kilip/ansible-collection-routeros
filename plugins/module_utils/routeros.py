@@ -52,17 +52,48 @@ def get_config(module, command):
     return cfg
 
 
+# def wrap_command(command):
+#    matches = re.findall(r"(.+)\s+([set|add|remove]+\s+\[.+\])\s+(.+)", command)
+#    root, cmd, parameters = matches[0]
+#    to_wrap = [root + " " + cmd]
+#
+#    parameters = re.findall(r"(\S+\=\".+\"|\S+)", parameters)
+#    to_wrap.extend(parameters)
+#
+#    to_wrap = " \\\n".join(to_wrap) + ";\n"
+#
+#    return command
+def transform_response(command, response):
+    replaced = re.sub(r"([\<|\/].*)", "", response, flags=re.MULTILINE).strip()
+
+    success = False
+    if replaced == "":
+        success = True
+
+    transformed = dict(
+        response=replaced,
+        command=command,
+        success=success,
+        # full_response=response,
+    )
+
+    return transformed
+
+
 def load_config(module, commands):
-    response = {}
-    results = []
-    requests = []
+    fail = []
+    success = []
     for line in to_list(commands):
-        requests.append(line)
         out = run_commands(module, commands=line)
-        results.append("\n".join(out))
+        out = "\n".join(out)
+        response = transform_response(line, out)
+        if response["success"] is True:
+            success.append(response)
+        else:
+            fail.append(response)
         reset_config(line)
 
-    response["results"] = results
-    response["requests"] = requests
+    if len(fail) > 0:
+        module.fail_json(fail)
 
-    return response
+    return success

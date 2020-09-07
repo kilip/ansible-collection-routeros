@@ -24,9 +24,13 @@ class TestConfig(TestCase):
         self.get_config = self.mock_get_config.start()
 
         self.mock_load_config = patch(
-            "ansible_collections.kilip.routeros.plugins.module_utils.routeros.load_config"
+            "ansible_collections.kilip.routeros.plugins.module_utils.config.config.load_config"
         )
         self.load_config = self.mock_load_config.start()
+
+        self.load_config.return_value = dict(
+            diff=None, session="session", results=[], requests=[]
+        )
 
     def load_fixture(*args, **kwargs):
         me = args[0]
