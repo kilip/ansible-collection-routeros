@@ -12,39 +12,58 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 ---
-- debug: msg="kilip.routeros.ros_interface tests"
 
-- include_tasks: "_pre_tasks.yml"
+- include_tasks: pre_tasks.yml
 
 - name: set result commands facts
   set_fact:
     commands: [
       '/interface set [ find name=ether2 ] comment="ether2 updated" mtu=2000',
-      '/interface set [ find name=ether3 ] comment="ether3 updated" disabled=no mtu=3000',
+      '/interface set [ find name=ether3 ] comment="ether3 updated" disabled=no mtu=3000'
     ]
 
 - name: Merge configuration with device configuration
   register: result
-  kilip.routeros.ros_interface:
+  kilip.routeros.ros__interface:
     config:
       - name: ether2
-        comment: 'ether2 updated'
-        mtu: '2000'
+        comment: ether2 updated
+        mtu: 2000
       - name: ether3
-        comment: 'ether3 updated'
-        disabled: 'no'
-        mtu: '3000'
+        comment: ether3 updated
+        disabled: no
+        mtu: 3000
     state: merged
+
 
 - name: set diff commands
   set_fact:
     diff_commands: "{{ result.commands | difference(commands) }}"
 
+
 - assert:
     that:
       - result.changed == True
       - diff_commands == []
+
+- name: "idempotence: Merge configuration with device configuration"
+  register: result
+  kilip.routeros.ros__interface:
+    config:
+      - name: ether2
+        comment: ether2 updated
+        mtu: 2000
+      - name: ether3
+        comment: ether3 updated
+        disabled: no
+        mtu: 3000
+    state: merged
+
+- assert:
+    that:
+      - result.changed == False
+      - result.commands == []

@@ -1,0 +1,13 @@
+asserts:
+  - 'self.assertEqual(result["called_format"], "mac:ssid")'
+  - 'self.assertEqual(result["interim_update"], "disabled")'
+  - 'self.assertEqual(result["mac_caching"], "disabled")'
+  - 'self.assertEqual(result["mac_format"], "XX.XX.XX.XX.XX.XX")'
+  - 'self.assertEqual(result["mac_mode"], "as-username")'
+resource: capsman_aaa
+fixtures: |
+  # RouterOS Output
+  #
+  /caps-man aaa
+  set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX.XX.XX.XX.XX.XX mac-mode=as-username
+

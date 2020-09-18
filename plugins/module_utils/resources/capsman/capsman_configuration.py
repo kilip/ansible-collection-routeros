@@ -12,7 +12,7 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 from __future__ import absolute_import, division, print_function
@@ -28,65 +28,16 @@ class CapsmanConfigurationResource(ResourceBase):
     gather_network_resources = ["capsman_configuration"]
     keys = ["name"]
     config_type = "config"
-    custom_props = {
-        "channel_band": {"ros_key": "channel.band"},
-        "channel_control_channel_width": {
-            "ros_key": "channel.control-channel-width"
-        },
-        "channel_extension_channel": {"ros_key": "channel.extension-channel"},
-        "channel_frequency": {"ros_key": "channel.frequency"},
-        "channel_reselect_interval": {"ros_key": "channel.reselect-interval"},
-        "channel_save_selected": {"ros_key": "channel.save-selected"},
-        "channel_secondary_frequency": {
-            "ros_key": "channel.secondary-frequency"
-        },
-        "channel_skip_dfs_channels": {"ros_key": "channel.skip-dfs-channels"},
-        "channel_tx_power": {"ros_key": "channel.tx-power"},
-        "channel_width": {"ros_key": "channel.width"},
-        "datapath_bridge": {"ros_key": "datapath.bridge"},
-        "datapath_bridge_cost": {"ros_key": "datapath.bridge-cost"},
-        "datapath_bridge_horizon": {"ros_key": "datapath.bridge-horizon"},
-        "datapath_client_to_client_forwarding": {
-            "ros_key": "datapath.client-to-client-forwarding"
-        },
-        "datapath_interface_list": {"ros_key": "datapath.interface-list"},
-        "datapath_l2mtu": {"ros_key": "datapath.l2mtu"},
-        "datapath_local_forwarding": {"ros_key": "datapath.local-forwarding"},
-        "datapath_mtu": {"ros_key": "datapath.mtu"},
-        "datapath_openflow_switch": {"ros_key": "datapath.openflow-switch"},
-        "datapath_vlan_id": {"ros_key": "datapath.vlan-id"},
-        "datapath_vlan_mode": {"ros_key": "datapath.vlan-mode"},
-        "rates_basic": {"ros_key": "rates.basic"},
-        "rates_ht_basic_mcs": {"ros_key": "rates.ht-basic-mcs"},
-        "rates_ht_supported_mcs": {"ros_key": "rates.ht-supported-mcs"},
-        "rates_supported": {"ros_key": "rates.supported"},
-        "rates_vht_basic_mcs": {"ros_key": "rates.vht-basic-mcs"},
-        "rates_vht_supported_mcs": {"ros_key": "rates.vht-supported-mcs"},
-        "security_authentication_types": {
-            "ros_key": "security.authentication-types"
-        },
-        "security_disable_pmkid": {"ros_key": "security.disable-pmkid"},
-        "security_eap_methods": {"ros_key": "security.eap-methods"},
-        "security_eap_radius_accounting": {
-            "ros_key": "security.eap-radius-accounting"
-        },
-        "security_encryption": {"ros_key": "security.encryption"},
-        "security_group_encryption": {"ros_key": "security.group-encryption"},
-        "security_group_key_update": {"ros_key": "security.group-key-update"},
-        "security_passphrase": {"ros_key": "security.passphrase"},
-        "security_tls_certificate": {"ros_key": "security.tls-certificate"},
-        "security_tls_mode": {"ros_key": "security.tls-mode"},
-    }
     supports = ["reset_value"]
     argument_spec = {
         "state": {
+            "type": "str",
             "choices": ["merged", "replaced", "overridden", "deleted"],
             "default": "merged",
-            "type": "str",
         },
         "config": {
-            "elements": "dict",
             "type": "list",
+            "elements": "dict",
             "options": {
                 "channel": {"type": "str"},
                 "channel_band": {
@@ -124,16 +75,11 @@ class CapsmanConfigurationResource(ResourceBase):
                 },
                 "channel_frequency": {"type": "int"},
                 "channel_reselect_interval": {"type": "str"},
-                "channel_save_selected": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "no",
-                },
-                "channel_secondary_frequency": {"type": "int"},
+                "channel_save_selected": {"type": "bool", "default": False},
+                "channel_secondary_frequency": {"type": "int", "default": 0},
                 "channel_skip_dfs_channels": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "no",
+                    "type": "bool",
+                    "default": False,
                 },
                 "channel_tx_power": {"type": "int"},
                 "channel_width": {"type": "str"},
@@ -144,16 +90,14 @@ class CapsmanConfigurationResource(ResourceBase):
                 "datapath_bridge_cost": {"type": "int"},
                 "datapath_bridge_horizon": {"type": "int"},
                 "datapath_client_to_client_forwarding": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "no",
+                    "type": "bool",
+                    "default": False,
                 },
                 "datapath_interface_list": {"type": "str"},
                 "datapath_l2mtu": {"type": "str"},
                 "datapath_local_forwarding": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "no",
+                    "type": "bool",
+                    "default": False,
                 },
                 "datapath_mtu": {"type": "str"},
                 "datapath_openflow_switch": {"type": "str"},
@@ -162,6 +106,7 @@ class CapsmanConfigurationResource(ResourceBase):
                     "type": "str",
                     "choices": ["use-service-tag", "use-tag"],
                 },
+                "disabled": {"type": "bool", "default": False},
                 "disconnect_timeout": {"type": "str"},
                 "distance": {"type": "str"},
                 "frame_lifetime": {"type": "str"},
@@ -170,7 +115,7 @@ class CapsmanConfigurationResource(ResourceBase):
                     "choices": ["any", "long"],
                     "default": "any",
                 },
-                "hide_ssid": {"type": "str", "choices": ["no", "yes"]},
+                "hide_ssid": {"type": "bool"},
                 "hw_protection_mode": {"type": "str"},
                 "hw_retries": {"type": "str"},
                 "installation": {
@@ -212,7 +157,6 @@ class CapsmanConfigurationResource(ResourceBase):
                 },
                 "rates_ht_basic_mcs": {
                     "type": "list",
-                    "elements": "str",
                     "choices": [
                         "mcs-0",
                         "mcs-1",
@@ -252,7 +196,6 @@ class CapsmanConfigurationResource(ResourceBase):
                 },
                 "rates_ht_supported_mcs": {
                     "type": "list",
-                    "elements": "str",
                     "choices": [
                         "mcs-0",
                         "mcs-1",
@@ -326,23 +269,19 @@ class CapsmanConfigurationResource(ResourceBase):
                 "rates_vht_basic_mcs": {
                     "type": "str",
                     "choices": ["MCS 0-7", "MCS 0-8", "MCS 0-9", "none"],
-                    "default": "none",
                 },
                 "rates_vht_supported_mcs": {
                     "type": "str",
                     "choices": ["MCS 0-7", "MCS 0-8", "MCS 0-9", "none"],
-                    "default": "none",
                 },
                 "rx_chains": {
                     "type": "list",
-                    "elements": "int",
                     "choices": [0, 1, 2, 3],
-                    "default": [0],
+                    "default": "a:1:{i:0;i:0;}",
                 },
-                "security": {"type": "str", "default": "none"},
+                "security": {"type": "str"},
                 "security_authentication_types": {
                     "type": "list",
-                    "elements": "str",
                     "choices": ["wpa-psk", "wpa2-psk", "wpa-eap", "wpa2-eap"],
                 },
                 "security_disable_pmkid": {"type": "str"},
@@ -353,7 +292,6 @@ class CapsmanConfigurationResource(ResourceBase):
                 "security_eap_radius_accounting": {"type": "str"},
                 "security_encryption": {
                     "type": "list",
-                    "elements": "str",
                     "choices": ["aes-ccm", "tkip"],
                 },
                 "security_group_encryption": {
@@ -379,9 +317,8 @@ class CapsmanConfigurationResource(ResourceBase):
                 "ssid": {"type": "str"},
                 "tx_chains": {
                     "type": "list",
-                    "elements": "int",
                     "choices": [0, 1, 2, 3],
-                    "default": [0],
+                    "default": "a:1:{i:0;i:0;}",
                 },
             },
         },

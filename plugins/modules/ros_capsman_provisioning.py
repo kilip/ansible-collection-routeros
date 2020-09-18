@@ -13,222 +13,158 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
+
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-"""
-The module file for kilip.routeros.ros_capsman_provisioning
-"""
 
 DOCUMENTATION = """
 module: ros_capsman_provisioning
+version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_description: CAPsMan Provisioning Module
 description:
-- This modules manages CAPsMan Provisioning on Mikrotik RouterOS network devices
-version_added: 1.0.0
+  - This modules manages CAPsMan Provisioning on Mikrotik RouterOS network devices
 options:
   state:
-    type: str
-    choices: ["merged","replaced","overridden","deleted"]
-    description: Set module state
+    choices:
+      - merged
+      - replaced
+      - overridden
+      - deleted
     default: merged
+    description: Set state for this module
   config:
-    description: A dictionary of `/caps-man provisioning` parameters
     type: list
     elements: dict
     suboptions:
-        action:
-          type: str
-          choices:
-            - 'create-disabled'
-            - 'create-dynamic-enabled'
-            - 'create-enabled'
-            - 'none'
-          default: "none"
-          description: |
-            Action to take if rule matches are specified by the following settings:
-            - **create-disabled** - create disabled static interfaces for radio. I.e., the
-              interfaces will be bound to the radio, but the radio will not be operational
-              until the interface is manually enabled;
-            - **create-enabled** - create enabled static interfaces. I.e., the interfaces
-              will be bound to the radio and the radio will be operational;
-            - **create-dynamic-enabled** - create enabled dynamic interfaces. I.e., the
-              interfaces will be bound to the radio, and the radio will be operational;
-            - **none** - do nothing, leaves radio in non-provisioned state;
-
-        comment:
-          type: str
-          required: True
-
-          description: |
-            Short description of the Provisioning rule
-
-        common_name_regexp:
-          type: str
-
-          description: |
-            Regular expression to match radios by common name. Each CAP's common name
-            identifier can be found under '/caps-man radio' as value 'REMOTE-CAP-NAME'
-
-        hw_supported_modes:
-          type: str
-          choices:
-            - 'a'
-            - 'a-turbo'
-            - 'ac'
-            - 'an'
-            - 'b'
-            - 'g'
-            - 'g-turbo'
-            - 'gn'
-
-          description: |
-            Match radios by supported wireless modes
-
-        identity_regexp:
-          type: str
-
-          description: |
-            Regular expression to match radios by router identity
-
-        ip_address_ranges:
-          type: str
-
-          description: |
-            Match CAPs with IPs within configured address range.
-
-        master_configuration:
-          type: str
-
-          description: |
-            If **action** specifies to create interfaces, then a new master interface with
-            its configuration set to this configuration profile will be created
-
-        name_format:
-          type: str
-          choices:
-            - 'cap'
-            - 'identity'
-            - 'prefix'
-            - 'prefix-identity'
-          default: "cap"
-          description: |
-            specify the syntax of the CAP interface name creation
-            - cap - default name
-            - identity - CAP boards system identity name
-            - prefix - name from the name-prefix value
-            - prefix-identity - name from the name-prefix value and the CAP boards system
-              identity name
-
-        name_prefix:
-          type: str
-
-          description: |
-            name prefix which can be used in the name-format for creating the CAP interface
-            names
-
-        radio_mac:
-          type: str
-          default: "00:00:00:00:00:00"
-          description: |
-            MAC address of radio to be matched, empty MAC (00:00:00:00:00:00) means match
-            all MAC addresses
-
-        slave_configurations:
-          type: list
-          elements: "str"
-
-          description: |
-            If **action** specifies to create interfaces, then a new slave interface for
-            each configuration profile in this list is created.
-
+      action:
+        type: str
+        choices:
+          - create-disabled
+          - create-dynamic-enabled
+          - create-enabled
+          - none
+        description: |
+          Action to take if rule matches are specified by the following settings:
+          - **create-disabled** - create disabled static interfaces for radio. I.e., the interfaces will be bound to the radio, but the radio will not be operational until the interface is manually enabled;
+          - **create-enabled** - create enabled static interfaces. I.e., the interfaces will be bound to the radio and the radio will be operational;
+          - **create-dynamic-enabled** - create enabled dynamic interfaces. I.e., the interfaces will be bound to the radio, and the radio will be operational;
+          - **none** - do nothing, leaves radio in non-provisioned state;
+      comment:
+        type: str
+        required: True
+        description: Short description of the Provisioning rule
+      common_name_regexp:
+        type: str
+        description: Regular expression to match radios by common name. Each CAP's common name identifier can be found under "/caps-man radio" as value "REMOTE-CAP-NAME"
+      disabled:
+        type: bool
+        default: False
+        description: Set capsman_provisioning resource disability
+      hw_supported_modes:
+        type: str
+        choices:
+          - a
+          - a-turbo
+          - ac
+          - an
+          - b
+          - g
+          - g-turbo
+          - gn
+        description: Match radios by supported wireless modes
+      identity_regexp:
+        type: str
+        description: Regular expression to match radios by router identity
+      ip_address_ranges:
+        type: str
+        description: Match CAPs with IPs within configured address range.
+      master_configuration:
+        type: str
+        description: If **action** specifies to create interfaces, then a new master interface with its configuration set to this configuration profile will be created
+      name_format:
+        type: str
+        choices:
+          - cap
+          - identity
+          - prefix
+          - prefix-identity
+        default: cap
+        description: |
+          specify the syntax of the CAP interface name creation
+          - cap - default name
+          - identity - CAP boards system identity name
+          - prefix - name from the name-prefix value
+          - prefix-identity - name from the name-prefix value and the CAP boards system identity name
+      name_prefix:
+        type: str
+        description: name prefix which can be used in the name-format for creating the CAP interface names
+      radio_mac:
+        type: str
+        default: 00:00:00:00:00:00
+        description: MAC address of radio to be matched, empty MAC (00:00:00:00:00:00) means match all MAC addresses
+      slave_configurations:
+        type: list
+        description: If **action** specifies to create interfaces, then a new slave interface for each configuration profile in this list is created.
 """
 
 EXAMPLES = """
-# ----
 # Using merged state
-# ----
-# before:
+#
+# before state:
 # [admin@MikroTik] > /caps-man provisioning export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
 # /caps-man provisioning
 # add comment=test
 #
-# configuration:
 - name: Merge with device configuration
-  kilip.routeros.kilip.routeros.ros_capsman_provisioning:
+  kilip.routeros.ros_capsman_provisioning:
     state: merged
     config:
       - comment: test
         action: create-disabled
-      - comment: 'Olympus Wireless Network'
-        identity_regexp: olympus-
-        master_configuration: olympus-network
+      - comment: Olympus Wireless Network
+        identity_regexp: olympus
+        master_configuration: olympus
         name_format: identity
         slave_configurations:
           - troy-network
           - gaia-network
         action: create-enabled
-
 #
-# after:
+# after state:
 # [admin@MikroTik] > /caps-man provisioning export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# # RouterOS Output
+# #
 # /caps-man provisioning
-# add comment=test action=create-disabled
-# add comment="Olympus Wireless Network" \
-#     identity-regexp=olympus- \
-#     master-configuration=olympus-network \
-#     name-format=identity \
-#     slave-configurations=troy-network,gaia-network
-# ----
+# add action=create-disabled comment=test
+# add action=create-enabled comment="Olympus Wireless Network" identity-regexp=olympus master-configuration=olympus-network name-format=identity slave-configurations=troy-network,gaia-network
+#
+#
 # Using deleted state
-# ----
-# before:
+#
+# before state:
 # [admin@MikroTik] > /caps-man provisioning export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
 # /caps-man provisioning
 # add comment=test
 #
-# configuration:
 - name: Delete provisioning config
-  kilip.routeros.kilip.routeros.ros_capsman_provisioning:
+  kilip.routeros.ros_capsman_provisioning:
     state: deleted
     config:
       - comment: test
-
 #
-# after:
+# after state:
 # [admin@MikroTik] > /caps-man provisioning export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
-# # empty caps-man provisioning config
-"""
-
-RETURN = """
-before:
-  description: The configuration as structured data prior to module invocation.
-  returned: always
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-after:
-  description: The configuration as structured data after module completion.
-  returned: when changed
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-commands:
-  description: The set of commands pushed to the remote device
-  returned: always
-  type: list
-  sample: ['/interface bridge add name=sample']
+# # RouterOS Output
+# #
+# /caps-man provisioning
+#
+#
 """
 
 from ansible.module_utils.basic import AnsibleModule

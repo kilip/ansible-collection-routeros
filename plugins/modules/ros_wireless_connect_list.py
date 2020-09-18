@@ -13,179 +13,113 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
+
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-"""
-The module file for kilip.routeros.ros_wireless_connect_list
-"""
 
 DOCUMENTATION = """
 module: ros_wireless_connect_list
+version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_description: Wireless Connect List Module
 description:
-- This module manages the Wireless Access List configuration of Mikrotik RouterOS network devices.
-version_added: 1.0.0
+  - This module manages the Wireless Access List configuration of Mikrotik RouterOS network devices.
 options:
   state:
-    type: str
-    choices: ["merged","replaced","overridden","deleted"]
-    description: Set module state
+    choices:
+      - merged
+      - replaced
+      - overridden
+      - deleted
     default: merged
+    description: Set state for this module
   config:
-    description: A dictionary of `/interface wireless connect-list` parameters
     type: list
     elements: dict
     suboptions:
-        area_prefix:
-          type: str
-
-          description: |
-            Rule matches if area value of AP (a proprietary extension) begins with specified
-            value.**area** value is a proprietary extension.
-
-        comment:
-          type: str
-          required: True
-
-          description: |
-            Short description of an entry
-
-        connect:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "yes"
-          description: |
-            Available options:
-            - *yes* - Connect to access point that matches this rule.
-            - *no* - Do not connect to any access point that matches this rule.
-
-        disabled:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-
-        interface:
-          type: str
-          required: True
-
-          description: |
-            Each rule in connect list applies only to one wireless interface that is
-            specified by this setting.
-
-        mac_address:
-          type: str
-          default: "00:00:00:00:00:00"
-          description: |
-            Rule matches only AP with the specified MAC address. Value *00:00:00:00:00:00*
-            matches always.
-
-        security_profile:
-          type: str
-          default: "none"
-          description: |
-            Name of L(security profile,#Security_Profiles) that is used when connecting to
-            matching access points, If value of this property is *none*, then security
-            profile specified in the interface configuration will be used. In station mode,
-            rule will match only access points that can support specified security profile.
-            Value *none* will match access point that supports security profile that is
-            specified in the interface configuration. In access point mode value of this
-            property will not be used to match remote devices.
-
-        signal_range:
-          type: str
-          default: "-120..120"
-          description: |
-            Rule matches if signal strength of the access point is within the range. If
-            station establishes connection to access point that is matched by this rule, it
-            will disconnect from that access point when signal strength goes out of the
-            specified range.
-
-        ssid:
-          type: str
-
-          description: |
-            Rule matches access points that have this SSID. Empty value matches any SSID.
-            This property has effect only when station mode interface **ssid** is empty, or
-            when access point mode interface has **wds-ignore-ssid**=*yes*
-
-        three_gpp:
-          type: str
-
-          description: |
-
-        wireless_protocol:
-          type: str
-          choices:
-            - '802.11'
-            - 'any'
-            - 'nstreme'
-            - 'tdma'
-          default: "any"
-          description: |
-
+      3gpp:
+        type: str
+        description: '
+      area_prefix:
+        type: str
+        description: Rule matches if area value of AP (a proprietary extension) begins with specified value.**area** value is a proprietary extension.
+      comment:
+        type: str
+        required: True
+        description: Short description of an entry
+      connect:
+        type: bool
+        default: True
+        description: |
+          Available options:
+          - *yes* - Connect to access point that matches this rule.
+          - *no* - Do not connect to any access point that matches this rule.
+      disabled:
+        type: bool
+        default: False
+        description: '
+      interface:
+        type: str
+        description: Each rule in connect list applies only to one wireless interface that is specified by this setting.
+      mac_address:
+        type: str
+        default: 00:00:00:00:00:00
+        description: Rule matches only AP with the specified MAC address. Value *00:00:00:00:00:00* matches always.
+      security_profile:
+        type: str
+        description: Name of L(security profile, #Security_Profiles) that is used when connecting to matching access points, If value of this property is *none*, then security profile specified in the interface configuration will be used. In station mode, rule will match only access points that can support specified security profile. Value *none* will match access point that supports security profile that is specified in the interface configuration. In access point mode value of this property will not be used to match remote devices.
+      signal_range:
+        type: str
+        default: -120..120
+        description: Rule matches if signal strength of the access point is within the range. If station establishes connection to access point that is matched by this rule, it will disconnect from that access point when signal strength goes out of the specified range.
+      ssid:
+        type: str
+        description: Rule matches access points that have this SSID. Empty value matches any SSID. This property has effect only when station mode interface **ssid** is empty, or when access point mode interface has **wds-ignore-ssid**=*yes*
+      wireless_protocol:
+        type: str
+        choices:
+          - 802.11
+          - any
+          - nstreme
+          - tdma
+        default: any
+        description: '
 """
 
 EXAMPLES = """
-# ----
 # Using merged state
-# ----
-# before:
-# [admin@MikroTik] > /interface wireless connect-list export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
-# /interface wireless connect-list
-# add comment=existing interfce=wlan1 signal-range=-79..120
 #
-# configuration:
+# before state:
+# [admin@MikroTik] > /interface wireless connect-list export
+# /interface wireless connect-list
+# add comment=existing interface=wlan1 signal-range=-79..120
+#
 - name: Merge device configuration
-  kilip.routeros.kilip.routeros.ros_wireless_connect_list:
+  kilip.routeros.ros_wireless_connect_list:
     config:
       - comment: existing
         interface: wlan1
-        signal_range: '-50..120'
+        signal_range: -50..120
         wireless_protocol: 802.11
     state: merged
-
 #
-# after:
+# after state:
 # [admin@MikroTik] > /interface wireless connect-list export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# # RouterOS Output
+# #
 # /interface wireless connect-list
-# add comment=existing interfce=wlan1 signal-range=-50..120
-"""
-
-RETURN = """
-before:
-  description: The configuration as structured data prior to module invocation.
-  returned: always
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-after:
-  description: The configuration as structured data after module completion.
-  returned: when changed
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-commands:
-  description: The set of commands pushed to the remote device
-  returned: always
-  type: list
-  sample: ['/interface bridge add name=sample']
+# add comment=existing interface=wlan1 signal-range=-50..120 wireless-protocol=802.11
+#
+#
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.resources.wireless.wireless_connect_list import (
+from ..module_utils.resources.interface.wireless.wireless_connect_list import (
     WirelessConnectListResource,
 )
 from ..module_utils.config.config import Config

@@ -13,160 +13,103 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
+
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-"""
-The module file for kilip.routeros.ros_capsman_manager
-"""
 
 DOCUMENTATION = """
 module: ros_capsman_manager
+version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_description: CAPsMan Manager Setting Module
 description:
-- This modules manages CAPsMan Maanager Setting on Mikrotik RouterOS network devices
-version_added: 1.0.0
+  - This modules manages CAPsMan Maanager Setting on Mikrotik RouterOS network devices
+supports:
+  - export-verbose-mode
 options:
   state:
-    type: str
-    choices: ["present","reset"]
-    description: Set module state
+    choices:
+      - present
+      - reset
     default: present
+    description: Set state for this module
   config:
-    description: A dictionary of `/caps-man manager` parameters
     type: dict
     suboptions:
-        ca_certificate:
-          type: str
-          default: "none"
-          description: |
-            Device CA certificate
-
-        certificate:
-          type: str
-          choices:
-            - 'auto'
-            - 'certificate name'
-            - 'none'
-          default: "none"
-          description: |
-            Device certificate
-
-        enabled:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-            Disable or enable CAPsMAN functionality
-
-        package_path:
-          type: str
-
-          description: |
-            Folder location for the RouterOS packages. For example, use '/upgrade' to
-            specify the upgrade folder from the files section. If empty string is set,
-            CAPsMAN can use built-in RouterOS packages, note that in this case only CAPs
-            with the same architecture as CAPsMAN will be upgraded.
-
-        require_peer_certificate:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-            Require all connecting CAPs to have a valid certificate
-
-        upgrade_policy:
-          type: str
-          choices:
-            - 'none'
-            - 'require-same-version'
-            - 'suggest-same-upgrade'
-          default: "none"
-          description: |
-            Upgrade policy options
-            - none - do not perform upgrade
-            - require-same-version - CAPsMAN suggest to upgrade the CAP RouterOS version and
-              if it fails it will not provision the CAP. (Manual provision is still possible)
-            - suggest-same-version - CAPsMAN suggests to upgrade the CAP RouterOS version
-              and if it fails it will still be provisioned
-
+      ca_certificate:
+        type: str
+        description: Device CA certificate
+      certificate:
+        type: str
+        choices:
+          - auto
+          - certificate name
+          - none
+        description: Device certificate
+      enabled:
+        type: bool
+        default: False
+        description: Disable or enable CAPsMAN functionality
+      package_path:
+        type: str
+        description: Folder location for the RouterOS packages. For example, use "/upgrade" to specify the upgrade folder from the files section. If empty string is set, CAPsMAN can use built-in RouterOS packages, note that in this case only CAPs with the same architecture as CAPsMAN will be upgraded.
+      require_peer_certificate:
+        type: bool
+        default: False
+        description: Require all connecting CAPs to have a valid certificate
+      upgrade_policy:
+        type: str
+        choices:
+          - none
+          - require-same-version
+          - suggest-same-upgrade
+        description: |
+          Upgrade policy options
+          - none - do not perform upgrade
+          - require-same-version - CAPsMAN suggest to upgrade the CAP RouterOS version and if it fails it will not provision the CAP. (Manual provision is still possible)
+          - suggest-same-version - CAPsMAN suggests to upgrade the CAP RouterOS version and if it fails it will still be provisioned
 """
 
 EXAMPLES = """
-# ----
 # Using Present State
-# ----
-# before:
-# [admin@MikroTik] > /caps-man manager export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
-# /caps-man manager
-# set ca-certificate=none \
-#     certificate=none \
-#     enabled=no \
-#     package-path="" \
-#     require-peer-certificate=no \
-#     upgrade-policy=none
 #
-# configuration:
+# before state:
+# [admin@MikroTik] > /caps-man manager export
+# /caps-man manager
+# set ca-certificate=none certificate=none enabled=no require-peer-certificate=no upgrade-policy=none
+#
 - name: Update Settings
-  kilip.routeros.kilip.routeros.ros_capsman_manager:
+  kilip.routeros.ros_capsman_manager:
     state: present
     config:
       ca_certificate: auto
-      enabled: 'yes'
-
+      enabled: yes
 #
-# after:
-# [admin@MikroTik] > /caps-man manager export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# after state:
+# [admin@MikroTik] > /caps-man manager export
+# # RouterOS Output
+# #
 # /caps-man manager
-# set ca-certificate=none \
-#     certificate=auto \
-#     enabled=yes \
-#     package-path="" \
-#     require-peer-certificate=no \
-#     upgrade-policy=none
-"""
-
-RETURN = """
-before:
-  description: The configuration as structured data prior to module invocation.
-  returned: always
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-after:
-  description: The configuration as structured data after module completion.
-  returned: when changed
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-commands:
-  description: The set of commands pushed to the remote device
-  returned: always
-  type: list
-  sample: ['/interface bridge add name=sample']
+# set ca-certificate=auto enabled=yes
+#
+#
 """
 
 from ansible.module_utils.basic import AnsibleModule
 from ..module_utils.resources.capsman.capsman_manager import (
     CapsmanManagerResource,
 )
-from ..module_utils.config.setting import Setting
+from ..module_utils.config.config import Config
 
 
 def main():
     module = AnsibleModule(argument_spec=CapsmanManagerResource.argument_spec)
-    result = Setting(module, CapsmanManagerResource).execute_module()
+    result = Config(module, CapsmanManagerResource).execute_module()
     return module.exit_json(**result)
 
 

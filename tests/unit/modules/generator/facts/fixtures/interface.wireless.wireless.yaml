@@ -1,0 +1,11 @@
+asserts:
+  - 'self.assertEqual(result[0]["comment"], "wlan1 comment")'
+  - 'self.assertEqual(result[0]["name"], "wlan1")'
+  - 'self.assertEqual(result[0]["security_profile"], "to-olympus")'
+resource: wireless
+fixtures: |
+  # RouterOS Output
+  #
+  /interface wireless
+  add comment="wlan1 comment" name=wlan1 security-profile=to-olympus
+

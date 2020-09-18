@@ -12,7 +12,7 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 from __future__ import absolute_import, division, print_function
@@ -30,17 +30,16 @@ class EthernetResource(ResourceBase):
     config_type = "config"
     argument_spec = {
         "state": {
+            "type": "str",
             "choices": ["merged", "replaced", "overridden", "deleted"],
             "default": "merged",
-            "type": "str",
         },
         "config": {
-            "elements": "dict",
             "type": "list",
+            "elements": "dict",
             "options": {
                 "advertise": {
                     "type": "list",
-                    "elements": "str",
                     "choices": [
                         "10000M-full",
                         "1000M-full",
@@ -64,12 +63,8 @@ class EthernetResource(ResourceBase):
                     ],
                     "default": "enabled",
                 },
-                "auto_negotiation": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "yes",
-                },
-                "bandwidth": {"type": "int"},
+                "auto_negotiation": {"type": "bool", "default": True},
+                "bandwidth": {"type": "int", "default": 0},
                 "cable_setting": {
                     "type": "str",
                     "choices": ["default", "short", "standard"],
@@ -81,29 +76,13 @@ class EthernetResource(ResourceBase):
                     "default": "auto",
                 },
                 "comment": {"type": "str"},
-                "disable_running_check": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "yes",
-                },
-                "disabled": {
-                    "type": "str",
-                    "choices": ["yes", "no"],
-                    "default": "no",
-                },
-                "full_duplex": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "yes",
-                },
+                "disable_running_check": {"type": "bool", "default": True},
+                "disabled": {"type": "bool", "default": False},
+                "full_duplex": {"type": "bool", "default": True},
                 "l2mtu": {"type": "int"},
                 "mac_address": {"type": "str"},
-                "master_port": {"type": "str", "default": "none"},
-                "mdix_enable": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "yes",
-                },
+                "master_port": {"type": "str"},
+                "mdix_enable": {"type": "bool", "default": True},
                 "mtu": {"type": "int", "default": 1500},
                 "name": {"type": "str", "required": True},
                 "poe_out": {

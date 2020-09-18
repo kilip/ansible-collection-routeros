@@ -12,7 +12,7 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 from __future__ import absolute_import, division, print_function
@@ -26,14 +26,14 @@ class CapsmanAaaResource(ResourceBase):
     resource_name = "capsman_aaa"
     command = "/caps-man aaa"
     gather_network_resources = ["capsman_aaa"]
-    keys = []
+    keys = ["name"]
     config_type = "setting"
-    supports = ["facts_verbose_mode"]
+    supports = ["export-verbose-mode"]
     argument_spec = {
         "state": {
+            "type": "str",
             "choices": ["present", "reset"],
             "default": "present",
-            "type": "str",
         },
         "config": {
             "type": "dict",

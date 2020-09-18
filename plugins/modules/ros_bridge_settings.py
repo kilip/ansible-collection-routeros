@@ -13,177 +13,114 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
+
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-"""
-The module file for kilip.routeros.ros_bridge_settings
-"""
 
 DOCUMENTATION = """
 module: ros_bridge_settings
+version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_description: Bridge Setting Module
 description:
-- This modules manages configuration in submenu `/interface bridge settings`.
-version_added: 1.0.0
+  - This modules manages configuration in submenu C(/interface bridge settings).
+ignores:
+  - bridge-fast-path-active
+  - bridge-fast-path-packets
+  - bridge-fast-path-bytes
+  - bridge-fast-forward-packets
+  - bridge-fast-forward-bytes
+supports:
+  - export-verbose-mode
 options:
   state:
-    type: str
-    choices: ["present","reset"]
-    description: Set module state
+    choices:
+      - present
+      - reset
     default: present
+    description: Set state for this module
   config:
-    description: A dictionary of `/interface bridge settings` parameters
     type: dict
     suboptions:
-        allow_fast_path:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "yes"
-          description: |
-            Whether to enable a bridge [
-            FastPath](https://wiki.mikrotik.com/wiki/Manual:Fast_Path 'Manual:Fast Path')
-            globally.
-
-        use_ip_firewall:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-            Force bridged traffic to also be processed by prerouting, forward and
-            postrouting sections of IP routing ([ Packet
-            Flow](https://wiki.mikrotik.com/wiki/Manual:Packet_Flow_v6 'Manual:Packet Flow
-            v6')). This does not apply to routed traffic. This property is required in case
-            you want to assign [ Simple
-            Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues
-            'Manual:Queue') or global [ Queue
-            Tree](https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree 'Manual:Queue') to
-            traffic in a bridge. Property use-ip-firewall-for-vlan is required in case
-            bridge vlan-filtering is used.
-
-        use_ip_firewall_for_pppoe:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-            Send bridged un-encrypted PPPoE traffic to also be processed by [
-            IP/Firewall](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall
-            'Manual:IP/Firewall'). This property only has effect when use-ip-firewall is set
-            to C(yes). This property is required in case you want to assign [ Simple
-            Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues
-            'Manual:Queue') or global [ Queue
-            Tree](https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree 'Manual:Queue') to
-            PPPoE traffic in a bridge.
-
-        use_ip_firewall_for_vlan:
-          type: str
-          choices:
-            - 'no'
-            - 'yes'
-          default: "no"
-          description: |
-            Send bridged VLAN traffic to also be processed by [
-            IP/Firewall](https://wiki.mikrotik.com/wiki/Manual:IP/Firewall
-            'Manual:IP/Firewall'). This property only has effect when use-ip-firewall is set
-            to C(yes). This property is required in case you want to assign [ Simple
-            Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues
-            'Manual:Queue') or global [ Queue
-            Tree](https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree 'Manual:Queue') to
-            VLAN traffic in a bridge.
-
+      allow_fast_path:
+        type: bool
+        default: True
+        description: Whether to enable a bridge L(FastPath, https://wiki.mikrotik.com/wiki/Manual:Fast_Path) globally.
+      use_ip_firewall:
+        type: bool
+        default: False
+        description: Force bridged traffic to also be processed by prerouting, forward and postrouting sections of IP routing (L(Packet Flow, https://wiki.mikrotik.com/wiki/Manual:Packet_Flow_v6 "Manual:Packet Flow v6")). This does not apply to routed traffic. This property is required in case you want to assign [ Simple Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree, https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to traffic in a bridge. Property C(use-ip-firewall-for-vlan) is required in case bridge C(vlan-filtering) is used.
+      use_ip_firewall_for_pppoe:
+        type: bool
+        default: False
+        description: Send bridged un-encrypted PPPoE traffic to also be processed by L(IP/Firewall, https://wiki.mikrotik.com/wiki/Manual:IP/Firewall "Manual:IP/Firewall"). This property only has effect when C(use-ip-firewall) is set to C(yes). This property is required in case you want to assign [ Simple Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree, https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to PPPoE traffic in a bridge.
+      use_ip_firewall_for_vlan:
+        type: bool
+        default: False
+        description: Send bridged VLAN traffic to also be processed by L(IP/Firewall, https://wiki.mikrotik.com/wiki/Manual:IP/Firewall "Manual:IP/Firewall"). This property only has effect when C(use-ip-firewall) is set to C(yes). This property is required in case you want to assign [ Simple Queues](https://wiki.mikrotik.com/wiki/Manual:Queue#Simple_Queues) or global L(Queue Tree, https://wiki.mikrotik.com/wiki/Manual:Queue#Queue_Tree) to VLAN traffic in a bridge.
 """
 
 EXAMPLES = """
-# ----
 # Change Bridge Setting Configuration
-# ----
-# before:
-# [admin@MikroTik] > /interface bridge settings export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+#
+# before state:
+# [admin@MikroTik] > /interface bridge settings export
 # /interface bridge settings
 # set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
 #
-# configuration:
 - name: Configure Bridge Settings
-  kilip.routeros.kilip.routeros.ros_bridge_settings:
+  kilip.routeros.ros_bridge_settings:
     config:
-      allow_fast_path: 'yes'
-      use_ip_firewall: 'no'
-      use_ip_firewall_for_pppoe: 'no'
-      use_ip_firewall_for_vlan: 'no'
+      allow_fast_path: yes
+      use_ip_firewall: no
+      use_ip_firewall_for_pppoe: no
+      use_ip_firewall_for_vlan: no
     state: present
-
 #
-# after:
-# [admin@MikroTik] > /interface bridge settings export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# after state:
+# [admin@MikroTik] > /interface bridge settings export
+# # RouterOS Output
+# #
 # /interface bridge settings
 # set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
-# ----
+#
+#
 # Change Bridge Setting Configuration
-# ----
-# before:
-# [admin@MikroTik] > /interface bridge settings export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+#
+# before state:
+# [admin@MikroTik] > /interface bridge settings export
 # /interface bridge settings
 # set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
 #
-# configuration:
 - name: Configure Bridge Settings
-  kilip.routeros.kilip.routeros.ros_bridge_settings:
+  kilip.routeros.ros_bridge_settings:
     state: reset
-
 #
-# after:
-# [admin@MikroTik] > /interface bridge settings export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# after state:
+# [admin@MikroTik] > /interface bridge settings export
+# # RouterOS Output
+# #
 # /interface bridge settings
-# set allow-fast-path=yes use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no use-ip-firewall=no
-"""
-
-RETURN = """
-before:
-  description: The configuration as structured data prior to module invocation.
-  returned: always
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-after:
-  description: The configuration as structured data after module completion.
-  returned: when changed
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-commands:
-  description: The set of commands pushed to the remote device
-  returned: always
-  type: list
-  sample: ['/interface bridge add name=sample']
+# set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
+#
+#
 """
 
 from ansible.module_utils.basic import AnsibleModule
-from ..module_utils.resources.bridge.bridge_settings import (
+from ..module_utils.resources.interface.bridge.bridge_settings import (
     BridgeSettingsResource,
 )
-from ..module_utils.config.setting import Setting
+from ..module_utils.config.config import Config
 
 
 def main():
     module = AnsibleModule(argument_spec=BridgeSettingsResource.argument_spec)
-    result = Setting(module, BridgeSettingsResource).execute_module()
+    result = Config(module, BridgeSettingsResource).execute_module()
     return module.exit_json(**result)
 
 

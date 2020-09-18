@@ -13,157 +13,110 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
+
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-"""
-The module file for kilip.routeros.ros_capsman_channel
-"""
 
 DOCUMENTATION = """
 module: ros_capsman_channel
+version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_description: CAPsMan Channels Configuration Module
 description:
-- This modules manages CAPsMan Channels configuration on Mikrotik RouterOS network devices
-version_added: 1.0.0
+  - This modules manages CAPsMan Channels configuration on Mikrotik RouterOS network devices
 options:
   state:
-    type: str
-    choices: ["merged","replaced","overridden","deleted"]
-    description: Set module state
+    choices:
+      - merged
+      - replaced
+      - overridden
+      - deleted
     default: merged
+    description: Set state for this module
   config:
-    description: A dictionary of `/caps-man channel` parameters
     type: list
     elements: dict
     suboptions:
-        band:
-          type: str
-          choices:
-            - '2ghz-b'
-            - '2ghz-b/g'
-            - '2ghz-b/g/n'
-            - '2ghz-onlyg'
-            - '2ghz-onlyn'
-            - '5ghz-a'
-            - '5ghz-a/n'
-            - '5ghz-onlyn'
-
-          description: |
-            Define operational radio frequency band and mode taken from hardware capability
-            of wireless card
-
-        comment:
-          type: str
-
-          description: |
-            Short description of the Channel Group profile
-
-        extension_channel:
-          type: str
-          choices:
-            - 'Ce'
-            - 'Ceee'
-            - 'disabled'
-            - 'eC'
-            - 'eCee'
-            - 'eeCe'
-            - 'eeeC'
-
-          description: |
-            Extension channel configuration. (E.g. Ce = extension channel is above Control
-            channel, eC = extension channel is below Control channel)
-
-        frequency:
-          type: int
-
-          description: |
-            Channel frequency value in MHz on which AP will operate.
-
-        name:
-          type: str
-          required: True
-
-          description: |
-            Descriptive name for the Channel Group Profile
-
-        save_selected:
-          type: str
-          choices:
-            - 'yes'
-            - 'no'
-          default: "yes"
-          description: |
-            Saves selected channel for the CAP Radio - will select this channel after the
-            CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for
-            this CAP.
-
-        tx_power:
-          type: int
-
-          description: |
-            TX Power for CAP interface (for the whole interface not for individual chains)
-            in dBm. It is not possible to set higher than allowed by country regulations or
-            interface. By default max allowed by country or interface is used.
-
-        width:
-          type: str
-
-          description: |
-            Sets Channel Width in MHz. (E.g. 20, 40)
-
+      band:
+        type: str
+        choices:
+          - 2ghz-b
+          - 2ghz-b/g
+          - 2ghz-b/g/n
+          - 2ghz-onlyg
+          - 2ghz-onlyn
+          - 5ghz-a
+          - 5ghz-a/n
+          - 5ghz-onlyn
+        description: Define operational radio frequency band and mode taken from hardware capability of wireless card
+      comment:
+        type: str
+        description: Short description of the Channel Group profile
+      disabled:
+        type: bool
+        default: False
+        description: Set capsman_channel resource disability
+      extension_channel:
+        type: str
+        choices:
+          - Ce
+          - Ceee
+          - disabled
+          - eC
+          - eCee
+          - eeCe
+          - eeeC
+        description: Extension channel configuration. (E.g. Ce = extension channel is above Control channel, eC = extension channel is below Control channel)
+      frequency:
+        type: int
+        description: Channel frequency value in MHz on which AP will operate.
+      name:
+        type: str
+        required: True
+        description: Descriptive name for the Channel Group Profile
+      save_selected:
+        type: bool
+        default: True
+        description: Saves selected channel for the CAP Radio - will select this channel after the CAP reconnects to CAPsMAN and use it till the channel Re-optimize is done for this CAP.
+      tx_power:
+        type: int
+        description: TX Power for CAP interface (for the whole interface not for individual chains) in dBm. It is not possible to set higher than allowed by country regulations or interface. By default max allowed by country or interface is used.
+      width:
+        type: str
+        description: Sets Channel Width in MHz. (E.g. 20, 40)
 """
 
 EXAMPLES = """
-# ----
 # Using merged
-# ----
-# before:
+#
+# before state:
 # [admin@MikroTik] > /caps-man channel export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
 # /caps-man channel
 # add name=test
 #
-# configuration:
 - name: Merge with device configuration
-  kilip.routeros.kilip.routeros.ros_capsman_channel:
+  kilip.routeros.ros_capsman_channel:
     config:
       - name: test
-        save_selected: 'no'
+        save_selected: no
       - name: new
         extension_channel: Ce
     state: merged
-
 #
-# after:
+# after state:
 # [admin@MikroTik] > /caps-man channel export
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
-# /caps-man channel add name=test save-selected=no add name=new extension-channel=Ce
-"""
-
-RETURN = """
-before:
-  description: The configuration as structured data prior to module invocation.
-  returned: always
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-after:
-  description: The configuration as structured data after module completion.
-  returned: when changed
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-commands:
-  description: The set of commands pushed to the remote device
-  returned: always
-  type: list
-  sample: ['/interface bridge add name=sample']
+# # RouterOS Output
+# #
+# /caps-man channel
+# add name=test save-selected=no
+# add extension-channel=Ce name=new
+#
+#
 """
 
 from ansible.module_utils.basic import AnsibleModule

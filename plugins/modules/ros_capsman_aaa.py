@@ -13,100 +13,72 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
+
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-"""
-The module file for kilip.routeros.ros_capsman_aaa
-"""
 
 DOCUMENTATION = """
 module: ros_capsman_aaa
+version_added: 1.0.0
 author: Anthonius Munthi (@kilip)
 short_description: CAPsMan AAA Configuration Module
 description:
-- This modules manages CAPsMan AAA configuration on Mikrotik RouterOS network devices
-version_added: 1.0.0
+  - This modules manages CAPsMan AAA configuration on Mikrotik RouterOS network devices
+supports:
+  - export-verbose-mode
 options:
   state:
-    type: str
-    choices: ["present","reset"]
-    description: Set module state
+    choices:
+      - present
+      - reset
     default: present
+    description: Set state for this module
   config:
-    description: A dictionary of `/caps-man aaa` parameters
     type: dict
     suboptions:
-        called_format:
-          type: str
-          choices:
-            - 'mac'
-            - 'mac:ssid'
-            - 'ssid'
-          default: "mac:ssid"
-          description: |
-            Format of how the 'called-id' identifier will be passed to RADIUS. When
-            configuring radius server clients, you can specify 'called-id' in order to
-            separate multiple entires.
-
-        interim_update:
-          type: str
-          default: "disabled"
-          description: |
-            When RADIUS accounting is used, Access Point periodically sends accounting
-            information updates to the RADIUS server. This property specifies default update
-            interval that can be overridden by the RADIUS server using the [
-            Acct-Interim-Interval](https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless#RADIUS_MAC_authentication 'Manual:Interface/Wireless') attribute.
-
-        mac_caching:
-          type: str
-          default: "disabled"
-          description: |
-            If this value is set to time interval, the Access Point will cache RADIUS MAC
-            authentication responses for specified time, and will not contact RADIUS server
-            if matching cache entry already exists. Value disabled will disable cache,
-            Access Point will always contact RADIUS server.
-
-        mac_format:
-          type: str
-          default: "XX:XX:XX:XX:XX:XX"
-          description: |
-            Controls how MAC address of the client is encoded by Access Point in the
-            User-Name attribute of the MAC authentication and MAC accounting RADIUS
-            requests.
-
-        mac_mode:
-          type: str
-          choices:
-            - 'as-username'
-            - 'as-username-and-password'
-
-          description: |
-            By default Access Point uses an empty password, when sending Access-Request
-            during MAC authentication. When this property is set to
-            as-username-and-password, Access Point will use the same value for User-Password
-            attribute as for the User-Name attribute.
-
+      called_format:
+        type: str
+        choices:
+          - mac
+          - mac:ssid
+          - ssid
+        default: mac:ssid
+        description: Format of how the "called-id" identifier will be passed to RADIUS. When configuring radius server clients, you can specify "called-id" in order to separate multiple entires.
+      interim_update:
+        type: str
+        default: disabled
+        description: When RADIUS accounting is used, Access Point periodically sends accounting information updates to the RADIUS server. This property specifies default update interval that can be overridden by the RADIUS server using the L(Acct-Interim-Interval, https://wiki.mikrotik.com/wiki/Manual:Interface/Wireless#RADIUS_MAC_authentication) attribute.
+      mac_caching:
+        type: str
+        default: disabled
+        description: If this value is set to time interval, the Access Point will cache RADIUS MAC authentication responses for specified time, and will not contact RADIUS server if matching cache entry already exists. Value disabled will disable cache, Access Point will always contact RADIUS server.
+      mac_format:
+        type: str
+        default: XX:XX:XX:XX:XX:XX
+        description: Controls how MAC address of the client is encoded by Access Point in the User-Name attribute of the MAC authentication and MAC accounting RADIUS requests.
+      mac_mode:
+        type: str
+        choices:
+          - as-username
+          - as-username-and-password
+        description: By default Access Point uses an empty password, when sending Access-Request during MAC authentication. When this property is set to as-username-and-password, Access Point will use the same value for User-Password attribute as for the User-Name attribute.
 """
 
 EXAMPLES = """
-# ----
 # Using present state
-# ----
-# before:
-# [admin@MikroTik] > /caps-man aaa export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+#
+# before state:
+# [admin@MikroTik] > /caps-man aaa export
 # /caps-man aaa
 # set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX.XX.XX.XX.XX.XX mac-mode=as-username
 #
-# configuration:
 - name: Change configuration
-  kilip.routeros.kilip.routeros.ros_capsman_aaa:
+  kilip.routeros.ros_capsman_aaa:
     config:
       called_format: mac
       interim_update: 10s
@@ -114,64 +86,44 @@ EXAMPLES = """
       mac_format: XX-XX-XX-XX-XX-XX
       mac_mode: as-username-and-password
     state: present
-
 #
-# after:
-# [admin@MikroTik] > /caps-man aaa export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# after state:
+# [admin@MikroTik] > /caps-man aaa export
+# # RouterOS Output
+# #
 # /caps-man aaa
 # set called-format=mac interim-update=10s mac-caching=10m mac-format=XX-XX-XX-XX-XX-XX mac-mode=as-username-and-password
-# ----
+#
+#
 # Using reset state
-# ----
-# before:
-# [admin@MikroTik] > /caps-man aaa export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+#
+# before state:
+# [admin@MikroTik] > /caps-man aaa export
 # /caps-man aaa
 # set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX.XX.XX.XX.XX.XX mac-mode=as-username
 #
-# configuration:
 - name: Reset to default value
-  kilip.routeros.kilip.routeros.ros_capsman_aaa:
+  kilip.routeros.ros_capsman_aaa:
     state: reset
-
 #
-# after:
-# [admin@MikroTik] > /caps-man aaa export verbose
-# sep/06/2020 03:08:16 by RouterOS 6.47.2
-# software id =
+# after state:
+# [admin@MikroTik] > /caps-man aaa export
+# # RouterOS Output
+# #
 # /caps-man aaa
-# set called-format=mac:ssid interim-update=disabled mac-caching=disabled mac-format=XX:XX:XX:XX:XX:XX mac-mode=as-username
-"""
-
-RETURN = """
-before:
-  description: The configuration as structured data prior to module invocation.
-  returned: always
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-after:
-  description: The configuration as structured data after module completion.
-  returned: when changed
-  type: list
-  sample: The configuration returned will always be in the same format of the parameters above.
-commands:
-  description: The set of commands pushed to the remote device
-  returned: always
-  type: list
-  sample: ['/interface bridge add name=sample']
+# set mac-format=XX:XX:XX:XX:XX:XX
+#
+#
 """
 
 from ansible.module_utils.basic import AnsibleModule
 from ..module_utils.resources.capsman.capsman_aaa import CapsmanAaaResource
-from ..module_utils.config.setting import Setting
+from ..module_utils.config.config import Config
 
 
 def main():
     module = AnsibleModule(argument_spec=CapsmanAaaResource.argument_spec)
-    result = Setting(module, CapsmanAaaResource).execute_module()
+    result = Config(module, CapsmanAaaResource).execute_module()
     return module.exit_json(**result)
 
 

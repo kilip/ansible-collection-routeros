@@ -12,7 +12,7 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 from __future__ import absolute_import, division, print_function
@@ -30,13 +30,13 @@ class CapsmanProvisioningResource(ResourceBase):
     config_type = "config"
     argument_spec = {
         "state": {
+            "type": "str",
             "choices": ["merged", "replaced", "overridden", "deleted"],
             "default": "merged",
-            "type": "str",
         },
         "config": {
-            "elements": "dict",
             "type": "list",
+            "elements": "dict",
             "options": {
                 "action": {
                     "type": "str",
@@ -46,10 +46,10 @@ class CapsmanProvisioningResource(ResourceBase):
                         "create-enabled",
                         "none",
                     ],
-                    "default": "none",
                 },
                 "comment": {"type": "str", "required": True},
                 "common_name_regexp": {"type": "str"},
+                "disabled": {"type": "bool", "default": False},
                 "hw_supported_modes": {
                     "type": "str",
                     "choices": [
@@ -78,7 +78,7 @@ class CapsmanProvisioningResource(ResourceBase):
                 },
                 "name_prefix": {"type": "str"},
                 "radio_mac": {"type": "str", "default": "00:00:00:00:00:00"},
-                "slave_configurations": {"type": "list", "elements": "str"},
+                "slave_configurations": {"type": "list"},
             },
         },
     }

@@ -1,0 +1,9 @@
+asserts:
+  - 'self.assertEqual(result[0]["name"], "test")'
+resource: capsman_configuration
+fixtures: |
+  # RouterOS Output
+  #
+  /caps-man configuration
+  add name=test
+

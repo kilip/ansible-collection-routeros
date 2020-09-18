@@ -12,7 +12,7 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 from __future__ import absolute_import, division, print_function
@@ -28,27 +28,15 @@ class CapsmanDatapathResource(ResourceBase):
     gather_network_resources = ["capsman_datapath"]
     keys = ["name"]
     config_type = "config"
-    custom_props = {
-        "bridge_cost": {"ros_key": "bridge_cost"},
-        "bridge_horizon": {"ros_key": "bridge_horizon"},
-        "client_to_client_forwarding": {
-            "ros_key": "client_to_client_forwarding"
-        },
-        "interface_list": {"ros_key": "interface_list"},
-        "local_forwarding": {"ros_key": "local_forwarding"},
-        "openflow_switch": {"ros_key": "openflow_switch"},
-        "vlan_id": {"ros_key": "vlan_id"},
-        "vlan_mode": {"ros_key": "vlan_mode"},
-    }
     argument_spec = {
         "state": {
+            "type": "str",
             "choices": ["merged", "replaced", "overridden", "deleted"],
             "default": "merged",
-            "type": "str",
         },
         "config": {
-            "elements": "dict",
             "type": "list",
+            "elements": "dict",
             "options": {
                 "arp": {
                     "type": "str",
@@ -64,18 +52,14 @@ class CapsmanDatapathResource(ResourceBase):
                 "bridge_cost": {"type": "int"},
                 "bridge_horizon": {"type": "int"},
                 "client_to_client_forwarding": {
-                    "type": "str",
-                    "choices": ["yes", "no"],
-                    "default": "no",
+                    "type": "bool",
+                    "default": False,
                 },
                 "comment": {"type": "str"},
-                "interface_list": {"type": "list", "elements": "str"},
+                "disabled": {"type": "bool", "default": False},
+                "interface_list": {"type": "list"},
                 "l2mtu": {"type": "str"},
-                "local_forwarding": {
-                    "type": "str",
-                    "choices": ["yes", "no"],
-                    "default": "no",
-                },
+                "local_forwarding": {"type": "bool", "default": False},
                 "mtu": {"type": "str"},
                 "name": {"type": "str", "required": True},
                 "openflow_switch": {"type": "str"},

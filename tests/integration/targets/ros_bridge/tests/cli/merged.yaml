@@ -12,37 +12,38 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
 ---
-- debug: msg="kilip.routeros.ros_bridge tests"
 
-- include_tasks: "_pre_tasks.yml"
+- include_tasks: pre_tasks.yml
 
 - name: set result commands facts
   set_fact:
     commands: [
       '/interface bridge set [ find name=br-wan ] arp=enabled comment="updated comment"',
-      '/interface bridge set [ find name=br-trunk ] arp=enabled comment="updated comment" vlan-filtering=yes',
+      '/interface bridge set [ find name=br-trunk ] arp=enabled comment="updated comment" vlan-filtering=yes'
     ]
 
 - name: Merge configuration with device configuration
   register: result
-  kilip.routeros.ros_bridge:
+  kilip.routeros.ros__bridge:
     config:
       - name: br-wan
-        comment: 'updated comment'
+        comment: updated comment
         arp: enabled
       - name: br-trunk
-        comment: 'updated comment'
+        comment: updated comment
         arp: enabled
-        vlan_filtering: 'yes'
+        vlan_filtering: yes
     state: merged
+
 
 - name: set diff commands
   set_fact:
     diff_commands: "{{ result.commands | difference(commands) }}"
+
 
 - assert:
     that:
@@ -51,15 +52,15 @@
 
 - name: "idempotence: Merge configuration with device configuration"
   register: result
-  kilip.routeros.ros_bridge:
+  kilip.routeros.ros__bridge:
     config:
       - name: br-wan
-        comment: 'updated comment'
+        comment: updated comment
         arp: enabled
       - name: br-trunk
-        comment: 'updated comment'
+        comment: updated comment
         arp: enabled
-        vlan_filtering: 'yes'
+        vlan_filtering: yes
     state: merged
 
 - assert:

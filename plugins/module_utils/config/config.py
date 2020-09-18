@@ -53,6 +53,7 @@ class Config(ConfigBase):
         changed_resource_facts = []
         if commands and self.state in self.ACTION_STATES:
             if not self._module.check_mode:
+                print(commands)
                 response = load_config(self._module, commands)
                 result["response"] = response
 

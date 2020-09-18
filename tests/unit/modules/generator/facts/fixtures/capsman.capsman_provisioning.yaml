@@ -1,0 +1,9 @@
+asserts:
+  - 'self.assertEqual(result[0]["comment"], "test")'
+resource: capsman_provisioning
+fixtures: |
+  # RouterOS Output
+  #
+  /caps-man provisioning
+  add comment=test
+
