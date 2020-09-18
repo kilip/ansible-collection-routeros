@@ -12,10 +12,9 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -28,19 +27,17 @@ class VlanResource(ResourceBase):
     command = "/interface vlan"
     gather_network_resources = ["vlan"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
+            "type": "str",
             "choices": ["merged", "replaced", "overridden", "deleted"],
             "default": "merged",
-            "type": "str",
         },
         "config": {
-            "elements": "dict",
             "type": "list",
+            "elements": "dict",
             "options": {
-                "vlan_id": {"type": "int", "required": True},
-                "interface": {"type": "str", "required": True},
                 "arp": {
                     "type": "str",
                     "choices": [
@@ -51,11 +48,14 @@ class VlanResource(ResourceBase):
                     ],
                     "default": "enabled",
                 },
+                "comment": {"type": "str"},
+                "disabled": {"type": "bool", "default": False},
+                "interface": {"type": "str"},
                 "l2mtu": {"type": "int"},
                 "mtu": {"type": "int", "default": 1500},
                 "name": {"type": "str", "required": True},
-                "use_service_tag": {"type": "str", "choices": ["no", "yes"]},
-                "comment": {"type": "str"},
+                "use_service_tag": {"type": "bool"},
+                "vlan_id": {"type": "int", "default": 1},
             },
         },
     }

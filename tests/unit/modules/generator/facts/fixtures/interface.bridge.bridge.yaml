@@ -1,0 +1,15 @@
+asserts:
+  - 'self.assertEqual(result[0]["arp"], "reply-only")'
+  - 'self.assertEqual(result[0]["comment"], "trunk bridge")'
+  - 'self.assertEqual(result[0]["name"], "br-trunk")'
+  - 'self.assertEqual(result[1]["arp"], "reply-only")'
+  - 'self.assertEqual(result[1]["comment"], "wan bridge")'
+  - 'self.assertEqual(result[1]["name"], "br-wan")'
+resource: bridge
+fixtures: |
+  # RouterOS Output
+  #
+  /interface bridge
+  add arp=reply-only comment="trunk bridge" name=br-trunk
+  add arp=reply-only comment="wan bridge" name=br-wan
+

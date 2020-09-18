@@ -1,0 +1,12 @@
+asserts:
+  - 'self.assertEqual(result[0]["arp"], "reply-only")'
+  - 'self.assertEqual(result[0]["interface"], "br-trunk")'
+  - 'self.assertEqual(result[0]["name"], "vlan-100")'
+  - 'self.assertEqual(result[0]["vlan_id"], 100)'
+resource: vlan
+fixtures: |
+  # RouterOS Output
+  #
+  /interface vlan
+  add arp=reply-only interface=br-trunk name=vlan-100 vlan-id=100
+

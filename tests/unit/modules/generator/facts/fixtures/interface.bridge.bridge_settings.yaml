@@ -1,0 +1,12 @@
+asserts:
+  - 'self.assertEqual(result["allow_fast_path"], "no")'
+  - 'self.assertEqual(result["use_ip_firewall"], "yes")'
+  - 'self.assertEqual(result["use_ip_firewall_for_pppoe"], "yes")'
+  - 'self.assertEqual(result["use_ip_firewall_for_vlan"], "yes")'
+resource: bridge_settings
+fixtures: |
+  # RouterOS Output
+  #
+  /interface bridge settings
+  set allow-fast-path=no use-ip-firewall=yes use-ip-firewall-for-pppoe=yes use-ip-firewall-for-vlan=yes
+

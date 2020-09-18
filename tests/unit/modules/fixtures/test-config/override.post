@@ -1,0 +1,5 @@
+#
+#
+#
+/interface bridge
+add name=br-trunk comment="new comment"

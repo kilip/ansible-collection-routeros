@@ -1,0 +1,13 @@
+asserts:
+  - 'self.assertEqual(result["bridge"], "none")'
+  - 'self.assertEqual(result["certificate"], "none")'
+  - 'self.assertEqual(result["enabled"], "no")'
+  - 'self.assertEqual(result["lock_to_caps_man"], "no")'
+  - 'self.assertEqual(result["static_virtual"], "no")'
+resource: wireless_cap
+fixtures: |
+  # RouterOS Output
+  #
+  /interface wireless cap
+  set bridge=none certificate=none enabled=no lock-to-caps-man=no static-virtual=no
+

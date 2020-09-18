@@ -2,13 +2,13 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-
 from ..compat.unittest import TestCase
-from ansible_collections.kilip.routeros.plugins.module_utils.routeros import (
+from ..compat.mock import patch
+from ....plugins.module_utils.routeros import (
     generate_config_key,
     get_config,
+    transform_response,
 )
-from ..compat.mock import patch
 
 
 class TestRouterOS(TestCase):
@@ -41,3 +41,25 @@ class TestRouterOS(TestCase):
     def test_get_config(self):
         output = get_config(self.module, "/interface test verbose terse")
         self.assertEqual("config1\nconfig2", output)
+
+    def test_transform_response(self):
+        response = """
+/interface set [ find name=ether2 ] comment="new comment" dis
+< name=ether2 ] comment="new comment" disabled=yes
+< name=ether2 ] comment="new comment" disabled=yes
+        """
+
+        ret = transform_response("test", response)
+        self.assertTrue(ret["success"])
+
+        fail_response = (
+            response
+            + """
+
+value mismatched
+
+"""
+        )
+        ret = transform_response("test", fail_response)
+        self.assertFalse(ret["success"])
+        self.assertEqual(ret["response"], "value mismatched")

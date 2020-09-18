@@ -1,0 +1,16 @@
+asserts:
+  - 'self.assertEqual(result[0]["comment"], "ether2 comment")'
+  - 'self.assertEqual(result[0]["mtu"], "1500")'
+  - 'self.assertEqual(result[0]["name"], "ether2")'
+  - 'self.assertEqual(result[1]["comment"], "ether3 comment")'
+  - 'self.assertEqual(result[1]["disabled"], "yes")'
+  - 'self.assertEqual(result[1]["mtu"], "1500")'
+  - 'self.assertEqual(result[1]["name"], "ether3")'
+resource: interface
+fixtures: |
+  # RouterOS Output
+  #
+  /interface
+  add comment="ether2 comment" mtu=1500 name=ether2
+  add comment="ether3 comment" disabled=yes mtu=1500 name=ether3
+

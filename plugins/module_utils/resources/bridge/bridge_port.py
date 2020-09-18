@@ -12,10 +12,9 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -28,7 +27,7 @@ class BridgePortResource(ResourceBase):
     command = "/interface bridge port"
     gather_network_resources = ["bridge_port"]
     keys = ["bridge", "interface"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],
@@ -39,11 +38,6 @@ class BridgePortResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
-                "disabled": {
-                    "type": "str",
-                    "choices": ["yes", "no"],
-                    "default": "no",
-                },
                 "auto_isolate": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -59,6 +53,12 @@ class BridgePortResource(ResourceBase):
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "yes",
+                },
+                "comment": {"type": "str"},
+                "disabled": {
+                    "type": "str",
+                    "choices": ["yes", "no"],
+                    "default": "no",
                 },
                 "edge": {
                     "type": "str",
@@ -90,11 +90,14 @@ class BridgePortResource(ResourceBase):
                     ],
                     "default": "admit-all",
                 },
+                "horizon": {"type": "int"},
                 "ingress_filtering": {
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "no",
                 },
+                "interface": {"type": "str", "required": True},
+                "internal_path_cost": {"type": "int", "default": 10},
                 "learn": {
                     "type": "str",
                     "choices": ["auto", "no", "yes"],
@@ -105,9 +108,6 @@ class BridgePortResource(ResourceBase):
                     "choices": ["disabled", "permanent", "temporary-query"],
                     "default": "temporary-query",
                 },
-                "horizon": {"type": "int", "default": 0},
-                "internal_path_cost": {"type": "int", "default": 10},
-                "interface": {"type": "str", "required": True},
                 "path_cost": {"type": "int", "default": 10},
                 "point_to_point": {
                     "type": "str",
@@ -146,7 +146,6 @@ class BridgePortResource(ResourceBase):
                     "choices": ["no", "yes"],
                     "default": "yes",
                 },
-                "comment": {"type": "str"},
             },
         },
     }

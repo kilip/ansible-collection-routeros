@@ -1,0 +1,11 @@
+asserts:
+  - 'self.assertEqual(result[0]["comment"], "existing")'
+  - 'self.assertEqual(result[0]["interface"], "wlan1")'
+  - 'self.assertEqual(result[0]["signal_range"], "-79..120")'
+resource: wireless_connect_list
+fixtures: |
+  # RouterOS Output
+  #
+  /interface wireless connect-list
+  add comment=existing interface=wlan1 signal-range=-79..120
+

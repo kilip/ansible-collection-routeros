@@ -1,0 +1,6 @@
+#
+#
+#
+/interface bridge
+add name=br-trunk arp=reply-only comment="new comment" region-name="test" region-revision=1 mtu=1000
+add name=br-wan

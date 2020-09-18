@@ -1,0 +1,31 @@
+module: ros_wireless
+fixtures:
+  interface_wireless_export: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /interface wireless
+    set [ find default-name=wlan1 ] comment="wlan1 comment" security-profile=to-olympus
+    
+tests:
+  -
+    commands:
+      - '/interface wireless set [ find name=wlan1 ] ampdu-priorities=0,1,2 comment="updated comment" security-profile=default supported-rates-a/g=6Mbps,24Mbps'
+    argument_spec:
+      config:
+        -
+          name: wlan1
+          comment: 'updated comment'
+          ampdu_priorities: [0, 1, 2]
+          supported_rates_ag: [6Mbps, 24Mbps]
+      state: merged
+  -
+    commands:
+      - '/interface wireless set [ find name=wlan1 ] comment="new olympus" security-profile=new-olympus ssid=Olympus'
+    argument_spec:
+      config:
+        -
+          name: wlan1
+          comment: 'new olympus'
+          ssid: Olympus
+          security_profile: new-olympus
+      state: replaced

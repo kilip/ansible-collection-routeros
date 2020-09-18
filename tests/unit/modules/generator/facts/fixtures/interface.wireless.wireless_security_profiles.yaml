@@ -1,0 +1,10 @@
+asserts:
+  - 'self.assertEqual(result[0]["name"], "test")'
+  - 'self.assertEqual(result[0]["supplicant_identity"], "MikroTik")'
+resource: wireless_security_profiles
+fixtures: |
+  # RouterOS Output
+  #
+  /interface wireless security-profiles
+  add name=test supplicant-identity=MikroTik
+

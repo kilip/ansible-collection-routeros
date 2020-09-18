@@ -1,0 +1,10 @@
+asserts:
+  - 'self.assertEqual(result[0]["comment"], "ether1 comment")'
+  - 'self.assertEqual(result[0]["name"], "ether1")'
+resource: ethernet
+fixtures: |
+  # RouterOS Output
+  #
+  /interface ethernet
+  add comment="ether1 comment" name=ether1
+

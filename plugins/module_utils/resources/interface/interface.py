@@ -12,17 +12,14 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
 from ..base import ResourceBase
-from ...utils import parse_config
-import re
 
 
 class InterfaceResource(ResourceBase):
@@ -30,42 +27,19 @@ class InterfaceResource(ResourceBase):
     command = "/interface"
     gather_network_resources = ["interface"]
     keys = ["name"]
-    type = "config"
-    supports = ["facts_verbose_mode"]
+    config_type = "config"
+    supports = ["export-verbose-mode"]
     argument_spec = {
-        "state": {"choices": ["merged"], "default": "merged", "type": "str"},
+        "state": {"type": "str", "choices": ["merged"], "default": "merged"},
         "config": {
-            "elements": "dict",
             "type": "list",
+            "elements": "dict",
             "options": {
-                "disabled": {
-                    "type": "str",
-                    "choices": ["yes", "no"],
-                    "default": "no",
-                },
-                "l2mtu": {"type": "int"},
-                "mtu": {"type": "int"},
-                "name": {"type": "str", "required": True},
                 "comment": {"type": "str"},
+                "disabled": {"type": "bool", "default": False},
+                "l2mtu": {"type": "str"},
+                "mtu": {"type": "str"},
+                "name": {"type": "str", "required": True},
             },
         },
     }
-
-    supported_interfaces = ["interface", "ethernet", "vlan", "bridge"]
-
-    def render_config(self, spec, conf):
-        sp = re.split("set |add ", conf)
-        intype = sp[0].strip()
-        if intype not in self.supported_interfaces:
-            return None
-        del sp[0]
-
-        configs = []
-        for conf in sp:
-            config = parse_config(
-                spec, conf, self.facts_argument_spec, self.prefixes
-            )
-            config["type"] = intype
-            if config:
-                configs.append(config)
-        return configs

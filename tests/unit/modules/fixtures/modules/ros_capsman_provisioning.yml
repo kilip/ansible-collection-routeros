@@ -1,0 +1,35 @@
+module: ros_capsman_provisioning
+fixtures:
+  caps-man_provisioning_export: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /caps-man provisioning
+    add comment=test
+    
+tests:
+  -
+    commands:
+      - '/caps-man provisioning set [ find comment=test ] action=create-disabled'
+      - '/caps-man provisioning add action=create-enabled comment="Olympus Wireless Network" identity-regexp=olympus- master-configuration=olympus-network name-format=identity slave-configurations=troy-network,gaia-network'
+    argument_spec:
+      state: merged
+      config:
+        -
+          comment: test
+          action: create-disabled
+        -
+          comment: 'Olympus Wireless Network'
+          identity_regexp: olympus-
+          master_configuration: olympus-network
+          name_format: identity
+          slave_configurations: [troy-network, gaia-network]
+          action: create-enabled
+  -
+    commands:
+      - '/caps-man provisioning remove [ find comment=test ]'
+      - '/system script run ansible-remove-invalid'
+    argument_spec:
+      state: deleted
+      config:
+        -
+          comment: test

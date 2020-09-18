@@ -1,0 +1,19 @@
+module: ros_ethernet
+fixtures:
+  interface_ethernet_export: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /interface ethernet
+    set [ find default-name=ether1 ] comment="ether1 comment"
+    
+tests:
+  -
+    commands:
+      - '/interface ethernet set [ find name=ether1 ] advertise=10M-full,100M-full,1000M-full comment="updated comment"'
+    argument_spec:
+      config:
+        -
+          name: ether1
+          advertise: [10M-full, 100M-full, 1000M-full]
+          comment: 'updated comment'
+      state: merged

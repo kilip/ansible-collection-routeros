@@ -1,0 +1,9 @@
+asserts:
+  - 'self.assertEqual(result[0]["name"], "test")'
+resource: capsman_channel
+fixtures: |
+  # RouterOS Output
+  #
+  /caps-man channel
+  add name=test
+

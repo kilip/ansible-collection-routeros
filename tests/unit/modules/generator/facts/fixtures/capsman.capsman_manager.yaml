@@ -1,0 +1,13 @@
+asserts:
+  - 'self.assertEqual(result["ca_certificate"], "none")'
+  - 'self.assertEqual(result["certificate"], "none")'
+  - 'self.assertEqual(result["enabled"], "no")'
+  - 'self.assertEqual(result["require_peer_certificate"], "no")'
+  - 'self.assertEqual(result["upgrade_policy"], "none")'
+resource: capsman_manager
+fixtures: |
+  # RouterOS Output
+  #
+  /caps-man manager
+  set ca-certificate=none certificate=none enabled=no require-peer-certificate=no upgrade-policy=none
+

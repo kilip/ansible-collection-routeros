@@ -1,0 +1,22 @@
+module: ros_capsman_channel
+fixtures:
+  caps-man_channel_export: |
+    # sep/06/2020 03:08:16 by RouterOS 6.47.2
+    # software id =
+    /caps-man channel
+    add name=test
+    
+tests:
+  -
+    commands:
+      - '/caps-man channel set [ find name=test ] save-selected=no'
+      - '/caps-man channel add extension-channel=Ce name=new'
+    argument_spec:
+      config:
+        -
+          name: test
+          save_selected: 'no'
+        -
+          name: new
+          extension_channel: Ce
+      state: merged

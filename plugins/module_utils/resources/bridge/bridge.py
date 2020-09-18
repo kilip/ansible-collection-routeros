@@ -12,10 +12,9 @@
 #     and manual changes will be clobbered when the file is regenerated.
 #
 #     Please read more about how to change this file at
-#     https://www.github.com/kilip/ansible-routeros-generator
+#     https://github.com/kilip/ansible-routeros-generator
 #
 # ----------------------------------------------------------------------------
-
 from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
@@ -28,7 +27,7 @@ class BridgeResource(ResourceBase):
     command = "/interface bridge"
     gather_network_resources = ["bridge"]
     keys = ["name"]
-    type = "config"
+    config_type = "config"
     argument_spec = {
         "state": {
             "choices": ["merged", "replaced", "overridden", "deleted"],
@@ -39,11 +38,6 @@ class BridgeResource(ResourceBase):
             "elements": "dict",
             "type": "list",
             "options": {
-                "disabled": {
-                    "type": "str",
-                    "choices": ["no", "yes"],
-                    "default": "no",
-                },
                 "add_dhcp_option82": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -69,6 +63,11 @@ class BridgeResource(ResourceBase):
                 },
                 "comment": {"type": "str"},
                 "dhcp_snooping": {
+                    "type": "str",
+                    "choices": ["no", "yes"],
+                    "default": "no",
+                },
+                "disabled": {
                     "type": "str",
                     "choices": ["no", "yes"],
                     "default": "no",
@@ -118,7 +117,7 @@ class BridgeResource(ResourceBase):
                     "choices": ["1", "2"],
                     "default": "1",
                 },
-                "mtu": {"type": "int", "default": 0},
+                "mtu": {"type": "int"},
                 "multicast_querier": {
                     "type": "str",
                     "choices": ["no", "yes"],
@@ -141,7 +140,7 @@ class BridgeResource(ResourceBase):
                 "query_interval": {"type": "str", "default": "2m5s"},
                 "query_response_interval": {"type": "str", "default": "10s"},
                 "region_name": {"type": "str"},
-                "region_revision": {"type": "int", "default": 0},
+                "region_revision": {"type": "int"},
                 "startup_query_count": {"type": "int", "default": 2},
                 "startup_query_interval": {
                     "type": "str",

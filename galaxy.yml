@@ -10,11 +10,11 @@ tags:
 - routoros
 - mikrotik
 - network
-dependencies:
-    ansible.netcommon: ""
+#dependencies:
+#    ansible.netcommon: ""
 repository: https://github.com/kilip/ansible-collection-ros
 documentation: https://github.com/kilip/ansible-collection-ros
 homepage: https://github.com/kilip/ansible-collection-ros
 issues: https://github.com/kilip/ansible-collection-ros/issues
-build_ignore:
-- tests
+#build_ignore:
+#- tests
